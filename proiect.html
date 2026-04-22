@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proiect — Diana Tatar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="project-body">
+
+  <header class="nav nav--dark container">
+    <a href="index.html#top" class="nav__brand">
+      <span class="nav__brand-dot"></span>
+      <span class="nav__brand-name">diana<em>tatar</em></span>
+    </a>
+    <nav class="nav__menu">
+      <a href="index.html#despre">Despre mine</a>
+      <a href="index.html#portofoliu">Portofoliu</a>
+      <a href="index.html#servicii">Servicii</a>
+      <a href="resurse.html">Resurse</a>
+      <span class="nav__divider"></span>
+      <a href="index.html#contact" class="nav__cta"><span class="nav__cta-star">✶</span>Contactează-mă</a>
+    </nav>
+  </header>
+
+  <main class="project container" id="project">
+    <a href="index.html#portofoliu" class="project__back">← Înapoi la portofoliu</a>
+
+    <header class="project__header">
+      <p class="project__cat" data-field="category">Branding</p>
+      <h1 class="display" data-field="title">Proiect</h1>
+      <p class="project__sub" data-field="sub">Subtitlu / domeniu</p>
+    </header>
+
+    <figure class="project__cover">
+      <img data-field="cover" src="assets/images/project-01.png" alt="" />
+    </figure>
+
+    <section class="project__block">
+      <h2><span>01</span> Context</h2>
+      <p data-field="context">
+        Ce brand / tip de proiect este (ex: branding, social media, identitate vizuală).
+        Această informație se va actualiza cu descrierea specifică fiecărui proiect.
+      </p>
+    </section>
+
+    <section class="project__block">
+      <h2><span>02</span> Scopul</h2>
+      <p data-field="goal">
+        Ce trebuia rezolvat — claritate, imagine nouă, coerență — și ce provocare
+        a adus proiectul.
+      </p>
+    </section>
+
+    <section class="project__block">
+      <h2><span>03</span> Soluția</h2>
+      <p data-field="solution">
+        Ce am făcut concret — concept, identitate, design, organizarea sistemului vizual,
+        decizii cheie luate în timpul procesului.
+      </p>
+    </section>
+
+    <section class="project__block">
+      <h2><span>04</span> Rezultatul</h2>
+      <p data-field="result">
+        Ce a obținut clientul — claritate, imagine coerentă, impact vizual —
+        și cum a fost primită soluția de audiență.
+      </p>
+    </section>
+
+    <nav class="project__nav">
+      <a href="#" class="project__nav-item" data-rel="prev">← Proiect anterior</a>
+      <a href="index.html#portofoliu" class="project__nav-item project__nav-item--center">Toate proiectele</a>
+      <a href="#" class="project__nav-item project__nav-item--next" data-rel="next">Proiect următor →</a>
+    </nav>
+  </main>
+
+  <footer class="project__footer">
+    <div class="container">
+      <p>Ai un proiect în minte? <a href="index.html#contact">Hai să discutăm</a>.</p>
+      <p>© <span id="year"></span> Diana Tatar</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

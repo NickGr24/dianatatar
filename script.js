@@ -1,0 +1,304 @@
+/* =========================================================
+   Diana Tatar — portfolio site
+   Client-side logic for index, proiect, and resurse pages.
+   ========================================================= */
+(function () {
+  "use strict";
+
+  /* ---------- helpers ---------- */
+  const $  = (sel, root = document) => root.querySelector(sel);
+  const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+
+  /* ---------- year in footer ---------- */
+  const yearEl = $("#year");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  /* ---------- mobile menu toggle ---------- */
+  const navToggle = $(".nav__toggle");
+  const navMenu   = $(".nav__menu");
+  if (navToggle && navMenu) {
+    navToggle.addEventListener("click", () => {
+      const open = navMenu.classList.toggle("is-open");
+      navToggle.setAttribute("aria-expanded", String(open));
+    });
+    navMenu.addEventListener("click", (e) => {
+      if (e.target.tagName === "A") navMenu.classList.remove("is-open");
+    });
+  }
+
+  /* ---------- smooth scroll for hash links ---------- */
+  $$('a[href^="#"]').forEach((a) => {
+    a.addEventListener("click", (e) => {
+      const id = a.getAttribute("href");
+      if (id === "#" || id.length < 2) return;
+      const target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+
+  /* ---------- reveal on scroll ---------- */
+  const reveal = $$(".reveal");
+  if (reveal.length && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+    );
+    reveal.forEach((el) => io.observe(el));
+  }
+
+  /* =========================================================
+     CASE — project navigation inside a category
+     Each <article.case> may contain multiple .case__slide.
+     Arrows cycle through slides; counter shows "n / N".
+     ========================================================= */
+  $$(".case").forEach((caseEl) => {
+    const slides = $$(".case__slide", caseEl);
+    const counter = $(".case__counter", caseEl);
+    const arrows  = $$(".case__arrow", caseEl);
+    if (!slides.length) return;
+
+    let index = slides.findIndex((s) => s.classList.contains("is-active"));
+    if (index < 0) index = 0;
+
+    const render = () => {
+      slides.forEach((s, i) => s.classList.toggle("is-active", i === index));
+      if (counter) counter.textContent = `${index + 1} / ${slides.length}`;
+      arrows.forEach((btn) => {
+        const dir = Number(btn.dataset.dir);
+        const nextIdx = index + dir;
+        btn.disabled = slides.length <= 1 || nextIdx < 0 || nextIdx >= slides.length;
+      });
+    };
+
+    arrows.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const dir = Number(btn.dataset.dir);
+        const next = index + dir;
+        if (next < 0 || next >= slides.length) return;
+        index = next;
+        render();
+      });
+    });
+
+    render();
+  });
+
+  /* =========================================================
+     TESTIMONIALS — horizontal carousel
+     Centered card becomes color, the others stay grayscale.
+     Driven by scroll position + IntersectionObserver.
+     ========================================================= */
+  const rail  = $("#testimonial-rail");
+  if (rail) {
+    const track = $(".testimonial__track", rail);
+    const cards = $$(".t-card", rail);
+    const countEl = $(".testimonial__num", document);
+    const tArrows = $$(".t-arrow", rail);
+
+    const setActive = (idx) => {
+      cards.forEach((c, i) => c.classList.toggle("is-active", i === idx));
+      if (countEl) {
+        const n = String(idx + 1).padStart(2, "0");
+        countEl.textContent = `[${n}]`;
+      }
+    };
+
+    /* IO inside the horizontal scroller — the card closest to the rail center wins */
+    const pickActiveByScroll = () => {
+      const rect = track.getBoundingClientRect();
+      const center = rect.left + rect.width / 2;
+      let best = 0;
+      let bestDist = Infinity;
+      cards.forEach((c, i) => {
+        const cr = c.getBoundingClientRect();
+        const cCenter = cr.left + cr.width / 2;
+        const d = Math.abs(cCenter - center);
+        if (d < bestDist) { bestDist = d; best = i; }
+      });
+      setActive(best);
+    };
+
+    track.addEventListener("scroll", pickActiveByScroll, { passive: true });
+    window.addEventListener("resize", pickActiveByScroll);
+    // wait for first paint to measure correctly
+    requestAnimationFrame(pickActiveByScroll);
+
+    tArrows.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const dir = Number(btn.dataset.dir);
+        const step = cards[0].getBoundingClientRect().width + 24;
+        track.scrollBy({ left: dir * step, behavior: "smooth" });
+      });
+    });
+
+    /* Also trigger grayscale->color effect on whole-page scroll:
+       when the testimonial section enters viewport, IO keeps the
+       active card update responsive even without manual horizontal scroll. */
+    if ("IntersectionObserver" in window) {
+      const sectionIO = new IntersectionObserver(
+        (entries) => entries.forEach((e) => {
+          if (e.isIntersecting) pickActiveByScroll();
+        }),
+        { threshold: 0.25 }
+      );
+      sectionIO.observe(rail);
+    }
+  }
+
+  /* =========================================================
+     CONTACT FORM — simple client-side validation
+     (No backend in greenfield — surface feedback, open mailto).
+     ========================================================= */
+  const form = $(".footer__form");
+  if (form) {
+    const status = $(".footer__status", form);
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const name    = (data.get("name")    || "").toString().trim();
+      const email   = (data.get("email")   || "").toString().trim();
+      const message = (data.get("message") || "").toString().trim();
+
+      if (!name || !email || !message) {
+        status.textContent = "Completează toate câmpurile, te rog.";
+        status.style.color = "#ff7a7a";
+        return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        status.textContent = "Adresa de email nu pare validă.";
+        status.style.color = "#ff7a7a";
+        return;
+      }
+
+      /* Open mail client — a backend endpoint can replace this later. */
+      const subject = encodeURIComponent(`Solicitare proiect — ${name}`);
+      const body    = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
+      window.location.href = `mailto:designerdianatatar30@gmail.com?subject=${subject}&body=${body}`;
+
+      status.textContent = "Mulțumesc! Se deschide aplicația de email…";
+      status.style.color = "rgba(255,255,255,.8)";
+      form.reset();
+    });
+  }
+
+  /* =========================================================
+     PROJECT DETAIL PAGE (proiect.html)
+     Pull data by ?slug=… and hydrate the template.
+     ========================================================= */
+  const projectRoot = $("#project");
+  if (projectRoot) {
+    const projects = {
+      decoratii: {
+        category: "Branding & Identitate vizuală",
+        title: "Decorații.md",
+        sub: "Decor urban | Rebranding & Identity",
+        cover: "assets/images/project-01.png",
+        context: "Orașul nu este doar o construcție din clădiri, străzi și materiale — trăiește prin oamenii săi, prin ideile și detaliile care îi dau sens. Din această înțelegere s-a născut Decorații.md, un brand care aduce claritate, identitate și emoție spațiilor prin care trecem zilnic.",
+        goal: "Construirea unei identități vizuale recunoscute pe toate materialele grafice ale Decorații, care să transmită clar ideile de metal, lumină și serviciile oferite de brand.",
+        solution: "Sistem vizual unitar construit pe trei culori-pilon — negru (contrast maxim, aplicații elegante), portocaliu (inspirație, dinamism, vizibilitate) și maro (stabilitate, profunzime, conexiune cu materialele naturale). Tipografie NeulisSans, iconografie și texturi dedicate, ghid de aplicare pe print, stand și digital.",
+        result: "Brandul a câștigat o identitate coerentă, ușor de recunoscut în spațiul urban, cu layout-uri reutilizabile pentru campanii sezoniere și comunicare pe termen lung."
+      },
+      "oo-nutrition": {
+        category: "Presentation & Social Media",
+        title: "OO.Nutrition",
+        sub: "Product concept | Prezentare de brand",
+        cover: "assets/images/project-02-b.png",
+        context: "OO.Nutrition aveau nevoie de o prezentare de produs clară, care să explice conceptul și beneficiile liniei de nutriție către parteneri și investitori, cât și să funcționeze ca material de comunicare pe social media.",
+        goal: "Un document care să vândă conceptul — structură editorială ușor de parcurs, ierarhie tipografică puternică și vizualuri care să transmită ideea de produs premium, fără a încărca informația.",
+        solution: "Am construit o prezentare modulară pornind de la conceptul de produs, cu paletă asortată brandului, iconografie simplă, machete de pagini reutilizabile și un set de slide-uri adaptate pentru postări pe social media.",
+        result: "Materialul a devenit principalul instrument de comunicare a brandului către parteneri, iar echipa OO.Nutrition a putut reutiliza slide-urile pentru campanii noi fără a cere redesign de la zero."
+      },
+      "centrul-sportiv": {
+        category: "Editorial & Print",
+        title: "Centrul sportiv de pregătire a loturilor naționale",
+        sub: "Brand book, flyere și reviste",
+        cover: "assets/images/project-bg.png",
+        context: "Centrul sportiv de pregătire a loturilor naționale avea nevoie de materiale tipărite (flyere, reviste, documente de prezentare) care să reflecte seriozitatea și prestigiul instituției, dar să rămână accesibile publicului larg.",
+        goal: "Un sistem editorial care să susțină comunicarea oficială și, în același timp, să facă informația ușor de parcurs pentru sportivi, antrenori și parteneri.",
+        solution: "Grid editorial pe 8 coloane, ierarhie tipografică clară, fotografie documentară combinată cu infografice. Am livrat layout-uri pentru flyere, revista internă și materiale de eveniment, toate folosind același sistem vizual.",
+        result: "Materiale folosite la evenimente oficiale și la comunicarea internă; instituția a câștigat un format editorial pe care îl poate extinde singură pentru numerele următoare."
+      },
+      "campanie-vizuala": {
+        category: "Concept vizual & Campanii",
+        title: "Campanii vizuale — BloomIn & Fine Digital",
+        sub: "Direcție creativă | Social + Print",
+        cover: "assets/images/project-bg.png",
+        context: "Pentru clienții BloomIn Agency și Fine Digital am coordonat concepte vizuale pentru campanii de marketing — de la cercetarea publicului țintă până la livrabilele finale pentru social media, bannere și materiale promoționale.",
+        goal: "Direcție creativă coerentă care să transmită același mesaj pe toate canalele, adaptabilă de către echipele clientului fără pierderea tonului.",
+        solution: "Moodboard detaliat, concept narativ cu piloni vizuali clari, paletă asortată, machete pentru toate canalele (static, video, print). Ghid de aplicare astfel încât echipele interne să poată continua producția autonom.",
+        result: "Campaniile au fost lansate cu identitate unitară pe toate canalele; clienții au continuat să producă conținut nou păstrând direcția vizuală stabilită."
+      },
+      "vector-academy-ai": {
+        category: "Generare conținut cu AI",
+        title: "Vector Academy — AI content",
+        sub: "AI mentor | Video, static, moodboards",
+        cover: "assets/images/project-bg.png",
+        context: "În calitate de AI content creator și AI mentor la Vector Academy, dezvolt concepte grafice pentru postări social media, bannere și materiale promoționale folosind workflow-uri mixte — design clasic + generare cu AI.",
+        goal: "Livrare rapidă și constantă de conținut vizual cu look premium, fără costurile unui shooting pentru fiecare campanie, menținând o estetică coerentă de la un lansare la alta.",
+        solution: "Workflow hibrid — prompt library reutilizabil, moodboard-uri și scene generate cu AI, retouch și compoziție în Photoshop/Illustrator, export în formate pregătite pentru social și print. Sesiuni de mentorat pentru echipele interne.",
+        result: "Timp de producție redus semnificativ, estetică unitară pe mai multe colecții și campanii, plus un sistem pe care echipele Vector Academy îl pot rula autonom."
+      }
+    };
+
+    const order = Object.keys(projects);
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get("slug");
+    const data = projects[slug] || projects[order[0]];
+
+    const set = (field, value) => {
+      const el = projectRoot.querySelector(`[data-field="${field}"]`);
+      if (!el) return;
+      if (field === "cover") el.setAttribute("src", value);
+      else                   el.textContent = value;
+    };
+
+    if (data) {
+      document.title = `${data.title} — Diana Tatar`;
+      set("category", data.category);
+      set("title",    data.title);
+      set("sub",      data.sub);
+      set("cover",    data.cover);
+      set("context",  data.context);
+      set("goal",     data.goal);
+      set("solution", data.solution);
+      set("result",   data.result);
+
+      /* Prev / Next within the whole portfolio (wraps around) */
+      const idx = order.indexOf(slug in projects ? slug : order[0]);
+      const prevSlug = order[(idx - 1 + order.length) % order.length];
+      const nextSlug = order[(idx + 1) % order.length];
+      const prev = projectRoot.querySelector('[data-rel="prev"]');
+      const next = projectRoot.querySelector('[data-rel="next"]');
+      if (prev) prev.setAttribute("href", `proiect.html?slug=${prevSlug}`);
+      if (next) next.setAttribute("href", `proiect.html?slug=${nextSlug}`);
+    }
+  }
+
+  /* =========================================================
+     RESURSE (blog) — category filter
+     ========================================================= */
+  const resGrid = $("#resources-grid");
+  if (resGrid) {
+    const chips = $$(".chip");
+    const cards = $$(".r-card", resGrid);
+    chips.forEach((chip) => {
+      chip.addEventListener("click", () => {
+        chips.forEach((c) => c.classList.remove("is-active"));
+        chip.classList.add("is-active");
+        const cat = chip.dataset.cat;
+        cards.forEach((card) => {
+          card.style.display = cat === "all" || card.dataset.cat === cat ? "" : "none";
+        });
+      });
+    });
+  }
+})();
