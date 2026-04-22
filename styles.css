@@ -299,6 +299,62 @@ p { margin: 0; }
 }
 .link-arrow:hover::after { transform: scaleX(1); }
 
+/* CV download button — dark pill with animated arrow + shine */
+.btn-cv {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 28px 16px 22px;
+  background: var(--c-dark);
+  color: #fff;
+  font-size: clamp(15px, 1.05vw, 17px);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  border-radius: 999px;
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform .35s var(--ease), box-shadow .35s var(--ease), background-color .35s var(--ease);
+  box-shadow: 0 2px 0 rgba(0,0,0,.05), 0 8px 20px -12px rgba(0,0,0,.35);
+}
+.btn-cv:hover {
+  transform: translateY(-2px);
+  background: #1a1c1c;
+  box-shadow: 0 4px 0 rgba(0,0,0,.05), 0 16px 32px -14px rgba(0,0,0,.45);
+}
+.btn-cv:active { transform: translateY(0); }
+.btn-cv:focus-visible {
+  outline: 2px solid var(--c-dark);
+  outline-offset: 3px;
+}
+.btn-cv__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.12);
+  color: var(--c-accent);
+  transition: transform .4s var(--ease), background-color .3s var(--ease);
+}
+.btn-cv:hover .btn-cv__icon {
+  background: rgba(255,255,255,.2);
+  transform: translateY(2px);
+}
+.btn-cv__icon svg { display: block; }
+.btn-cv__text { position: relative; z-index: 1; }
+.btn-cv__shine {
+  position: absolute;
+  top: 0; left: -60%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,.12) 50%, transparent);
+  transform: skewX(-20deg);
+  transition: left .6s var(--ease);
+  pointer-events: none;
+}
+.btn-cv:hover .btn-cv__shine { left: 120%; }
+
 /* =========================================================
    PORTFOLIO HEAD
    ========================================================= */
@@ -1029,17 +1085,85 @@ p { margin: 0; }
   .nav__menu.is-open .nav__divider { display: none; }
   .nav__toggle { display: inline-flex; }
 
-  .hero__lead { margin-left: 0; }
+  /* Hero — framing pentru mobil: subiectul e în partea stângă a fotografiei */
+  .hero { min-height: min(820px, 100svh); }
+  .hero__bg img { object-position: 22% center; }
+  .hero__overlay {
+    background:
+      linear-gradient(180deg,
+        rgba(0,0,0,.35) 0%,
+        rgba(0,0,0,.15) 35%,
+        rgba(0,0,0,.55) 80%,
+        rgba(0,0,0,.75) 100%);
+  }
+  .hero__content { padding-bottom: clamp(40px, 8vw, 90px); }
+  .hero__lead {
+    margin-left: 0;
+    padding-top: 30px;
+    text-shadow: 0 2px 18px rgba(0,0,0,.45);
+  }
+  .hero__arrow { width: 30px; height: 30px; }
 
   .about__grid { grid-template-columns: 1fr; }
   .about__photo, .about__body { grid-column: 1 / -1; }
+  .about__text { margin-bottom: 28px; }
 
+  .portfolio-head { padding: 60px 0 30px; }
+
+  .case__header { padding: 48px 0 24px; gap: 16px; }
   .case__stage { aspect-ratio: 4 / 5; min-height: 420px; }
   .case__preview { width: min(86vw, 420px); }
   .case__preview--split { width: min(86vw, 460px); }
   .case__stage-inner { flex-direction: column; align-items: flex-start; gap: 18px; }
+  .case__nav { gap: 14px; }
 
+  .services { padding: 80px 0; }
+  .services__list li { padding: 18px 0; gap: 14px; }
+
+  .testimonial__head-wrap { flex-direction: column; gap: 16px; }
+  .testimonial__hint { max-width: 100%; }
+  .t-card { scroll-snap-align: center; }
+  .testimonial__controls { display: none; }
+
+  .partners__row { gap: clamp(22px, 5vw, 40px); }
+
+  .footer__grid { gap: 40px; }
   .footer__base { flex-direction: column; gap: 10px; align-items: flex-start; }
+}
+
+/* Small mobile — telefoane înguste */
+@media (max-width: 480px) {
+  :root { --gutter: 18px; }
+  .nav { padding-top: 22px; }
+  .nav__brand { font-size: 16px; }
+  .hero__tagline { font-size: clamp(22px, 6.5vw, 30px); }
+  .hero__link { font-size: clamp(18px, 5vw, 24px); }
+  .ticker__track span { font-size: clamp(22px, 7vw, 34px); gap: 1.25rem; }
+  .ticker__viewport { padding-block: 14px; }
+
+  .about__text { font-size: clamp(22px, 6vw, 30px); }
+  .btn-cv {
+    padding: 14px 22px 14px 18px;
+    gap: 12px;
+    font-size: 15px;
+  }
+  .btn-cv__icon { width: 30px; height: 30px; }
+
+  .case__num { font-size: 14px; }
+  .case__category { font-size: clamp(26px, 7vw, 38px); }
+  .case__title { font-size: clamp(26px, 7vw, 38px); }
+  .case__counter { font-size: 14px; }
+  .case__arrow { width: 40px; height: 40px; }
+
+  .services__list li {
+    font-size: clamp(22px, 6vw, 30px);
+    grid-template-columns: 38px 1fr;
+  }
+
+  .t-card { width: min(82vw, 360px); }
+
+  .footer__form { padding: 28px 22px; }
+  .field input, .field textarea { font-size: 15px; }
 }
 
 /* =========================================================
