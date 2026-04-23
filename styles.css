@@ -1112,7 +1112,7 @@ p { margin: 0; }
 
   .portfolio-head { padding: 60px 0 30px; }
 
-  .case__header { padding: 48px 0 24px; gap: 16px; }
+  .case__header { padding-block: 48px 24px; gap: 16px; }
   .case__stage { aspect-ratio: 4 / 5; min-height: 420px; }
   .case__preview { width: min(86vw, 420px); }
   .case__preview--split { width: min(86vw, 460px); }
@@ -1123,6 +1123,15 @@ p { margin: 0; }
   .services__list li { padding: 18px 0; gap: 14px; }
 
   .testimonial__head-wrap { flex-direction: column; gap: 16px; }
+  .testimonial__head {
+    flex-direction: row;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .testimonial__head .display { font-size: clamp(44px, 12vw, 64px); line-height: 1; }
+  .testimonial__head .display br { display: none; }
+  .testimonial__num { font-size: clamp(22px, 6vw, 32px); }
   .testimonial__hint { max-width: 100%; }
   .t-card { scroll-snap-align: center; }
   .testimonial__controls { display: none; }
