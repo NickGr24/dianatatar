@@ -3,19 +3,81 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0c0c0c" />
+  <meta name="robots" content="index, follow" />
+
   <title>Diana Tatar — Graphic Designer & AI Content Creator</title>
   <meta name="description" content="Portofoliu Diana Tatar: branding (Decorații.md), prezentări (OO.Nutrition), editorial (Centrul sportiv național), campanii vizuale și generare conținut cu AI la Vector Academy." />
+  <link rel="canonical" href="https://dianatatar.com/" />
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="apple-touch-icon" href="favicon.svg" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://dianatatar.com/" />
+  <meta property="og:title" content="Diana Tatar — Graphic Designer & AI Content Creator" />
+  <meta property="og:description" content="Branding, identitate vizuală, social media, editorial și generare conținut cu AI. Portofoliu și colaborări — Diana Tatar, Chișinău." />
+  <meta property="og:image" content="https://dianatatar.com/assets/images/about.webp" />
+  <meta property="og:image:width" content="1280" />
+  <meta property="og:image:height" content="854" />
+  <meta property="og:locale" content="ro_RO" />
+  <meta property="og:site_name" content="Diana Tatar" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Diana Tatar — Graphic Designer & AI Content Creator" />
+  <meta name="twitter:description" content="Branding, social media, editorial și generare conținut cu AI." />
+  <meta name="twitter:image" content="https://dianatatar.com/assets/images/about.webp" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="preload" as="image" href="assets/images/hero.webp" type="image/webp" fetchpriority="high" />
+
   <link rel="stylesheet" href="styles.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://dianatatar.com/#diana",
+        "name": "Diana Tatar",
+        "jobTitle": "Graphic Designer & AI Content Creator",
+        "url": "https://dianatatar.com/",
+        "image": "https://dianatatar.com/assets/images/about.webp",
+        "email": "designerdianatatar30@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Chișinău",
+          "addressCountry": "MD"
+        },
+        "worksFor": { "@type": "Organization", "name": "Vector Academy" },
+        "knowsAbout": ["Branding", "Identitate vizuală", "Social Media Design", "Editorial Design", "AI Content Generation"]
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://dianatatar.com/#service",
+        "name": "Diana Tatar — Graphic Design",
+        "description": "Branding, identitate vizuală, social media, editorial și generare conținut cu AI.",
+        "url": "https://dianatatar.com/",
+        "image": "https://dianatatar.com/assets/images/hero.webp",
+        "priceRange": "$$",
+        "areaServed": { "@type": "Country", "name": "Moldova" },
+        "provider": { "@id": "https://dianatatar.com/#diana" }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
   <!-- ============ HERO ============ -->
   <section class="hero" id="top">
     <div class="hero__bg" aria-hidden="true">
-      <img src="assets/images/hero.webp" alt="" />
+      <img src="assets/images/hero.webp" alt="" width="1440" height="750" fetchpriority="high" />
       <div class="hero__overlay"></div>
     </div>
 
@@ -74,7 +136,7 @@
       <h2 class="display about__title">Despre<br/>mine</h2>
 
       <figure class="about__photo reveal">
-        <img src="assets/images/about.webp" alt="Diana Tatar, designer grafic" />
+        <img src="assets/images/about.webp" alt="Diana Tatar, designer grafic și AI content creator din Chișinău" width="1280" height="854" />
       </figure>
 
       <div class="about__body">
@@ -125,7 +187,7 @@
       <div class="case__slides">
         <div class="case__slide is-active" data-slug="decoratii">
           <div class="case__preview reveal">
-            <img src="assets/images/project-01.webp" alt="Preview proiect Decorații.md" />
+            <img src="assets/images/project-01.webp" alt="Identitate vizuală Decorații.md — branding pentru decor urban" width="1650" height="1083" loading="lazy" />
           </div>
           <div class="container case__stage-inner">
             <div class="case__meta">
@@ -167,8 +229,8 @@
       <div class="case__slides">
         <div class="case__slide is-active" data-slug="oo-nutrition">
           <div class="case__preview case__preview--split reveal">
-            <img src="assets/images/project-02-b.webp" alt="OO.Nutrition preview 1" />
-            <img src="assets/images/project-02-a.webp" alt="OO.Nutrition preview 2" />
+            <img src="assets/images/project-02-b.webp" alt="Prezentare brand OO.Nutrition — pagină interioară" width="984" height="1226" loading="lazy" />
+            <img src="assets/images/project-02-a.webp" alt="Prezentare brand OO.Nutrition — copertă produs" width="1146" height="1632" loading="lazy" />
           </div>
           <div class="container case__stage-inner">
             <div class="case__meta">
@@ -340,7 +402,7 @@
 
         <li class="t-card" data-name="Dumitru Vlah" data-role="founder Vector Academy">
           <figure>
-            <img class="t-card__photo" src="assets/images/testimonial.webp" alt="" />
+            <img class="t-card__photo" src="assets/images/testimonial.webp" alt="" width="2500" height="1669" loading="lazy" />
             <div class="t-card__gradient"></div>
             <figcaption>
               <blockquote>
@@ -355,7 +417,7 @@
 
         <li class="t-card" data-name="Client 2" data-role="Domeniul activității">
           <figure>
-            <img class="t-card__photo" src="assets/images/testimonial.webp" alt="" />
+            <img class="t-card__photo" src="assets/images/testimonial.webp" alt="" width="2500" height="1669" loading="lazy" />
             <div class="t-card__gradient"></div>
             <figcaption>
               <blockquote>
@@ -368,7 +430,7 @@
 
         <li class="t-card" data-name="Client 3" data-role="Domeniul activității">
           <figure>
-            <img class="t-card__photo" src="assets/images/testimonial.webp" alt="" />
+            <img class="t-card__photo" src="assets/images/testimonial.webp" alt="" width="2500" height="1669" loading="lazy" />
             <div class="t-card__gradient"></div>
             <figcaption>
               <blockquote>
@@ -411,7 +473,7 @@
   <!-- ============ CONTACT / FOOTER ============ -->
   <footer class="footer" id="contact">
     <div class="footer__bg" aria-hidden="true">
-      <img src="assets/images/footer.webp" alt="" />
+      <img src="assets/images/footer.webp" alt="" width="2526" height="1140" loading="lazy" />
     </div>
 
     <div class="container footer__grid">

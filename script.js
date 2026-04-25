@@ -5,6 +5,11 @@
 (function () {
   "use strict";
 
+  /* Form backend — set to "" to fall back to mailto:.
+     To activate Formspree: sign up at formspree.io, create a form,
+     paste the endpoint URL here (looks like https://formspree.io/f/xxxxxxxx). */
+  const FORMSPREE_ENDPOINT = "";
+
   /* ---------- helpers ---------- */
   const $  = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
@@ -155,13 +160,19 @@
   }
 
   /* =========================================================
-     CONTACT FORM — simple client-side validation
-     (No backend in greenfield — surface feedback, open mailto).
+     CONTACT FORM — validation + Formspree (with mailto fallback)
      ========================================================= */
   const form = $(".footer__form");
   if (form) {
     const status = $(".footer__status", form);
-    form.addEventListener("submit", (e) => {
+    const submitBtn = form.querySelector('button[type="submit"]');
+
+    const setStatus = (text, color) => {
+      status.textContent = text;
+      status.style.color = color;
+    };
+
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const data = new FormData(form);
       const name    = (data.get("name")    || "").toString().trim();
@@ -169,23 +180,38 @@
       const message = (data.get("message") || "").toString().trim();
 
       if (!name || !email || !message) {
-        status.textContent = "Completează toate câmpurile, te rog.";
-        status.style.color = "#ff7a7a";
+        setStatus("Completează toate câmpurile, te rog.", "#ff7a7a");
         return;
       }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        status.textContent = "Adresa de email nu pare validă.";
-        status.style.color = "#ff7a7a";
+        setStatus("Adresa de email nu pare validă.", "#ff7a7a");
         return;
       }
 
-      /* Open mail client — a backend endpoint can replace this later. */
+      if (FORMSPREE_ENDPOINT) {
+        if (submitBtn) submitBtn.disabled = true;
+        setStatus("Se trimite…", "rgba(255,255,255,.7)");
+        try {
+          const res = await fetch(FORMSPREE_ENDPOINT, {
+            method: "POST",
+            headers: { "Accept": "application/json", "Content-Type": "application/json" },
+            body: JSON.stringify({ name, email, message })
+          });
+          if (!res.ok) throw new Error("Network response was not ok");
+          setStatus("Mulțumesc! Mesajul a fost trimis — îți voi răspunde curând.", "rgba(255,255,255,.85)");
+          form.reset();
+        } catch (err) {
+          setStatus("Ceva nu a mers. Încearcă pe Telegram sau direct la email.", "#ff7a7a");
+        } finally {
+          if (submitBtn) submitBtn.disabled = false;
+        }
+        return;
+      }
+
       const subject = encodeURIComponent(`Solicitare proiect — ${name}`);
       const body    = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
       window.location.href = `mailto:designerdianatatar30@gmail.com?subject=${subject}&body=${body}`;
-
-      status.textContent = "Mulțumesc! Se deschide aplicația de email…";
-      status.style.color = "rgba(255,255,255,.8)";
+      setStatus("Se deschide aplicația de email…", "rgba(255,255,255,.8)");
       form.reset();
     });
   }
@@ -262,6 +288,7 @@
     };
 
     if (data) {
+      const safeSlug = slug in projects ? slug : order[0];
       document.title = `${data.title} — Diana Tatar`;
       set("category", data.category);
       set("title",    data.title);
@@ -272,8 +299,22 @@
       set("solution", data.solution);
       set("result",   data.result);
 
+      const canonicalUrl = `https://dianatatar.com/proiect.html?slug=${safeSlug}`;
+      const canonical = document.getElementById("canonical-link");
+      if (canonical) canonical.setAttribute("href", canonicalUrl);
+      const ogUrl = document.querySelector('meta[property="og:url"]');
+      if (ogUrl) ogUrl.setAttribute("content", canonicalUrl);
+      const ogTitle = document.querySelector('meta[property="og:title"]');
+      if (ogTitle) ogTitle.setAttribute("content", `${data.title} — Diana Tatar`);
+      const ogImg = document.querySelector('meta[property="og:image"]');
+      if (ogImg) ogImg.setAttribute("content", `https://dianatatar.com/${data.cover}`);
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) metaDesc.setAttribute("content", data.context.slice(0, 160));
+      const ogDesc = document.querySelector('meta[property="og:description"]');
+      if (ogDesc) ogDesc.setAttribute("content", data.context.slice(0, 160));
+
       /* Prev / Next within the whole portfolio (wraps around) */
-      const idx = order.indexOf(slug in projects ? slug : order[0]);
+      const idx = order.indexOf(safeSlug);
       const prevSlug = order[(idx - 1 + order.length) % order.length];
       const nextSlug = order[(idx + 1) % order.length];
       const prev = projectRoot.querySelector('[data-rel="prev"]');
