@@ -342,4 +342,69 @@
       });
     });
   }
+
+  /* =========================================================
+     SCROLL FX — Lenis + stacking + cursor + parallax + marquee
+     Only initializes when MOTION_FULL is true.
+     ========================================================= */
+  const MOTION_FULL =
+    matchMedia("(min-width: 1024px)").matches &&
+    matchMedia("(pointer: fine)").matches &&
+    !matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  let lenis = null;
+  let cases = [];
+
+  async function initLenis() {
+    if (!MOTION_FULL) return null;
+    try {
+      const mod = await import("https://unpkg.com/lenis@1.1.13/dist/lenis.mjs");
+      const Lenis = mod.default;
+      lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
+      const raf = (time) => { lenis.raf(time); requestAnimationFrame(raf); };
+      requestAnimationFrame(raf);
+      return lenis;
+    } catch (err) {
+      console.warn("Lenis failed to load, falling back to native scroll", err);
+      return null;
+    }
+  }
+
+  async function initScrollFX() {
+    if (!MOTION_FULL) return;
+    document.documentElement.classList.add("js-stack-on");
+    await initLenis();
+
+    /* Stack progress — set --stack-progress on each .case based on
+       how far it has been pushed past its sticky boundary. */
+    cases = $$(".case");
+    if (!cases.length) return;
+
+    if ("IntersectionObserver" in window) {
+      const nearIO = new IntersectionObserver(
+        (entries) => entries.forEach((e) => e.target.classList.toggle("is-near", e.isIntersecting)),
+        { rootMargin: "50% 0px" }
+      );
+      cases.forEach((c) => nearIO.observe(c));
+    }
+
+    const updateStackProgress = () => {
+      cases.forEach((caseEl) => {
+        if (!caseEl.classList.contains("is-near")) return;
+        const rect = caseEl.getBoundingClientRect();
+        const progress = Math.max(0, Math.min(1, -rect.top / rect.height));
+        caseEl.style.setProperty("--stack-progress", progress.toFixed(3));
+      });
+    };
+
+    const onScroll = () => requestAnimationFrame(updateStackProgress);
+    if (lenis) {
+      lenis.on("scroll", onScroll);
+    } else {
+      window.addEventListener("scroll", onScroll, { passive: true });
+    }
+    requestAnimationFrame(updateStackProgress);
+  }
+
+  initScrollFX();
 })();
