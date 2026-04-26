@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="project-body">
+  <canvas class="grainient grainient--global" data-grainient aria-hidden="true"></canvas>
 
   <header class="nav nav--dark container">
     <a href="index.html#top" class="nav__brand">
@@ -40,7 +41,7 @@
       <a href="index.html#servicii">Servicii</a>
       <a href="resurse.html">Resurse</a>
       <span class="nav__divider"></span>
-      <a href="index.html#contact" class="nav__cta"><span class="nav__cta-star">✶</span>Contactează-mă</a>
+      <a href="index.html#contact" class="nav__cta" data-cursor-label="Scrie-mi →" data-magnetic><span class="nav__cta-star">✶</span>Contactează-mă</a>
     </nav>
   </header>
 
@@ -102,6 +103,9 @@
       <p>© <span id="year"></span> Diana Tatar</p>
     </div>
   </footer>
+
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor__label" aria-hidden="true"></div>
 
   <script src="script.js" defer></script>
 </body>

@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="resources-body">
+  <canvas class="grainient grainient--global" data-grainient aria-hidden="true"></canvas>
 
   <header class="nav nav--dark container">
     <a href="index.html#top" class="nav__brand">
@@ -40,7 +41,7 @@
       <a href="index.html#servicii">Servicii</a>
       <a href="resurse.html" class="is-active">Resurse</a>
       <span class="nav__divider"></span>
-      <a href="index.html#contact" class="nav__cta"><span class="nav__cta-star">✶</span>Contactează-mă</a>
+      <a href="index.html#contact" class="nav__cta" data-cursor-label="Scrie-mi →" data-magnetic><span class="nav__cta-star">✶</span>Contactează-mă</a>
     </nav>
   </header>
 
@@ -69,42 +70,42 @@
         <span class="r-card__tag">Pentru începători</span>
         <h2>10 pași pentru a începe o carieră în design grafic</h2>
         <p>Un ghid simplu prin care înțelegi de unde pornești, ce instrumente folosești și cum îți construiești primul portofoliu.</p>
-        <a href="#" class="link-arrow">Citește &gt;&gt;&gt;</a>
+        <a href="#" class="link-arrow" data-cursor-label="Citește →" data-magnetic><span>Citește</span><svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </article>
 
       <article class="r-card" data-cat="design">
         <span class="r-card__tag">Design grafic</span>
         <h2>Cum alegi o paletă de culori pentru un brand</h2>
         <p>Principii practice de culoare, contrast și semnificație emoțională, cu exemple reale din proiectele mele.</p>
-        <a href="#" class="link-arrow">Citește &gt;&gt;&gt;</a>
+        <a href="#" class="link-arrow" data-cursor-label="Citește →" data-magnetic><span>Citește</span><svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </article>
 
       <article class="r-card" data-cat="ai">
         <span class="r-card__tag">AI &amp; conținut</span>
         <h2>Prompt-uri utile pentru imagini de branding cu AI</h2>
         <p>Lista de prompt-uri verificate care te ajută să generezi rapid moodboard-uri coerente și concepte vizuale.</p>
-        <a href="#" class="link-arrow">Citește &gt;&gt;&gt;</a>
+        <a href="#" class="link-arrow" data-cursor-label="Citește →" data-magnetic><span>Citește</span><svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </article>
 
       <article class="r-card" data-cat="templateuri">
         <span class="r-card__tag">Template-uri</span>
         <h2>Template brand guidelines (Figma &amp; PDF)</h2>
         <p>Un template complet pe care îl poți folosi ca punct de pornire pentru manualul tău de brand.</p>
-        <a href="#" class="link-arrow">Descarcă &gt;&gt;&gt;</a>
+        <a href="#" class="link-arrow" data-cursor-label="Descarcă →" data-magnetic><span>Descarcă</span><svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </article>
 
       <article class="r-card" data-cat="ai">
         <span class="r-card__tag">AI &amp; conținut</span>
         <h2>Workflow: de la idee la video generat cu AI</h2>
         <p>Cum împart procesul între research, scenariu, generare și editare pentru rezultate coerente.</p>
-        <a href="#" class="link-arrow">Citește &gt;&gt;&gt;</a>
+        <a href="#" class="link-arrow" data-cursor-label="Citește →" data-magnetic><span>Citește</span><svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </article>
 
       <article class="r-card" data-cat="design">
         <span class="r-card__tag">Design grafic</span>
         <h2>Tipografie editorială: 5 greșeli de evitat</h2>
         <p>Ce trebuie să știi despre ierarhie, spațiere și alegerea fonturilor pentru print și digital.</p>
-        <a href="#" class="link-arrow">Citește &gt;&gt;&gt;</a>
+        <a href="#" class="link-arrow" data-cursor-label="Citește →" data-magnetic><span>Citește</span><svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </article>
 
     </section>
@@ -120,6 +121,9 @@
       <a href="index.html#top">Înapoi sus ↑</a>
     </div>
   </footer>
+
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor__label" aria-hidden="true"></div>
 
   <script src="script.js" defer></script>
 </body>
