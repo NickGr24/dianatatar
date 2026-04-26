@@ -438,4 +438,71 @@
   }
 
   initScrollFX();
+
+  /* =========================================================
+     Split-text reveal — runs unconditionally (cheap, respects
+     reduced motion via CSS). Walks text nodes only, so nested
+     <strong> and <br/> stay intact.
+     ========================================================= */
+  function splitNode(node, counter) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      const parts = node.textContent.split(/(\s+)/);
+      const frag = document.createDocumentFragment();
+      parts.forEach((part) => {
+        if (!part) return;
+        if (!part.trim()) {
+          frag.appendChild(document.createTextNode(part));
+          return;
+        }
+        const wordSpan = document.createElement("span");
+        wordSpan.className = "word";
+        for (const c of part) {
+          const charSpan = document.createElement("span");
+          charSpan.className = "char";
+          charSpan.style.setProperty("--i", counter.value);
+          charSpan.textContent = c;
+          wordSpan.appendChild(charSpan);
+          counter.value++;
+        }
+        frag.appendChild(wordSpan);
+      });
+      return frag;
+    }
+    if (node.nodeType === Node.ELEMENT_NODE) {
+      if (node.tagName === "BR") return node.cloneNode(true);
+      const wrapper = node.cloneNode(false);
+      Array.from(node.childNodes).forEach((child) => {
+        wrapper.appendChild(splitNode(child, counter));
+      });
+      return wrapper;
+    }
+    return node.cloneNode(true);
+  }
+
+  function initSplitText() {
+    const splitTargets = $$(".display, .case__category, .case__title");
+    splitTargets.forEach((el) => {
+      const counter = { value: 0 };
+      const newChildren = Array.from(el.childNodes).map((c) => splitNode(c, counter));
+      while (el.firstChild) el.removeChild(el.firstChild);
+      newChildren.forEach((c) => el.appendChild(c));
+      el.classList.add("split-ready");
+    });
+
+    if ("IntersectionObserver" in window) {
+      const splitIO = new IntersectionObserver(
+        (entries) => entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-revealed");
+            splitIO.unobserve(entry.target);
+          }
+        }),
+        { threshold: 0.3 }
+      );
+      splitTargets.forEach((el) => splitIO.observe(el));
+    } else {
+      splitTargets.forEach((el) => el.classList.add("is-revealed"));
+    }
+  }
+  initSplitText();
 })();

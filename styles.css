@@ -1312,3 +1312,29 @@ html.js-stack-on input, html.js-stack-on textarea { cursor: text; }
   html.js-stack-on .cursor,
   html.js-stack-on .cursor__label { display: none !important; }
 }
+
+/* Split-text reveal */
+.split-ready .word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+}
+.split-ready .char {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform 700ms var(--ease) calc(var(--i, 0) * 22ms);
+  will-change: transform;
+}
+.split-ready.is-revealed .char {
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .split-ready .char {
+    transform: none !important;
+    opacity: 0;
+    transition: opacity 300ms;
+  }
+  .split-ready.is-revealed .char {
+    opacity: 1;
+  }
+}
