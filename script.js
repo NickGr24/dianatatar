@@ -404,6 +404,37 @@
       window.addEventListener("scroll", onScroll, { passive: true });
     }
     requestAnimationFrame(updateStackProgress);
+
+    /* Custom cursor */
+    const cursor = $(".cursor");
+    const cursorLabel = $(".cursor__label");
+    if (cursor && cursorLabel) {
+      let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+      let cx = mx, cy = my;
+      window.addEventListener("mousemove", (e) => {
+        mx = e.clientX; my = e.clientY;
+      });
+      const cursorLoop = () => {
+        cx += (mx - cx) * 0.18;
+        cy += (my - cy) * 0.18;
+        cursor.style.transform = `translate3d(${cx - 18}px, ${cy - 18}px, 0)`;
+        cursorLabel.style.transform = `translate3d(${mx + 22}px, ${my - 8}px, 0)`;
+        requestAnimationFrame(cursorLoop);
+      };
+      requestAnimationFrame(cursorLoop);
+
+      $$("[data-cursor-label]").forEach((el) => {
+        el.addEventListener("mouseenter", () => {
+          cursor.classList.add("is-expanded");
+          cursorLabel.textContent = el.dataset.cursorLabel;
+          cursorLabel.classList.add("is-visible");
+        });
+        el.addEventListener("mouseleave", () => {
+          cursor.classList.remove("is-expanded");
+          cursorLabel.classList.remove("is-visible");
+        });
+      });
+    }
   }
 
   initScrollFX();

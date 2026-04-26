@@ -1259,3 +1259,56 @@ html.js-stack-on .case.is-near .case__pin {
     z-index: auto !important;
   }
 }
+
+/* Custom cursor */
+.cursor,
+.cursor__label {
+  display: none;
+}
+html.js-stack-on .cursor {
+  display: block;
+  position: fixed;
+  top: 0; left: 0;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: #fff;
+  mix-blend-mode: difference;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate3d(-100px, -100px, 0);
+  transition: width .35s var(--ease), height .35s var(--ease), border-radius .35s var(--ease);
+  will-change: transform;
+}
+html.js-stack-on .cursor.is-expanded {
+  width: 140px;
+  height: 40px;
+  border-radius: 24px;
+}
+html.js-stack-on .cursor__label {
+  display: block;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 10000;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: #0c0c0c;
+  opacity: 0;
+  transition: opacity .25s var(--ease);
+  transform: translate3d(-100px, -100px, 0);
+  white-space: nowrap;
+  mix-blend-mode: difference;
+}
+html.js-stack-on .cursor__label.is-visible { opacity: 1; }
+html.js-stack-on, html.js-stack-on body, html.js-stack-on a, html.js-stack-on button { cursor: none; }
+html.js-stack-on input, html.js-stack-on textarea { cursor: text; }
+@media (pointer: coarse) {
+  html.js-stack-on .cursor,
+  html.js-stack-on .cursor__label { display: none !important; }
+  html.js-stack-on, html.js-stack-on body, html.js-stack-on a, html.js-stack-on button { cursor: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.js-stack-on .cursor,
+  html.js-stack-on .cursor__label { display: none !important; }
+}
