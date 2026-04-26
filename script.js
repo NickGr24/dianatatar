@@ -576,4 +576,39 @@
     }
   }
   initSplitText();
+
+  /* =========================================================
+     Number counter — animates 0 → target on first enter.
+     Respects prefers-reduced-motion (skipped, static value used).
+     ========================================================= */
+  function initCounters() {
+    const counters = $$(".counter");
+    if (!counters.length) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!("IntersectionObserver" in window)) return;
+
+    const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
+    const animateCount = (el, to, duration) => {
+      const start = performance.now();
+      const step = (now) => {
+        const t = Math.min(1, (now - start) / duration);
+        el.textContent = Math.round(to * easeOutQuart(t));
+        if (t < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+
+    const counterIO = new IntersectionObserver(
+      (entries) => entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const to = Number(entry.target.dataset.countTo);
+          animateCount(entry.target, to, 1400);
+          counterIO.unobserve(entry.target);
+        }
+      }),
+      { threshold: 0.6 }
+    );
+    counters.forEach((c) => counterIO.observe(c));
+  }
+  initCounters();
 })();
