@@ -359,29 +359,30 @@
     document.documentElement.classList.add("js-stack-on");
 
     /* Stack progress — set --stack-progress on each .case based on
-       how far it has been pushed past its sticky boundary. */
+       how far it has been pushed past its sticky boundary.
+       Only relevant on index.html where .case elements exist. */
     cases = $$(".case");
-    if (!cases.length) return;
+    if (cases.length) {
+      if ("IntersectionObserver" in window) {
+        const nearIO = new IntersectionObserver(
+          (entries) => entries.forEach((e) => e.target.classList.toggle("is-near", e.isIntersecting)),
+          { rootMargin: "50% 0px" }
+        );
+        cases.forEach((c) => nearIO.observe(c));
+      }
 
-    if ("IntersectionObserver" in window) {
-      const nearIO = new IntersectionObserver(
-        (entries) => entries.forEach((e) => e.target.classList.toggle("is-near", e.isIntersecting)),
-        { rootMargin: "50% 0px" }
-      );
-      cases.forEach((c) => nearIO.observe(c));
+      const updateStackProgress = () => {
+        cases.forEach((caseEl) => {
+          const rect = caseEl.getBoundingClientRect();
+          const progress = Math.max(0, Math.min(1, -rect.top / rect.height));
+          caseEl.style.setProperty("--stack-progress", progress.toFixed(3));
+        });
+      };
+
+      const onScroll = () => requestAnimationFrame(updateStackProgress);
+      window.addEventListener("scroll", onScroll, { passive: true });
+      requestAnimationFrame(updateStackProgress);
     }
-
-    const updateStackProgress = () => {
-      cases.forEach((caseEl) => {
-        const rect = caseEl.getBoundingClientRect();
-        const progress = Math.max(0, Math.min(1, -rect.top / rect.height));
-        caseEl.style.setProperty("--stack-progress", progress.toFixed(3));
-      });
-    };
-
-    const onScroll = () => requestAnimationFrame(updateStackProgress);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    requestAnimationFrame(updateStackProgress);
 
     /* Custom cursor */
     const cursor = $(".cursor");
