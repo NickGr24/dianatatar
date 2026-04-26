@@ -1145,20 +1145,8 @@ body { background: transparent; }
   .case__category { grid-column: auto; grid-row: auto; }
   .case__desc { grid-column: auto; grid-row: auto; }
 
-  .about__grid {
-    padding-right: 0;
-    min-height: 0;
-    gap: 32px;
-  }
-  .about__photo {
-    position: static;
-    width: 100%;
-    aspect-ratio: 4 / 5;
-    max-height: none;
-    order: 0;
-  }
-  .about__title { order: -1; }
-  .about__body  { order: 1; }
+  .about__grid { padding-right: clamp(220px, 28vw, 320px); }
+  .about__photo { width: clamp(200px, 26vw, 300px); max-height: 360px; }
 
   .testimonial__grid { grid-template-columns: 1fr; }
   .footer__grid { grid-template-columns: 1fr; }
