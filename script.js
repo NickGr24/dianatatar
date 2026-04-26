@@ -360,7 +360,7 @@
     try {
       const mod = await import("https://unpkg.com/lenis@1.1.13/dist/lenis.mjs");
       const Lenis = mod.default;
-      lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
+      lenis = new Lenis({ lerp: 0.14, wheelMultiplier: 0.9, smoothWheel: true });
       const raf = (time) => { lenis.raf(time); requestAnimationFrame(raf); };
       requestAnimationFrame(raf);
       return lenis;
