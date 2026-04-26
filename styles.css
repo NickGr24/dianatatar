@@ -265,29 +265,26 @@ html.js-stack-on .ticker__track {
   padding-block: var(--section-y);
 }
 .about__grid {
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  grid-template-areas:
-    "title photo"
-    "body  photo";
-  grid-template-rows: auto auto;
-  column-gap: clamp(40px, 5vw, 96px);
-  row-gap: clamp(32px, 4vw, 64px);
-  align-items: start;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(32px, 4vw, 56px);
+  padding-right: clamp(260px, 26vw, 400px);
+  min-height: 420px;
 }
 .about__title {
-  grid-area: title;
   margin: 0;
 }
 .about__photo {
-  grid-area: photo;
-  align-self: start;
+  position: absolute;
+  top: 0;
+  right: 0;
   margin: 0;
   border-radius: 14px;
   overflow: hidden;
   aspect-ratio: 4 / 5;
-  max-height: 480px;
-  width: 100%;
+  width: clamp(240px, 24vw, 360px);
+  max-height: 420px;
 }
 .about__photo img {
   width: 100%;
@@ -297,11 +294,10 @@ html.js-stack-on .ticker__track {
   display: block;
 }
 .about__body {
-  grid-area: body;
   display: flex;
   flex-direction: column;
   gap: 28px;
-  align-self: start;
+  max-width: 60ch;
 }
 .about__text {
   font-size: clamp(17px, 1.3vw, 21px);
@@ -1150,16 +1146,19 @@ body { background: transparent; }
   .case__desc { grid-column: auto; grid-row: auto; }
 
   .about__grid {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "title"
-      "photo"
-      "body";
-    grid-template-rows: auto auto auto;
+    padding-right: 0;
+    min-height: 0;
     gap: 32px;
   }
-  .about__photo { aspect-ratio: 4 / 5; min-height: 0; align-self: start; }
-  .about__body  { align-self: start; }
+  .about__photo {
+    position: static;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    max-height: none;
+    order: 0;
+  }
+  .about__title { order: -1; }
+  .about__body  { order: 1; }
 
   .testimonial__grid { grid-template-columns: 1fr; }
   .footer__grid { grid-template-columns: 1fr; }
@@ -1267,15 +1266,9 @@ body { background: transparent; }
   }
   .hero__arrow { width: 30px; height: 30px; }
 
-  .about__grid {
-    grid-template-areas:
-      "title"
-      "photo"
-      "body";
-    gap: 24px;
-  }
-  .about__photo { aspect-ratio: 4 / 5; min-height: 0; }
-  .about__body { gap: 24px; }
+  .about__grid { gap: 24px; padding-right: 0; min-height: 0; }
+  .about__photo { position: static; width: 100%; aspect-ratio: 4 / 5; max-height: none; }
+  .about__body { gap: 20px; }
   .about__text { margin: 0; }
 
   .portfolio-head { padding: 60px 0 30px; }
