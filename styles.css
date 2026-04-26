@@ -1191,3 +1191,71 @@ p { margin: 0; }
 @media (max-width: 760px) {
   .project__block { grid-template-columns: 1fr; }
 }
+
+/* =========================================================
+   SCROLL FX — stacking cases (desktop only, gated by JS)
+   ========================================================= */
+.cases-stack {
+  position: relative;
+}
+
+html.js-stack-on .case {
+  height: calc(100vh + 60px);
+  padding-top: 0;
+}
+html.js-stack-on .case:last-of-type {
+  height: 100vh;
+}
+html.js-stack-on .case__pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  transform-origin: 50% 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background: var(--c-bg);
+  transform: scale(calc(1 - 0.06 * var(--stack-progress, 0)));
+  filter:
+    brightness(calc(1 - 0.45 * var(--stack-progress, 0)))
+    blur(calc(2px * var(--stack-progress, 0)));
+  transition: filter 60ms linear;
+}
+html.js-stack-on .case:nth-of-type(1) .case__pin { z-index: 1; }
+html.js-stack-on .case:nth-of-type(2) .case__pin { z-index: 2; }
+html.js-stack-on .case:nth-of-type(3) .case__pin { z-index: 3; }
+html.js-stack-on .case:nth-of-type(4) .case__pin { z-index: 4; }
+html.js-stack-on .case:nth-of-type(5) .case__pin { z-index: 5; }
+
+html.js-stack-on .case.is-near .case__pin {
+  will-change: transform, filter;
+}
+
+@media (max-width: 1023px) {
+  html.js-stack-on .case,
+  html.js-stack-on .case:last-of-type {
+    height: auto;
+  }
+  html.js-stack-on .case__pin {
+    position: static;
+    height: auto;
+    transform: none !important;
+    filter: none !important;
+    z-index: auto !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js-stack-on .case,
+  html.js-stack-on .case:last-of-type {
+    height: auto;
+  }
+  html.js-stack-on .case__pin {
+    position: static;
+    height: auto;
+    transform: none !important;
+    filter: none !important;
+    z-index: auto !important;
+  }
+}
