@@ -266,13 +266,13 @@ html.js-stack-on .ticker__track {
 }
 .about__grid {
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
+  grid-template-columns: 1.2fr 0.8fr;
   grid-template-areas:
     "title photo"
     "body  photo";
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto auto;
   column-gap: clamp(40px, 5vw, 96px);
-  row-gap: clamp(40px, 5vw, 80px);
+  row-gap: clamp(32px, 4vw, 64px);
   align-items: start;
 }
 .about__title {
@@ -281,25 +281,27 @@ html.js-stack-on .ticker__track {
 }
 .about__photo {
   grid-area: photo;
-  align-self: stretch;
+  align-self: start;
   margin: 0;
   border-radius: 14px;
   overflow: hidden;
-  min-height: 480px;
+  aspect-ratio: 4 / 5;
+  max-height: 480px;
+  width: 100%;
 }
 .about__photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 25%;
+  object-position: center 30%;
   display: block;
 }
 .about__body {
   grid-area: body;
   display: flex;
   flex-direction: column;
-  gap: 32px;
-  align-self: end;
+  gap: 28px;
+  align-self: start;
 }
 .about__text {
   font-size: clamp(17px, 1.3vw, 21px);
