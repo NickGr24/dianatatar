@@ -344,7 +344,7 @@
   }
 
   /* =========================================================
-     SCROLL FX — Lenis + stacking + cursor + parallax + marquee
+     SCROLL FX — stacking + cursor + parallax + marquee + magnetic
      Only initializes when MOTION_FULL is true.
      ========================================================= */
   const MOTION_FULL =
@@ -352,28 +352,11 @@
     matchMedia("(pointer: fine)").matches &&
     !matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  let lenis = null;
   let cases = [];
 
-  async function initLenis() {
-    if (!MOTION_FULL) return null;
-    try {
-      const mod = await import("https://unpkg.com/lenis@1.1.13/dist/lenis.mjs");
-      const Lenis = mod.default;
-      lenis = new Lenis({ lerp: 0.14, wheelMultiplier: 0.9, smoothWheel: true });
-      const raf = (time) => { lenis.raf(time); requestAnimationFrame(raf); };
-      requestAnimationFrame(raf);
-      return lenis;
-    } catch (err) {
-      console.warn("Lenis failed to load, falling back to native scroll", err);
-      return null;
-    }
-  }
-
-  async function initScrollFX() {
+  function initScrollFX() {
     if (!MOTION_FULL) return;
     document.documentElement.classList.add("js-stack-on");
-    await initLenis();
 
     /* Stack progress — set --stack-progress on each .case based on
        how far it has been pushed past its sticky boundary. */
@@ -397,11 +380,7 @@
     };
 
     const onScroll = () => requestAnimationFrame(updateStackProgress);
-    if (lenis) {
-      lenis.on("scroll", onScroll);
-    } else {
-      window.addEventListener("scroll", onScroll, { passive: true });
-    }
+    window.addEventListener("scroll", onScroll, { passive: true });
     requestAnimationFrame(updateStackProgress);
 
     /* Custom cursor */
@@ -451,11 +430,7 @@
       });
     };
 
-    if (lenis) {
-      lenis.on("scroll", () => requestAnimationFrame(updateParallax));
-    } else {
-      window.addEventListener("scroll", () => requestAnimationFrame(updateParallax), { passive: true });
-    }
+    window.addEventListener("scroll", () => requestAnimationFrame(updateParallax), { passive: true });
     requestAnimationFrame(updateParallax);
 
     /* Stack indicator — counter [N / 05] + bottom progress bar */
@@ -493,8 +468,7 @@
       };
 
       const onIndicatorScroll = () => requestAnimationFrame(updateIndicator);
-      if (lenis) lenis.on("scroll", onIndicatorScroll);
-      else window.addEventListener("scroll", onIndicatorScroll, { passive: true });
+      window.addEventListener("scroll", onIndicatorScroll, { passive: true });
       requestAnimationFrame(updateIndicator);
     }
 
@@ -516,20 +490,22 @@
 
     /* Marquee — JS-driven so it can react to scroll velocity */
     const tickerTrack = $(".ticker__track");
-    if (tickerTrack && lenis) {
+    if (tickerTrack) {
       let x = 0;
       let velocity = 0;
       let smoothedSkew = 0;
+      let lastScrollY = window.scrollY;
       const baseSpeed = 60; // px/s
       let lastT = performance.now();
-
-      lenis.on("scroll", (e) => {
-        if (e && typeof e.velocity === "number") velocity = e.velocity;
-      });
 
       const trackLoop = (t) => {
         const dt = Math.min(0.05, (t - lastT) / 1000);
         lastT = t;
+        const dy = window.scrollY - lastScrollY;
+        lastScrollY = window.scrollY;
+        // pixels per second from native scroll delta
+        const targetVel = dt > 0 ? dy / dt : 0;
+        velocity += (targetVel - velocity) * 0.18;
         const boost = Math.max(-200, Math.min(200, velocity * 0.5));
         x -= (baseSpeed + boost) * dt;
         const trackWidth = tickerTrack.scrollWidth / 3;
