@@ -564,31 +564,38 @@ html.js-stack-on .ticker__track {
   background: var(--c-bg);
 }
 
-/* Grainient backdrop for light sections (Despre, Portofoliu head, Servicii, Partners) */
+/* Global Grainient — single fixed canvas behind everything.
+   Light sections become transparent so the warm texture shows through.
+   Dark sections (hero, case stage, testimonial, footer) keep their own
+   opaque backgrounds and naturally cover the grainient. */
+.grainient--global {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  display: block;
+  pointer-events: none;
+}
+body {
+  background: #ece4d6; /* fallback for no-WebGL / reduced-motion */
+}
 .about,
 .portfolio-head,
 .services,
-.partners {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
+.partners,
+.testimonial {
+  background: transparent;
 }
-.about > .container,
-.portfolio-head > .container,
-.services > .container,
-.partners > .container { position: relative; z-index: 1; }
-
-.grainient {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  display: block;
-  opacity: 0.85;
+.partners { border-top: none; border-bottom: none; }
+/* Case header areas no longer pure white — match grainient palette so
+   stack transitions don't flash white. Applied always (mobile + desktop)
+   for consistency with the global grainient. */
+.case__pin {
+  background: #e8dfd0;
 }
 @media (prefers-reduced-motion: reduce) {
-  .grainient { display: none; }
+  .grainient--global { display: none; }
 }
 .services__title {
   margin-bottom: clamp(30px, 4vw, 60px);
@@ -1247,7 +1254,7 @@ html.js-stack-on .case__pin {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  background: var(--c-bg);
+  background: #e8dfd0;
   transform: scale(calc(1 - 0.06 * var(--stack-progress, 0)));
   filter:
     brightness(calc(1 - 0.45 * var(--stack-progress, 0)))
