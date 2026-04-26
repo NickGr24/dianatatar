@@ -22,12 +22,16 @@
   const navToggle = $(".nav__toggle");
   const navMenu   = $(".nav__menu");
   if (navToggle && navMenu) {
-    navToggle.addEventListener("click", () => {
-      const open = navMenu.classList.toggle("is-open");
+    const setMenuOpen = (open) => {
+      navMenu.classList.toggle("is-open", open);
       navToggle.setAttribute("aria-expanded", String(open));
+      document.body.classList.toggle("is-menu-open", open);
+    };
+    navToggle.addEventListener("click", () => {
+      setMenuOpen(!navMenu.classList.contains("is-open"));
     });
     navMenu.addEventListener("click", (e) => {
-      if (e.target.tagName === "A") navMenu.classList.remove("is-open");
+      if (e.target.tagName === "A") setMenuOpen(false);
     });
   }
 
