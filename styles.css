@@ -1410,6 +1410,7 @@ html.js-stack-on .stack-progress-bar__fill {
   display: inline-block;
   overflow: hidden;
   vertical-align: top;
+  white-space: nowrap;
 }
 .split-ready .char {
   display: inline-block;
