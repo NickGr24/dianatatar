@@ -459,6 +459,46 @@
     }
     requestAnimationFrame(updateParallax);
 
+    /* Stack indicator — counter [N / 05] + bottom progress bar */
+    const indicator = $(".stack-indicator");
+    const bar = $(".stack-progress-bar");
+    const barFill = $(".stack-progress-bar__fill");
+    const stack = $(".cases-stack");
+    const numEl = indicator && indicator.querySelector("[data-cur]");
+
+    if (indicator && bar && barFill && stack && numEl && cases.length) {
+      const stackIO = new IntersectionObserver(
+        (entries) => entries.forEach((entry) => {
+          indicator.classList.toggle("is-visible", entry.isIntersecting);
+          bar.classList.toggle("is-visible", entry.isIntersecting);
+        }),
+        { threshold: 0 }
+      );
+      stackIO.observe(stack);
+
+      const updateIndicator = () => {
+        let active = 0;
+        for (let i = 0; i < cases.length; i++) {
+          const p = parseFloat(cases[i].style.getPropertyValue("--stack-progress")) || 0;
+          if (p < 0.5) { active = i; break; }
+          active = i;
+        }
+        numEl.textContent = String(active + 1).padStart(2, "0");
+
+        const stackRect = stack.getBoundingClientRect();
+        const denom = stackRect.height - window.innerHeight;
+        const totalProgress = denom > 0
+          ? Math.max(0, Math.min(1, -stackRect.top / denom))
+          : 0;
+        barFill.style.setProperty("--bar-progress", `${(totalProgress * 100).toFixed(1)}%`);
+      };
+
+      const onIndicatorScroll = () => requestAnimationFrame(updateIndicator);
+      if (lenis) lenis.on("scroll", onIndicatorScroll);
+      else window.addEventListener("scroll", onIndicatorScroll, { passive: true });
+      requestAnimationFrame(updateIndicator);
+    }
+
     /* Magnetic CTAs */
     $$("[data-magnetic]").forEach((btn) => {
       btn.style.transition = "transform 300ms var(--ease)";
