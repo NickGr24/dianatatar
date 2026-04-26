@@ -1,0 +1,562 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e5]:
+      - link "Diana Tatar" [ref=e6]:
+        - /url: "#top"
+        - generic [ref=e8]:
+          - text: diana
+          - emphasis [ref=e9]: tatar
+      - navigation "Meniu principal" [ref=e10]:
+        - link "Despre mine" [ref=e11]:
+          - /url: "#despre"
+        - link "Portofoliu" [ref=e12]:
+          - /url: "#portofoliu"
+        - link "Servicii" [ref=e13]:
+          - /url: "#servicii"
+        - link "Resurse" [ref=e14]:
+          - /url: resurse.html
+        - link "Contactează-mă" [ref=e16]:
+          - /url: "#contact"
+          - generic [ref=e17]: ✶
+          - text: Contactează-mă
+    - generic [ref=e19]:
+      - img [ref=e20]
+      - paragraph [ref=e22]:
+        - text: Nu știi de unde să începi?
+        - text: Te ghidez eu, de la idee
+        - text: la un rezultat care merită.
+      - link "Vezi portofoliu >>>" [ref=e23]:
+        - /url: "#portofoliu"
+    - generic [ref=e26]:
+      - generic [ref=e27]:
+        - text: Branding
+        - emphasis [ref=e28]: ✺
+        - text: Social Media
+        - emphasis [ref=e29]: ✺
+        - text: Editorial și print
+        - emphasis [ref=e30]: ✺
+        - text: Concept vizual
+        - emphasis [ref=e31]: ✺
+        - text: Generare conținut cu AI
+        - emphasis [ref=e32]: ✺
+      - generic [ref=e33]:
+        - text: Branding
+        - emphasis [ref=e34]: ✺
+        - text: Social Media
+        - emphasis [ref=e35]: ✺
+        - text: Editorial și print
+        - emphasis [ref=e36]: ✺
+        - text: Concept vizual
+        - emphasis [ref=e37]: ✺
+        - text: Generare conținut cu AI
+        - emphasis [ref=e38]: ✺
+      - generic [ref=e39]:
+        - text: Branding
+        - emphasis [ref=e40]: ✺
+        - text: Social Media
+        - emphasis [ref=e41]: ✺
+        - text: Editorial și print
+        - emphasis [ref=e42]: ✺
+        - text: Concept vizual
+        - emphasis [ref=e43]: ✺
+        - text: Generare conținut cu AI
+        - emphasis [ref=e44]: ✺
+  - generic [ref=e46]:
+    - heading "D e s p r e m i n e" [level=2] [ref=e47]:
+      - generic [ref=e48]:
+        - generic [ref=e49]: D
+        - generic [ref=e50]: e
+        - generic [ref=e51]: s
+        - generic [ref=e52]: p
+        - generic [ref=e53]: r
+        - generic [ref=e54]: e
+      - generic [ref=e55]:
+        - generic [ref=e56]: m
+        - generic [ref=e57]: i
+        - generic [ref=e58]: "n"
+        - generic [ref=e59]: e
+    - figure [ref=e60]:
+      - img "Diana Tatar, designer grafic și AI content creator din Chișinău" [ref=e61]
+    - generic [ref=e62]:
+      - paragraph [ref=e63]: Sunt Diana Tatar, designer grafic și AI content creator / mentor la Vector Academy. De 6 ani construiesc identități vizuale și campanii — peste 10 brand-uri dezvoltate și 200+ clienți cu care am colaborat la branding, social media, editorial și conținut AI.
+      - link "Descarcă CV" [ref=e64]:
+        - /url: assets/cv.pdf
+        - img [ref=e66]
+        - generic [ref=e68]: Descarcă CV
+  - generic [ref=e70]:
+    - heading "P o r t o f o l i u ." [level=2] [ref=e71]:
+      - generic [ref=e72]:
+        - generic [ref=e73]: P
+        - generic [ref=e74]: o
+        - generic [ref=e75]: r
+        - generic [ref=e76]: t
+        - generic [ref=e77]: o
+        - generic [ref=e78]: f
+        - generic [ref=e79]: o
+        - generic [ref=e80]: l
+        - generic [ref=e81]: i
+        - generic [ref=e82]: u
+        - generic [ref=e83]: .
+    - paragraph [ref=e84]: "2025"
+  - generic [ref=e85]:
+    - generic:
+      - generic: "01"
+      - generic: /
+      - generic: "05"
+    - article [ref=e86]:
+      - generic [ref=e87]:
+        - generic [ref=e88]:
+          - generic [ref=e89]: "[01]"
+          - heading "B r a n d i n g I d e n t i t a t e v i z u a l e" [level=3] [ref=e90]:
+            - strong [ref=e91]:
+              - generic [ref=e92]:
+                - generic [ref=e93]: B
+                - generic [ref=e94]: r
+                - generic [ref=e95]: a
+                - generic [ref=e96]: "n"
+                - generic [ref=e97]: d
+                - generic [ref=e98]: i
+                - generic [ref=e99]: "n"
+                - generic [ref=e100]: g
+            - generic [ref=e101]:
+              - generic [ref=e102]: I
+              - generic [ref=e103]: d
+              - generic [ref=e104]: e
+              - generic [ref=e105]: "n"
+              - generic [ref=e106]: t
+              - generic [ref=e107]: i
+              - generic [ref=e108]: t
+              - generic [ref=e109]: a
+              - generic [ref=e110]: t
+              - generic [ref=e111]: e
+            - generic [ref=e112]:
+              - generic [ref=e113]: v
+              - generic [ref=e114]: i
+              - generic [ref=e115]: z
+              - generic [ref=e116]: u
+              - generic [ref=e117]: a
+              - generic [ref=e118]: l
+              - generic [ref=e119]: e
+          - paragraph [ref=e120]: Identitatea vizuală nu este doar cum arată un brand, ci cum se simte. Creez sisteme vizuale care au sens, direcție și autenticitate.
+        - generic [ref=e121]:
+          - generic [ref=e124]:
+            - img "Identitate vizuală Decorații.md — branding pentru decor urban" [ref=e126]
+            - generic [ref=e127]:
+              - generic [ref=e128]:
+                - heading "P r o i e c t D e c o r a ț i i . m d" [level=4] [ref=e129]:
+                  - generic [ref=e130]:
+                    - generic [ref=e131]: P
+                    - generic [ref=e132]: r
+                    - generic [ref=e133]: o
+                    - generic [ref=e134]: i
+                    - generic [ref=e135]: e
+                    - generic [ref=e136]: c
+                    - generic [ref=e137]: t
+                  - generic [ref=e138]:
+                    - generic [ref=e139]: D
+                    - generic [ref=e140]: e
+                    - generic [ref=e141]: c
+                    - generic [ref=e142]: o
+                    - generic [ref=e143]: r
+                    - generic [ref=e144]: a
+                    - generic [ref=e145]: ț
+                    - generic [ref=e146]: i
+                    - generic [ref=e147]: i
+                    - generic [ref=e148]: .
+                    - generic [ref=e149]: m
+                    - generic [ref=e150]: d
+                - paragraph [ref=e151]: Decor urban | Rebranding
+              - link "Vezi proiectul >>>" [ref=e152]:
+                - /url: proiect.html?slug=decoratii
+          - generic [ref=e153]:
+            - button "Proiectul anterior" [disabled] [ref=e154]:
+              - img [ref=e155]
+            - generic [ref=e157]: 1 / 1
+            - button "Proiectul următor" [disabled] [ref=e158]:
+              - img [ref=e159]
+    - article [ref=e161]:
+      - generic [ref=e162]:
+        - generic [ref=e163]:
+          - generic [ref=e164]: "[02]"
+          - heading "S o c i a l M e d i a" [level=3] [ref=e165]:
+            - strong [ref=e166]:
+              - generic [ref=e167]:
+                - generic [ref=e168]: S
+                - generic [ref=e169]: o
+                - generic [ref=e170]: c
+                - generic [ref=e171]: i
+                - generic [ref=e172]: a
+                - generic [ref=e173]: l
+              - generic [ref=e174]:
+                - generic [ref=e175]: M
+                - generic [ref=e176]: e
+                - generic [ref=e177]: d
+                - generic [ref=e178]: i
+                - generic [ref=e179]: a
+          - paragraph [ref=e180]: Transform pagini de social media în spații vizuale coerente, unde fiecare element contribuie la o imagine clară și memorabilă.
+        - generic [ref=e181]:
+          - generic [ref=e184]:
+            - generic [ref=e185]:
+              - img "Prezentare brand OO.Nutrition — pagină interioară" [ref=e186]
+              - img "Prezentare brand OO.Nutrition — copertă produs" [ref=e187]
+            - generic [ref=e188]:
+              - generic [ref=e189]:
+                - heading "O O . N u t r i t i o n" [level=4] [ref=e190]:
+                  - generic [ref=e191]:
+                    - generic [ref=e192]: O
+                    - generic [ref=e193]: O
+                    - generic [ref=e194]: .
+                    - generic [ref=e195]: "N"
+                    - generic [ref=e196]: u
+                    - generic [ref=e197]: t
+                    - generic [ref=e198]: r
+                    - generic [ref=e199]: i
+                    - generic [ref=e200]: t
+                    - generic [ref=e201]: i
+                    - generic [ref=e202]: o
+                    - generic [ref=e203]: "n"
+                - paragraph [ref=e204]: Product concept | Prezentare brand
+              - link "Vezi proiectul >>>" [ref=e205]:
+                - /url: proiect.html?slug=oo-nutrition
+          - generic [ref=e206]:
+            - button "Proiectul anterior" [disabled] [ref=e207]:
+              - img [ref=e208]
+            - generic [ref=e210]: 1 / 1
+            - button "Proiectul următor" [disabled] [ref=e211]:
+              - img [ref=e212]
+    - article [ref=e214]:
+      - generic [ref=e215]:
+        - generic [ref=e216]:
+          - generic [ref=e217]: "[03]"
+          - heading "E d i t o r i a l ș i p r i n t" [level=3] [ref=e218]:
+            - strong [ref=e219]:
+              - generic [ref=e220]:
+                - generic [ref=e221]: E
+                - generic [ref=e222]: d
+                - generic [ref=e223]: i
+                - generic [ref=e224]: t
+                - generic [ref=e225]: o
+                - generic [ref=e226]: r
+                - generic [ref=e227]: i
+                - generic [ref=e228]: a
+                - generic [ref=e229]: l
+            - generic [ref=e230]:
+              - generic [ref=e231]: ș
+              - generic [ref=e232]: i
+            - generic [ref=e233]:
+              - generic [ref=e234]: p
+              - generic [ref=e235]: r
+              - generic [ref=e236]: i
+              - generic [ref=e237]: "n"
+              - generic [ref=e238]: t
+          - paragraph [ref=e239]: Creez materiale editoriale și de print cu layout-uri clare și bine structurate, unde textul și vizualul lucrează împreună pentru o comunicare eficientă.
+        - generic [ref=e240]:
+          - generic [ref=e244]:
+            - generic [ref=e245]:
+              - heading "C e n t r u l s p o r t i v n a ț i o n a l" [level=4] [ref=e246]:
+                - generic [ref=e247]:
+                  - generic [ref=e248]: C
+                  - generic [ref=e249]: e
+                  - generic [ref=e250]: "n"
+                  - generic [ref=e251]: t
+                  - generic [ref=e252]: r
+                  - generic [ref=e253]: u
+                  - generic [ref=e254]: l
+                - generic [ref=e255]:
+                  - generic [ref=e256]: s
+                  - generic [ref=e257]: p
+                  - generic [ref=e258]: o
+                  - generic [ref=e259]: r
+                  - generic [ref=e260]: t
+                  - generic [ref=e261]: i
+                  - generic [ref=e262]: v
+                - generic [ref=e263]:
+                  - generic [ref=e264]: "n"
+                  - generic [ref=e265]: a
+                  - generic [ref=e266]: ț
+                  - generic [ref=e267]: i
+                  - generic [ref=e268]: o
+                  - generic [ref=e269]: "n"
+                  - generic [ref=e270]: a
+                  - generic [ref=e271]: l
+              - paragraph [ref=e272]: Brand book, flyere, reviste
+            - link "Vezi proiectul >>>" [ref=e273]:
+              - /url: proiect.html?slug=centrul-sportiv
+          - generic [ref=e274]:
+            - button "Proiectul anterior" [disabled] [ref=e275]:
+              - img [ref=e276]
+            - generic [ref=e278]: 1 / 1
+            - button "Proiectul următor" [disabled] [ref=e279]:
+              - img [ref=e280]
+    - article [ref=e282]:
+      - generic [ref=e283]:
+        - generic [ref=e284]:
+          - generic [ref=e285]: "[04]"
+          - heading "C o n c e p t v i z u a l , c a m p a n i i" [level=3] [ref=e286]:
+            - strong [ref=e287]:
+              - generic [ref=e288]:
+                - generic [ref=e289]: C
+                - generic [ref=e290]: o
+                - generic [ref=e291]: "n"
+                - generic [ref=e292]: c
+                - generic [ref=e293]: e
+                - generic [ref=e294]: p
+                - generic [ref=e295]: t
+              - generic [ref=e296]:
+                - generic [ref=e297]: v
+                - generic [ref=e298]: i
+                - generic [ref=e299]: z
+                - generic [ref=e300]: u
+                - generic [ref=e301]: a
+                - generic [ref=e302]: l
+            - generic [ref=e304]: ","
+            - generic [ref=e305]:
+              - generic [ref=e306]: c
+              - generic [ref=e307]: a
+              - generic [ref=e308]: m
+              - generic [ref=e309]: p
+              - generic [ref=e310]: a
+              - generic [ref=e311]: "n"
+              - generic [ref=e312]: i
+              - generic [ref=e313]: i
+          - paragraph [ref=e314]: Dezvolt concepte vizuale pentru campanii, pornind de la idee și direcție creativă, până la moodboard și ghid clar pentru implementare.
+        - generic [ref=e315]:
+          - generic [ref=e319]:
+            - generic [ref=e320]:
+              - heading "C a m p a n i i v i z u a l e B l o o m I n & F i n e D i g i t a l" [level=4] [ref=e321]:
+                - generic [ref=e322]:
+                  - generic [ref=e323]: C
+                  - generic [ref=e324]: a
+                  - generic [ref=e325]: m
+                  - generic [ref=e326]: p
+                  - generic [ref=e327]: a
+                  - generic [ref=e328]: "n"
+                  - generic [ref=e329]: i
+                  - generic [ref=e330]: i
+                - generic [ref=e331]:
+                  - generic [ref=e332]: v
+                  - generic [ref=e333]: i
+                  - generic [ref=e334]: z
+                  - generic [ref=e335]: u
+                  - generic [ref=e336]: a
+                  - generic [ref=e337]: l
+                  - generic [ref=e338]: e
+                - generic [ref=e339]:
+                  - generic [ref=e340]: B
+                  - generic [ref=e341]: l
+                  - generic [ref=e342]: o
+                  - generic [ref=e343]: o
+                  - generic [ref=e344]: m
+                  - generic [ref=e345]: I
+                  - generic [ref=e346]: "n"
+                - generic [ref=e348]: "&"
+                - generic [ref=e349]:
+                  - generic [ref=e350]: F
+                  - generic [ref=e351]: i
+                  - generic [ref=e352]: "n"
+                  - generic [ref=e353]: e
+                - generic [ref=e354]:
+                  - generic [ref=e355]: D
+                  - generic [ref=e356]: i
+                  - generic [ref=e357]: g
+                  - generic [ref=e358]: i
+                  - generic [ref=e359]: t
+                  - generic [ref=e360]: a
+                  - generic [ref=e361]: l
+              - paragraph [ref=e362]: Direcție creativă | Social + Print
+            - link "Vezi proiectul >>>" [ref=e363]:
+              - /url: proiect.html?slug=campanie-vizuala
+          - generic [ref=e364]:
+            - button "Proiectul anterior" [disabled] [ref=e365]:
+              - img [ref=e366]
+            - generic [ref=e368]: 1 / 1
+            - button "Proiectul următor" [disabled] [ref=e369]:
+              - img [ref=e370]
+    - article [ref=e372]:
+      - generic [ref=e373]:
+        - generic [ref=e374]:
+          - generic [ref=e375]: "[05]"
+          - heading "G e n e r a r e c o n ț i n u t c u A I" [level=3] [ref=e376]:
+            - strong [ref=e377]:
+              - generic [ref=e378]:
+                - generic [ref=e379]: G
+                - generic [ref=e380]: e
+                - generic [ref=e381]: "n"
+                - generic [ref=e382]: e
+                - generic [ref=e383]: r
+                - generic [ref=e384]: a
+                - generic [ref=e385]: r
+                - generic [ref=e386]: e
+              - generic [ref=e387]:
+                - generic [ref=e388]: c
+                - generic [ref=e389]: o
+                - generic [ref=e390]: "n"
+                - generic [ref=e391]: ț
+                - generic [ref=e392]: i
+                - generic [ref=e393]: "n"
+                - generic [ref=e394]: u
+                - generic [ref=e395]: t
+              - generic [ref=e396]:
+                - generic [ref=e397]: c
+                - generic [ref=e398]: u
+              - generic [ref=e399]:
+                - generic [ref=e400]: A
+                - generic [ref=e401]: I
+          - paragraph [ref=e402]: Creez conținut vizual static și video cu ajutorul AI, de la concepte creative până la materiale gata de utilizat în campanii și social media.
+        - generic [ref=e403]:
+          - generic [ref=e407]:
+            - generic [ref=e408]:
+              - heading "V e c t o r A c a d e m y A I c o n t e n t" [level=4] [ref=e409]:
+                - generic [ref=e410]:
+                  - generic [ref=e411]: V
+                  - generic [ref=e412]: e
+                  - generic [ref=e413]: c
+                  - generic [ref=e414]: t
+                  - generic [ref=e415]: o
+                  - generic [ref=e416]: r
+                - generic [ref=e417]:
+                  - generic [ref=e418]: A
+                  - generic [ref=e419]: c
+                  - generic [ref=e420]: a
+                  - generic [ref=e421]: d
+                  - generic [ref=e422]: e
+                  - generic [ref=e423]: m
+                  - generic [ref=e424]: "y"
+                - generic [ref=e425]:
+                  - generic [ref=e426]: A
+                  - generic [ref=e427]: I
+                - generic [ref=e428]:
+                  - generic [ref=e429]: c
+                  - generic [ref=e430]: o
+                  - generic [ref=e431]: "n"
+                  - generic [ref=e432]: t
+                  - generic [ref=e433]: e
+                  - generic [ref=e434]: "n"
+                  - generic [ref=e435]: t
+              - paragraph [ref=e436]: Video, static, moodboards
+            - link "Vezi proiectul >>>" [ref=e437]:
+              - /url: proiect.html?slug=vector-academy-ai
+          - generic [ref=e438]:
+            - button "Proiectul anterior" [disabled] [ref=e439]:
+              - img [ref=e440]
+            - generic [ref=e442]: 1 / 1
+            - button "Proiectul următor" [disabled] [ref=e443]:
+              - img [ref=e444]
+  - region "Servicii" [ref=e446]:
+    - generic [ref=e447]:
+      - heading "S e r v i c i i ." [level=2] [ref=e448]:
+        - generic [ref=e449]:
+          - generic [ref=e450]: S
+          - generic [ref=e451]: e
+          - generic [ref=e452]: r
+          - generic [ref=e453]: v
+          - generic [ref=e454]: i
+          - generic [ref=e455]: c
+          - generic [ref=e456]: i
+          - generic [ref=e457]: i
+          - generic [ref=e458]: .
+      - list [ref=e459]:
+        - listitem [ref=e460]:
+          - generic [ref=e461]: "01"
+          - text: Branding & Identitate vizuale
+        - listitem [ref=e462]:
+          - generic [ref=e463]: "02"
+          - text: Social Media
+        - listitem [ref=e464]:
+          - generic [ref=e465]: "03"
+          - text: Editorial și print
+        - listitem [ref=e466]:
+          - generic [ref=e467]: "04"
+          - text: Concept vizual, campanii
+        - listitem [ref=e468]:
+          - generic [ref=e469]: "05"
+          - text: Generare conținut cu AI
+  - generic [ref=e470]:
+    - generic [ref=e471]:
+      - generic [ref=e472]:
+        - heading "T e s t i m o n i a l" [level=2] [ref=e473]:
+          - generic [ref=e474]:
+            - generic [ref=e475]: T
+            - generic [ref=e476]: e
+            - generic [ref=e477]: s
+            - generic [ref=e478]: t
+            - generic [ref=e479]: i
+          - generic [ref=e480]:
+            - generic [ref=e481]: m
+            - generic [ref=e482]: o
+            - generic [ref=e483]: "n"
+            - generic [ref=e484]: i
+            - generic [ref=e485]: a
+            - generic [ref=e486]: l
+        - paragraph [ref=e487]: "[02]"
+      - paragraph [ref=e488]: Derulează ca să vezi fiecare client — fotografia activă devine color, celelalte rămân alb-negru.
+    - generic [ref=e489]:
+      - list [ref=e490]:
+        - listitem [ref=e491]:
+          - figure "Colaborarea a fost foarte clară și bine structurată. Am venit fără o direcție exactă, iar rezultatul final a depășit așteptările. Designul este coerent și transmite exact ce aveam nevoie. Dumitru Vlah founder Vector Academy" [ref=e492]:
+            - generic [ref=e494]:
+              - blockquote [ref=e495]: Colaborarea a fost foarte clară și bine structurată. Am venit fără o direcție exactă, iar rezultatul final a depășit așteptările. Designul este coerent și transmite exact ce aveam nevoie.
+              - generic [ref=e496]:
+                - text: Dumitru Vlah
+                - generic [ref=e497]: founder Vector Academy
+        - listitem [ref=e498]:
+          - figure "Testimonial placeholder — va fi înlocuit după colectarea feedback-ului. Nume, prenume Funcție, companie" [ref=e499]:
+            - generic [ref=e501]:
+              - blockquote [ref=e502]: Testimonial placeholder — va fi înlocuit după colectarea feedback-ului.
+              - generic [ref=e503]:
+                - text: Nume, prenume
+                - generic [ref=e504]: Funcție, companie
+        - listitem [ref=e505]:
+          - figure "Testimonial placeholder — va fi înlocuit după colectarea feedback-ului. Nume, prenume Funcție, companie" [ref=e506]:
+            - generic [ref=e508]:
+              - blockquote [ref=e509]: Testimonial placeholder — va fi înlocuit după colectarea feedback-ului.
+              - generic [ref=e510]:
+                - text: Nume, prenume
+                - generic [ref=e511]: Funcție, companie
+      - generic [ref=e512]:
+        - button "Anterior" [ref=e513]:
+          - img [ref=e514]
+        - button "Următor" [ref=e516]:
+          - img [ref=e517]
+  - region "Companiile cu care am colaborat" [ref=e519]:
+    - generic [ref=e520]:
+      - paragraph [ref=e521]: Companiile cu care am lucrat
+      - generic [ref=e522]:
+        - generic [ref=e523]: Vector Academy
+        - generic [ref=e524]: Fine Digital
+        - generic [ref=e525]: BloomIn Agency
+        - generic [ref=e526]: Moldcell
+        - generic [ref=e527]: Microlab
+        - generic [ref=e528]: BEST Chisinau
+        - generic [ref=e529]: Tech Women MD
+  - contentinfo [ref=e530]:
+    - generic [ref=e532]:
+      - complementary [ref=e533]:
+        - heading "Scrie-mi pe Telegram" [level=3] [ref=e534]
+        - paragraph [ref=e535]: Fără formular, fără așteptare — trecem direct la discuție.
+        - link "Deschide chat" [ref=e536]:
+          - /url: https://t.me/
+          - img [ref=e537]
+          - text: Deschide chat
+      - generic [ref=e539]:
+        - paragraph [ref=e540]: designerdianatatar30@gmail.com
+        - generic [ref=e541]:
+          - generic [ref=e542]: 1. Nume
+          - textbox "1. Nume" [ref=e543]:
+            - /placeholder: Numele tău
+        - generic [ref=e544]:
+          - generic [ref=e545]: 2. Email
+          - textbox "2. Email" [ref=e546]:
+            - /placeholder: Adresa de email
+        - generic [ref=e547]:
+          - generic [ref=e548]: 3. Despre proiect
+          - textbox "3. Despre proiect" [ref=e549]:
+            - /placeholder: Câteva rânduri despre ideea ta
+        - button "Trimite cererea" [ref=e550]:
+          - text: Trimite cererea
+          - img [ref=e551]
+        - paragraph [ref=e553]
+    - generic [ref=e554]:
+      - paragraph [ref=e555]: © 2026 Diana Tatar — toate drepturile rezervate.
+      - link "Sus ↑" [ref=e556]:
+        - /url: "#top"

@@ -390,7 +390,6 @@
 
     const updateStackProgress = () => {
       cases.forEach((caseEl) => {
-        if (!caseEl.classList.contains("is-near")) return;
         const rect = caseEl.getBoundingClientRect();
         const progress = Math.max(0, Math.min(1, -rect.top / rect.height));
         caseEl.style.setProperty("--stack-progress", progress.toFixed(3));
