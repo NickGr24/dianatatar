@@ -191,19 +191,23 @@ p { margin: 0; }
   margin-bottom: 40px;
 }
 .hero__link {
-  display: inline-block;
-  font-size: var(--fs-lead);
-  font-weight: 500;
-  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: clamp(14px, 1.05vw, 17px);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #0c0c0c;
+  background: #fff;
+  padding: 14px 24px;
+  border-radius: 999px;
+  margin-top: 8px;
+  transition: background .25s var(--ease), color .25s var(--ease);
+  white-space: nowrap;
 }
-.hero__link::after {
-  content: "";
-  position: absolute; left: 0; right: 0; bottom: -6px;
-  height: 1px; background: #fff;
-  transform: scaleX(.5); transform-origin: left;
-  transition: transform .35s var(--ease);
-}
-.hero__link:hover::after { transform: scaleX(1); }
+.hero__link svg { transition: transform .35s var(--ease); }
+.hero__link:hover { background: #0c0c0c; color: #fff; }
+.hero__link:hover svg { transform: translateX(4px); }
 
 /* News-style ticker (subtitru, scroll dreapta → stânga) */
 .ticker {
@@ -488,21 +492,30 @@ html.js-stack-on .ticker__track {
   opacity: .85;
 }
 .case__cta {
-  font-size: var(--fs-lead);
-  font-weight: 500;
-  color: #fff;
-  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: clamp(14px, 1.05vw, 17px);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #0c0c0c;
+  background: #fff;
+  padding: 14px 24px;
+  border-radius: 999px;
   align-self: flex-end;
-  padding-bottom: 6px;
+  transition: background .25s var(--ease), color .25s var(--ease), transform .25s var(--ease);
+  white-space: nowrap;
 }
-.case__cta::after {
-  content: "";
-  position: absolute; left: 0; right: 0; bottom: 0;
-  height: 1px; background: #fff;
-  transform: scaleX(.3); transform-origin: left;
+.case__cta svg {
   transition: transform .35s var(--ease);
 }
-.case__cta:hover::after { transform: scaleX(1); }
+.case__cta:hover {
+  background: #0c0c0c;
+  color: #fff;
+}
+.case__cta:hover svg {
+  transform: translateX(4px);
+}
 
 /* Slides inside category (multiple projects per category support) */
 .case__slides {
@@ -577,9 +590,8 @@ html.js-stack-on .ticker__track {
   display: block;
   pointer-events: none;
 }
-body {
-  background: #ece4d6; /* fallback for no-WebGL / reduced-motion */
-}
+html { background: #ece4d6; }
+body { background: transparent; }
 .about,
 .portfolio-head,
 .services,

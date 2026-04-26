@@ -745,15 +745,21 @@ void main(){
       });
       const mesh = new Mesh(gl, { geometry: new Triangle(gl), program });
 
+      const isGlobal = canvas.classList.contains("grainient--global");
       const setSize = () => {
-        const r = container.getBoundingClientRect();
-        renderer.setSize(Math.max(1, Math.floor(r.width)), Math.max(1, Math.floor(r.height)));
+        const w = isGlobal ? window.innerWidth : container.getBoundingClientRect().width;
+        const h = isGlobal ? window.innerHeight : container.getBoundingClientRect().height;
+        renderer.setSize(Math.max(1, Math.floor(w)), Math.max(1, Math.floor(h)));
         program.uniforms.iResolution.value[0] = gl.drawingBufferWidth;
         program.uniforms.iResolution.value[1] = gl.drawingBufferHeight;
         renderer.render({ scene: mesh });
       };
-      const ro = new ResizeObserver(setSize);
-      ro.observe(container);
+      if (isGlobal) {
+        window.addEventListener("resize", setSize, { passive: true });
+      } else {
+        const ro = new ResizeObserver(setSize);
+        ro.observe(container);
+      }
       setSize();
 
       let raf = 0, running = false;
@@ -764,16 +770,22 @@ void main(){
         if (running) raf = requestAnimationFrame(loop);
       };
 
-      const visIO = new IntersectionObserver((entries) => entries.forEach((e) => {
-        if (e.isIntersecting && !running) {
-          running = true;
-          raf = requestAnimationFrame(loop);
-        } else if (!e.isIntersecting && running) {
-          running = false;
-          cancelAnimationFrame(raf);
-        }
-      }), { threshold: 0 });
-      visIO.observe(container);
+      if (isGlobal) {
+        // Global canvas always animates (body is always "intersecting").
+        running = true;
+        raf = requestAnimationFrame(loop);
+      } else {
+        const visIO = new IntersectionObserver((entries) => entries.forEach((e) => {
+          if (e.isIntersecting && !running) {
+            running = true;
+            raf = requestAnimationFrame(loop);
+          } else if (!e.isIntersecting && running) {
+            running = false;
+            cancelAnimationFrame(raf);
+          }
+        }), { threshold: 0 });
+        visIO.observe(container);
+      }
     });
   }
   initGrainient();
