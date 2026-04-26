@@ -435,6 +435,38 @@
         });
       });
     }
+
+    /* Marquee — JS-driven so it can react to scroll velocity */
+    const tickerTrack = $(".ticker__track");
+    if (tickerTrack && lenis) {
+      let x = 0;
+      let velocity = 0;
+      let smoothedSkew = 0;
+      const baseSpeed = 60; // px/s
+      let lastT = performance.now();
+
+      lenis.on("scroll", (e) => {
+        if (e && typeof e.velocity === "number") velocity = e.velocity;
+      });
+
+      const trackLoop = (t) => {
+        const dt = Math.min(0.05, (t - lastT) / 1000);
+        lastT = t;
+        const boost = Math.max(-200, Math.min(200, velocity * 0.5));
+        x -= (baseSpeed + boost) * dt;
+        const trackWidth = tickerTrack.scrollWidth / 3;
+        if (trackWidth > 0) {
+          if (-x >= trackWidth) x += trackWidth;
+          if (x > 0) x -= trackWidth;
+        }
+        const targetSkew = Math.max(-3, Math.min(3, -velocity * 0.02));
+        smoothedSkew += (targetSkew - smoothedSkew) * 0.12;
+        tickerTrack.style.setProperty("--ticker-x", `${x.toFixed(1)}px`);
+        tickerTrack.style.setProperty("--ticker-skew", `${smoothedSkew.toFixed(2)}deg`);
+        requestAnimationFrame(trackLoop);
+      };
+      requestAnimationFrame(trackLoop);
+    }
   }
 
   initScrollFX();

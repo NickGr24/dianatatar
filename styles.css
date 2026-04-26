@@ -228,6 +228,11 @@ p { margin: 0; }
   width: max-content;
   animation: ticker-scroll 38s linear infinite;
 }
+html.js-stack-on .ticker__track {
+  animation: none !important;
+  transform: translate3d(var(--ticker-x, 0px), 0, 0) skewX(var(--ticker-skew, 0deg));
+  will-change: transform;
+}
 .ticker__track span {
   font-size: clamp(30px, 3.6vw, 56px);
   font-weight: 800;
