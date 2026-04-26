@@ -626,4 +626,155 @@
     counters.forEach((c) => counterIO.observe(c));
   }
   initCounters();
+
+  /* =========================================================
+     Grainient — WebGL2 noisy gradient (ported from reactbits.dev/Grainient).
+     Lazy-loads on view, skipped on reduced-motion.
+     ========================================================= */
+  async function initGrainient() {
+    const canvases = $$("[data-grainient]");
+    if (!canvases.length) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!("IntersectionObserver" in window)) return;
+
+    const vertex = `#version 300 es
+in vec2 position;
+void main(){gl_Position=vec4(position,0.0,1.0);} `;
+
+    const fragment = `#version 300 es
+precision highp float;
+uniform vec2 iResolution;
+uniform float iTime;
+uniform float uTimeSpeed,uColorBalance,uWarpStrength,uWarpFrequency,uWarpSpeed,uWarpAmplitude;
+uniform float uBlendAngle,uBlendSoftness,uRotationAmount,uNoiseScale,uGrainAmount,uGrainScale;
+uniform float uContrast,uGamma,uSaturation,uZoom;
+uniform vec2 uCenterOffset;
+uniform vec3 uColor1,uColor2,uColor3;
+out vec4 fragColor;
+#define S(a,b,t) smoothstep(a,b,t)
+mat2 Rot(float a){float s=sin(a),c=cos(a);return mat2(c,-s,s,c);}
+vec2 hash(vec2 p){p=vec2(dot(p,vec2(2127.1,81.17)),dot(p,vec2(1269.5,283.37)));return fract(sin(p)*43758.5453);}
+float noise(vec2 p){vec2 i=floor(p),f=fract(p),u=f*f*(3.0-2.0*f);float n=mix(mix(dot(-1.0+2.0*hash(i+vec2(0.0,0.0)),f-vec2(0.0,0.0)),dot(-1.0+2.0*hash(i+vec2(1.0,0.0)),f-vec2(1.0,0.0)),u.x),mix(dot(-1.0+2.0*hash(i+vec2(0.0,1.0)),f-vec2(0.0,1.0)),dot(-1.0+2.0*hash(i+vec2(1.0,1.0)),f-vec2(1.0,1.0)),u.x),u.y);return 0.5+0.5*n;}
+void main(){
+  vec2 C=gl_FragCoord.xy;
+  float t=iTime*uTimeSpeed;
+  vec2 uv=C/iResolution.xy;
+  float ratio=iResolution.x/iResolution.y;
+  vec2 tuv=uv-0.5+uCenterOffset;
+  tuv/=max(uZoom,0.001);
+  float degree=noise(vec2(t*0.1,tuv.x*tuv.y)*uNoiseScale);
+  tuv.y*=1.0/ratio;
+  tuv*=Rot(radians((degree-0.5)*uRotationAmount+180.0));
+  tuv.y*=ratio;
+  float ws=max(uWarpStrength,0.001);
+  float amp=uWarpAmplitude/ws;
+  float wt=t*uWarpSpeed;
+  tuv.x+=sin(tuv.y*uWarpFrequency+wt)/amp;
+  tuv.y+=sin(tuv.x*(uWarpFrequency*1.5)+wt)/(amp*0.5);
+  float b=uColorBalance, sf=max(uBlendSoftness,0.0);
+  mat2 br=Rot(radians(uBlendAngle));
+  float bx=(tuv*br).x;
+  float e0=-0.3-b-sf, e1=0.2-b+sf, v0=0.5-b+sf, v1=-0.3-b-sf;
+  vec3 l1=mix(uColor3,uColor2,S(e0,e1,bx));
+  vec3 l2=mix(uColor2,uColor1,S(e0,e1,bx));
+  vec3 col=mix(l1,l2,S(v0,v1,tuv.y));
+  vec2 gu=uv*max(uGrainScale,0.001);
+  float grain=fract(sin(dot(gu,vec2(12.9898,78.233)))*43758.5453);
+  col+=(grain-0.5)*uGrainAmount;
+  col=(col-0.5)*uContrast+0.5;
+  float luma=dot(col,vec3(0.2126,0.7152,0.0722));
+  col=mix(vec3(luma),col,uSaturation);
+  col=pow(max(col,0.0),vec3(1.0/max(uGamma,0.001)));
+  col=clamp(col,0.0,1.0);
+  fragColor=vec4(col,1.0);
+}`;
+
+    const hexToRgb = (hex) => {
+      const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return m ? [parseInt(m[1],16)/255, parseInt(m[2],16)/255, parseInt(m[3],16)/255] : [1,1,1];
+    };
+
+    let ogl;
+    try {
+      ogl = await import("https://cdn.jsdelivr.net/npm/ogl@1.0.11/+esm");
+    } catch (err) {
+      console.warn("ogl failed to load — Grainient disabled", err);
+      return;
+    }
+    const { Renderer, Program, Mesh, Triangle } = ogl;
+
+    canvases.forEach((canvas) => {
+      const container = canvas.parentElement;
+      const colors = {
+        c1: hexToRgb(canvas.dataset.c1 || "#f5f0ea"),
+        c2: hexToRgb(canvas.dataset.c2 || "#e2d5c1"),
+        c3: hexToRgb(canvas.dataset.c3 || "#a89e8e"),
+      };
+
+      const renderer = new Renderer({
+        canvas, webgl: 2, alpha: true, antialias: false,
+        dpr: Math.min(window.devicePixelRatio || 1, 2),
+      });
+      const gl = renderer.gl;
+      const program = new Program(gl, {
+        vertex, fragment,
+        uniforms: {
+          iTime: { value: 0 },
+          iResolution: { value: new Float32Array([1, 1]) },
+          uTimeSpeed:     { value: 0.18 },
+          uColorBalance:  { value: 0.05 },
+          uWarpStrength:  { value: 1.0 },
+          uWarpFrequency: { value: 4.0 },
+          uWarpSpeed:     { value: 1.4 },
+          uWarpAmplitude: { value: 60.0 },
+          uBlendAngle:    { value: 15.0 },
+          uBlendSoftness: { value: 0.12 },
+          uRotationAmount:{ value: 360.0 },
+          uNoiseScale:    { value: 1.6 },
+          uGrainAmount:   { value: 0.16 },
+          uGrainScale:    { value: 2.4 },
+          uContrast:      { value: 1.05 },
+          uGamma:         { value: 1.0 },
+          uSaturation:    { value: 0.55 },
+          uCenterOffset:  { value: new Float32Array([0, 0]) },
+          uZoom:          { value: 1.0 },
+          uColor1:        { value: new Float32Array(colors.c1) },
+          uColor2:        { value: new Float32Array(colors.c2) },
+          uColor3:        { value: new Float32Array(colors.c3) },
+        },
+      });
+      const mesh = new Mesh(gl, { geometry: new Triangle(gl), program });
+
+      const setSize = () => {
+        const r = container.getBoundingClientRect();
+        renderer.setSize(Math.max(1, Math.floor(r.width)), Math.max(1, Math.floor(r.height)));
+        program.uniforms.iResolution.value[0] = gl.drawingBufferWidth;
+        program.uniforms.iResolution.value[1] = gl.drawingBufferHeight;
+        renderer.render({ scene: mesh });
+      };
+      const ro = new ResizeObserver(setSize);
+      ro.observe(container);
+      setSize();
+
+      let raf = 0, running = false;
+      const t0 = performance.now();
+      const loop = (t) => {
+        program.uniforms.iTime.value = (t - t0) * 0.001;
+        renderer.render({ scene: mesh });
+        if (running) raf = requestAnimationFrame(loop);
+      };
+
+      const visIO = new IntersectionObserver((entries) => entries.forEach((e) => {
+        if (e.isIntersecting && !running) {
+          running = true;
+          raf = requestAnimationFrame(loop);
+        } else if (!e.isIntersecting && running) {
+          running = false;
+          cancelAnimationFrame(raf);
+        }
+      }), { threshold: 0 });
+      visIO.observe(container);
+    });
+  }
+  initGrainient();
 })();
