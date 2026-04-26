@@ -436,6 +436,29 @@
       });
     }
 
+    /* Parallax — translate3d on Y for select images */
+    const parallaxTargets = [
+      { el: $(".hero__bg img"),     factor: 0.15 },
+      { el: $(".about__photo img"), factor: 0.08 },
+      { el: $(".footer__bg img"),   factor: 0.12 },
+    ].filter((t) => t.el);
+
+    const updateParallax = () => {
+      parallaxTargets.forEach(({ el, factor }) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+        const center = rect.top + rect.height / 2 - window.innerHeight / 2;
+        el.style.transform = `translate3d(0, ${(center * factor * -1).toFixed(1)}px, 0)`;
+      });
+    };
+
+    if (lenis) {
+      lenis.on("scroll", () => requestAnimationFrame(updateParallax));
+    } else {
+      window.addEventListener("scroll", () => requestAnimationFrame(updateParallax), { passive: true });
+    }
+    requestAnimationFrame(updateParallax);
+
     /* Marquee — JS-driven so it can react to scroll velocity */
     const tickerTrack = $(".ticker__track");
     if (tickerTrack && lenis) {
