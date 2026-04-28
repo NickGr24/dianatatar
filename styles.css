@@ -266,13 +266,13 @@ html.js-stack-on .ticker__track {
 }
 .about__grid {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr clamp(220px, 22vw, 300px);
   grid-template-areas:
     "title photo"
-    "body  body";
-  column-gap: clamp(32px, 4vw, 80px);
+    "body  photo";
+  column-gap: clamp(32px, 4vw, 64px);
   row-gap: clamp(40px, 5vw, 72px);
-  align-items: center;
+  align-items: start;
 }
 .about__title {
   grid-area: title;
@@ -284,9 +284,9 @@ html.js-stack-on .ticker__track {
   border-radius: 14px;
   overflow: hidden;
   aspect-ratio: 4 / 5;
-  width: clamp(140px, 14vw, 200px);
-  max-width: 200px;
-  max-height: 250px;
+  width: 100%;
+  max-height: 380px;
+  align-self: start;
   justify-self: end;
 }
 .about__photo img {
@@ -1152,7 +1152,8 @@ body { background: transparent; }
   .case__category { grid-column: auto; grid-row: auto; }
   .case__desc { grid-column: auto; grid-row: auto; }
 
-  .about__photo { width: clamp(120px, 16vw, 180px); max-width: 180px; max-height: 220px; }
+  .about__grid { grid-template-columns: 1fr clamp(180px, 24vw, 240px); }
+  .about__photo { width: 100%; max-height: 320px; }
 
   .testimonial__grid { grid-template-columns: 1fr; }
   .footer__grid { grid-template-columns: 1fr; }
