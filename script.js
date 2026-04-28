@@ -632,6 +632,31 @@
   }
   initCounters();
 
+  /* Footer curtain — slide up + fade in when entering viewport */
+  function initFooterReveal() {
+    const footer = $(".footer");
+    if (!footer) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      footer.classList.add("is-revealed");
+      return;
+    }
+    if (!("IntersectionObserver" in window)) {
+      footer.classList.add("is-revealed");
+      return;
+    }
+    const fIO = new IntersectionObserver(
+      (entries) => entries.forEach((e) => {
+        if (e.isIntersecting) {
+          footer.classList.add("is-revealed");
+          fIO.unobserve(footer);
+        }
+      }),
+      { threshold: 0.05 }
+    );
+    fIO.observe(footer);
+  }
+  initFooterReveal();
+
   /* =========================================================
      Grainient — WebGL2 noisy gradient (ported from reactbits.dev/Grainient).
      Lazy-loads on view, skipped on reduced-motion.

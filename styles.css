@@ -637,9 +637,6 @@ body { background: transparent; }
 .partners {
   border-top: none;
   border-bottom: none;
-  position: sticky;
-  bottom: 0;
-  z-index: 1;
 }
 /* Case header areas no longer pure white — match grainient palette so
    stack transitions don't flash white. Applied always (mobile + desktop)
@@ -852,6 +849,16 @@ body { background: transparent; }
   border-top-left-radius: clamp(24px, 3vw, 40px);
   border-top-right-radius: clamp(24px, 3vw, 40px);
   box-shadow: 0 -20px 60px rgba(0,0,0,0.18);
+  transform: translateY(60px);
+  opacity: 0;
+  transition: transform .9s cubic-bezier(0.22, 1, 0.36, 1), opacity .7s ease-out;
+}
+.footer.is-revealed {
+  transform: translateY(0);
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .footer { transform: none; opacity: 1; transition: none; }
 }
 
 .footer__grid {
