@@ -269,8 +269,8 @@ html.js-stack-on .ticker__track {
   display: flex;
   flex-direction: column;
   gap: clamp(32px, 4vw, 56px);
-  padding-right: clamp(260px, 26vw, 400px);
-  min-height: 420px;
+  padding-right: clamp(200px, 18vw, 280px);
+  min-height: 320px;
 }
 .about__title {
   margin: 0;
@@ -283,8 +283,8 @@ html.js-stack-on .ticker__track {
   border-radius: 14px;
   overflow: hidden;
   aspect-ratio: 4 / 5;
-  width: clamp(240px, 24vw, 360px);
-  max-height: 420px;
+  width: clamp(160px, 16vw, 240px);
+  max-height: 320px;
 }
 .about__photo img {
   width: 100%;
@@ -1141,8 +1141,8 @@ body { background: transparent; }
   .case__category { grid-column: auto; grid-row: auto; }
   .case__desc { grid-column: auto; grid-row: auto; }
 
-  .about__grid { padding-right: clamp(220px, 28vw, 320px); }
-  .about__photo { width: clamp(200px, 26vw, 300px); max-height: 360px; }
+  .about__grid { padding-right: clamp(160px, 20vw, 240px); min-height: 260px; }
+  .about__photo { width: clamp(140px, 18vw, 200px); max-height: 260px; }
 
   .testimonial__grid { grid-template-columns: 1fr; }
   .footer__grid { grid-template-columns: 1fr; }
