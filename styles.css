@@ -1240,7 +1240,6 @@ body { background: transparent; }
   .nav__toggle[aria-expanded="true"] span { background: #0c0c0c; }
 
   body.is-menu-open { overflow: hidden; }
-}
 
   /* Hero — framing pentru mobil: subiectul e în partea stângă a fotografiei */
   .hero { min-height: min(820px, 100svh); }
