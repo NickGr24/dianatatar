@@ -1268,17 +1268,20 @@ body { background: transparent; }
       "photo"
       "body";
     gap: 24px;
+    padding-right: 0;
+    justify-items: start;
   }
+  .about__title { text-align: left; }
   .about__photo {
     width: 60%;
     max-width: 240px;
     aspect-ratio: 4 / 5;
     max-height: 320px;
-    margin: 0 auto;
-    justify-self: center;
+    margin: 0;
+    justify-self: start;
   }
-  .about__body { gap: 20px; }
-  .about__text { margin: 0; }
+  .about__body { gap: 20px; align-items: flex-start; }
+  .about__text { margin: 0; text-align: left; }
 
   .portfolio-head { padding: 60px 0 30px; }
 
