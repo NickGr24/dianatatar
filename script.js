@@ -214,7 +214,7 @@
 
       const subject = encodeURIComponent(`Solicitare proiect — ${name}`);
       const body    = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
-      window.location.href = `mailto:designerdianatatar30@gmail.com?subject=${subject}&body=${body}`;
+      window.location.href = `mailto:designerdianatatar@gmail.com?subject=${subject}&body=${body}`;
       setStatus("Se deschide aplicația de email…", "rgba(255,255,255,.8)");
       form.reset();
     });
@@ -272,9 +272,9 @@
         title: "Vector Academy — AI content",
         sub: "AI mentor | Video, static, moodboards",
         cover: "assets/images/project-bg.webp",
-        context: "În calitate de AI content creator și AI mentor la Vector Academy, dezvolt concepte grafice pentru postări social media, bannere și materiale promoționale folosind workflow-uri mixte — design clasic + generare cu AI.",
+        context: "În calitate de AI content creator și AI mentor la Vector Academy, am dezvoltat concepte grafice pentru postări social media, bannere și materiale promoționale folosind workflow-uri mixte — design clasic + generare cu AI.",
         goal: "Livrare rapidă și constantă de conținut vizual cu look premium, fără costurile unui shooting pentru fiecare campanie, menținând o estetică coerentă de la un lansare la alta.",
-        solution: "Workflow hibrid — prompt library reutilizabil, moodboard-uri și scene generate cu AI, retouch și compoziție în Photoshop/Illustrator, export în formate pregătite pentru social și print. Sesiuni de mentorat pentru echipele interne.",
+        solution: "Workflow hibrid — prompt library reutilizabil, moodboard-uri și scene generate cu AI, retouch și compoziție în Photoshop/Illustrator, export în formate pregătite pentru social și print. Am susținut cursul „AI în Marketing” cu sesiuni practice pentru peste 50 de participanți.",
         result: "Timp de producție redus semnificativ, estetică unitară pe mai multe colecții și campanii, plus un sistem pe care echipele Vector Academy îl pot rula autonom."
       }
     };
