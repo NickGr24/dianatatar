@@ -16,7 +16,27 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://dianatatar.com/proiect.html?slug=revanty</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dianatatar.com/proiect.html?slug=budan-rush</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dianatatar.com/proiect.html?slug=applexium</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://dianatatar.com/proiect.html?slug=oo-nutrition</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dianatatar.com/proiect.html?slug=applexium-social</loc>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -26,12 +46,37 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://dianatatar.com/proiect.html?slug=cap-cap</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://dianatatar.com/proiect.html?slug=campanie-vizuala</loc>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://dianatatar.com/proiect.html?slug=campanie-rafi</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dianatatar.com/proiect.html?slug=campanie-solovov</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dianatatar.com/proiect.html?slug=campanie-ecb</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://dianatatar.com/proiect.html?slug=vector-academy-ai</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dianatatar.com/proiect.html?slug=enzzi-ai</loc>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>

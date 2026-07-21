@@ -6,9 +6,10 @@
   "use strict";
 
   /* Form backend — set to "" to fall back to mailto:.
-     To activate Formspree: sign up at formspree.io, create a form,
-     paste the endpoint URL here (looks like https://formspree.io/f/xxxxxxxx). */
-  const FORMSPREE_ENDPOINT = "";
+     FormSubmit needs no account: the first submission emails an activation
+     link to designerdianatatar@gmail.com; once confirmed, messages arrive
+     directly in the inbox. A Formspree endpoint works here too. */
+  const FORM_ENDPOINT = "https://formsubmit.co/ajax/designerdianatatar@gmail.com";
 
   /* ---------- helpers ---------- */
   const $  = (sel, root = document) => root.querySelector(sel);
@@ -73,10 +74,13 @@
     const slides = $$(".case__slide", caseEl);
     const counter = $(".case__counter", caseEl);
     const arrows  = $$(".case__arrow", caseEl);
+    const nav     = $(".case__nav", caseEl);
     if (!slides.length) return;
 
     let index = slides.findIndex((s) => s.classList.contains("is-active"));
     if (index < 0) index = 0;
+
+    let dots = [];
 
     const render = () => {
       slides.forEach((s, i) => s.classList.toggle("is-active", i === index));
@@ -86,17 +90,53 @@
         const nextIdx = index + dir;
         btn.disabled = slides.length <= 1 || nextIdx < 0 || nextIdx >= slides.length;
       });
+      dots.forEach((d, i) => d.classList.toggle("is-active", i === index));
+    };
+
+    const go = (dir) => {
+      const next = index + dir;
+      if (next < 0 || next >= slides.length) return;
+      index = next;
+      render();
     };
 
     arrows.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const dir = Number(btn.dataset.dir);
-        const next = index + dir;
-        if (next < 0 || next >= slides.length) return;
-        index = next;
-        render();
-      });
+      btn.addEventListener("click", () => go(Number(btn.dataset.dir)));
     });
+
+    /* Dot indicators — one per project in the category */
+    if (nav && slides.length > 1) {
+      const wrap = document.createElement("div");
+      wrap.className = "case__dots";
+      dots = slides.map((s, i) => {
+        const dot = document.createElement("button");
+        dot.type = "button";
+        dot.className = "case__dot";
+        dot.setAttribute("aria-label", `Proiectul ${i + 1} din ${slides.length}`);
+        dot.addEventListener("click", () => { index = i; render(); });
+        wrap.appendChild(dot);
+        return dot;
+      });
+      nav.prepend(wrap);
+    }
+
+    /* Touch swipe — horizontal, ignores mostly-vertical gestures */
+    const stage = $(".case__stage", caseEl);
+    if (stage && slides.length > 1) {
+      let x0 = 0, y0 = 0, tracking = false;
+      stage.addEventListener("touchstart", (e) => {
+        x0 = e.touches[0].clientX;
+        y0 = e.touches[0].clientY;
+        tracking = true;
+      }, { passive: true });
+      stage.addEventListener("touchend", (e) => {
+        if (!tracking) return;
+        tracking = false;
+        const dx = e.changedTouches[0].clientX - x0;
+        const dy = e.changedTouches[0].clientY - y0;
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) go(dx < 0 ? 1 : -1);
+      }, { passive: true });
+    }
 
     render();
   });
@@ -192,14 +232,18 @@
         return;
       }
 
-      if (FORMSPREE_ENDPOINT) {
+      if (FORM_ENDPOINT) {
         if (submitBtn) submitBtn.disabled = true;
         setStatus("Se trimite…", "rgba(255,255,255,.7)");
         try {
-          const res = await fetch(FORMSPREE_ENDPOINT, {
+          const res = await fetch(FORM_ENDPOINT, {
             method: "POST",
             headers: { "Accept": "application/json", "Content-Type": "application/json" },
-            body: JSON.stringify({ name, email, message })
+            body: JSON.stringify({
+              name, email, message,
+              _subject: `Solicitare proiect — ${name}`,
+              _template: "table"
+            })
           });
           if (!res.ok) throw new Error("Network response was not ok");
           setStatus("Mulțumesc! Mesajul a fost trimis — îți voi răspunde curând.", "rgba(255,255,255,.85)");
@@ -369,7 +413,7 @@
         category: "Editorial & Print",
         title: "Centrul sportiv de pregătire a loturilor naționale",
         sub: "Brand book, flyere și reviste",
-        cover: "assets/images/project-bg.webp",
+        cover: "assets/images/projects/wrestling-a3.webp",
         context: "Centrul sportiv de pregătire a loturilor naționale avea nevoie de materiale tipărite (flyere, reviste, documente de prezentare) care să reflecte seriozitatea și prestigiul instituției, dar să rămână accesibile publicului larg.",
         goal: "Un sistem editorial care să susțină comunicarea oficială și, în același timp, să facă informația ușor de parcurs pentru sportivi, antrenori și parteneri.",
         solution: "Grid editorial pe 8 coloane, ierarhie tipografică clară, fotografie documentară combinată cu infografice. Am livrat layout-uri pentru flyere, revista internă și materiale de eveniment, toate folosind același sistem vizual.",
@@ -496,7 +540,7 @@
         category: "Generare conținut cu AI",
         title: "Vector Academy — AI content",
         sub: "AI mentor | Video, static, moodboards",
-        cover: "assets/images/project-bg.webp",
+        cover: "assets/images/projects/vector-print-01.webp",
         context: "În calitate de AI content creator și AI mentor la Vector Academy, am dezvoltat concepte grafice pentru postări social media, bannere și materiale promoționale folosind workflow-uri mixte — design clasic + generare cu AI.",
         goal: "Livrare rapidă și constantă de conținut vizual cu look premium, fără costurile unui shooting pentru fiecare campanie, menținând o estetică coerentă de la un lansare la alta.",
         solution: "Workflow hibrid — prompt library reutilizabil, moodboard-uri și scene generate cu AI, retouch și compoziție în Photoshop/Illustrator, export în formate pregătite pentru social și print. Am susținut cursul „AI în Marketing” cu sesiuni practice pentru peste 50 de participanți.",
@@ -509,7 +553,7 @@
         category: "Generare conținut cu AI",
         title: "ENZZI — AI product content",
         sub: "Integrarea produsului în spațiu | Logo pe produs",
-        cover: "assets/images/project-enzzi.webp",
+        cover: "assets/images/projects/enzzi-01.webp",
         context: "Pentru brandul ENZZI am generat cu AI imagini de produs — baterii și obiecte sanitare — integrate în spații reale și scene de lifestyle, fără costurile unui shooting foto clasic.",
         goal: "Vizualuri de calitate comercială: integrarea produsului în spațiu și aplicarea logo-ului direct pe produs, păstrând materialele, reflexiile și proporțiile fidele produsului real.",
         solution: "Workflow hibrid — generarea scenelor cu AI, aplicarea logo-ului pe produs, apoi retuș și corecții manuale pentru realism și consistență între imagini.",
@@ -549,20 +593,77 @@
       set("solution", data.solution);
       set("result",   data.result);
 
-      /* Gallery — full set of project visuals */
+      /* Gallery — full set of project visuals, click opens the lightbox */
       const gallery = projectRoot.querySelector('[data-field="gallery"]');
       if (gallery && Array.isArray(data.images) && data.images.length) {
         const grid = gallery.querySelector(".project__gallery-grid");
         grid.innerHTML = "";
+
+        const lb = document.createElement("div");
+        lb.className = "lightbox";
+        lb.setAttribute("role", "dialog");
+        lb.setAttribute("aria-modal", "true");
+        lb.setAttribute("aria-label", "Imagine mărită din proiect");
+        lb.innerHTML =
+          '<button class="lightbox__close" aria-label="Închide">&times;</button>' +
+          '<button class="lightbox__nav lightbox__nav--prev" aria-label="Imaginea anterioară">&#8249;</button>' +
+          '<img class="lightbox__img" alt="" />' +
+          '<button class="lightbox__nav lightbox__nav--next" aria-label="Imaginea următoare">&#8250;</button>' +
+          '<span class="lightbox__count" aria-hidden="true"></span>';
+        document.body.appendChild(lb);
+
+        const lbImg = lb.querySelector(".lightbox__img");
+        const lbCount = lb.querySelector(".lightbox__count");
+        let lbIndex = 0;
+
+        const showLb = (i) => {
+          lbIndex = (i + data.images.length) % data.images.length;
+          lbImg.src = data.images[lbIndex];
+          lbImg.alt = `${data.title} — imagine ${lbIndex + 1} din proiect`;
+          lbCount.textContent = `${lbIndex + 1} / ${data.images.length}`;
+        };
+        const openLb = (i) => {
+          showLb(i);
+          lb.classList.add("is-open");
+          document.body.classList.add("is-lightbox-open");
+        };
+        const closeLb = () => {
+          lb.classList.remove("is-open");
+          document.body.classList.remove("is-lightbox-open");
+        };
+
+        lb.querySelector(".lightbox__close").addEventListener("click", closeLb);
+        lb.querySelector(".lightbox__nav--prev").addEventListener("click", () => showLb(lbIndex - 1));
+        lb.querySelector(".lightbox__nav--next").addEventListener("click", () => showLb(lbIndex + 1));
+        lb.addEventListener("click", (e) => { if (e.target === lb) closeLb(); });
+        document.addEventListener("keydown", (e) => {
+          if (!lb.classList.contains("is-open")) return;
+          if (e.key === "Escape") closeLb();
+          if (e.key === "ArrowLeft") showLb(lbIndex - 1);
+          if (e.key === "ArrowRight") showLb(lbIndex + 1);
+        });
+        let lbX0 = 0;
+        lb.addEventListener("touchstart", (e) => { lbX0 = e.touches[0].clientX; }, { passive: true });
+        lb.addEventListener("touchend", (e) => {
+          const dx = e.changedTouches[0].clientX - lbX0;
+          if (Math.abs(dx) > 50) showLb(lbIndex + (dx < 0 ? 1 : -1));
+        }, { passive: true });
+
         data.images.forEach((src, i) => {
           const fig = document.createElement("figure");
           fig.className = "project__gallery-item";
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "project__gallery-btn";
+          btn.setAttribute("aria-label", `Mărește imaginea ${i + 1} din proiect`);
           const img = document.createElement("img");
           img.src = src;
           img.alt = `${data.title} — imagine ${i + 1} din proiect`;
           img.loading = "lazy";
           img.decoding = "async";
-          fig.appendChild(img);
+          btn.appendChild(img);
+          btn.addEventListener("click", () => openLb(i));
+          fig.appendChild(btn);
           grid.appendChild(fig);
         });
         gallery.hidden = false;
