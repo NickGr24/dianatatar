@@ -358,7 +358,11 @@
         context: "Centrul sportiv de pregătire a loturilor naționale avea nevoie de materiale tipărite (flyere, reviste, documente de prezentare) care să reflecte seriozitatea și prestigiul instituției, dar să rămână accesibile publicului larg.",
         goal: "Un sistem editorial care să susțină comunicarea oficială și, în același timp, să facă informația ușor de parcurs pentru sportivi, antrenori și parteneri.",
         solution: "Grid editorial pe 8 coloane, ierarhie tipografică clară, fotografie documentară combinată cu infografice. Am livrat layout-uri pentru flyere, revista internă și materiale de eveniment, toate folosind același sistem vizual.",
-        result: "Materiale folosite la evenimente oficiale și la comunicarea internă; instituția a câștigat un format editorial pe care îl poate extinde singură pentru numerele următoare."
+        result: "Materiale folosite la evenimente oficiale și la comunicarea internă; instituția a câștigat un format editorial pe care îl poate extinde singură pentru numerele următoare.",
+        images: [
+          "assets/images/projects/wrestling-a3.webp",
+          "assets/images/projects/editorial-frame.webp"
+        ]
       },
       "cap-cap": {
         category: "Editorial & Print",
@@ -370,6 +374,7 @@
         solution: "Pe lateral și în partea din spate am păstrat conceptul principal cu casa secționată și procesele inginerești reprezentate vizual, deoarece aceasta transmite imediat ideea de soluții complete pentru casă. Capota poartă logo-ul și mesajul principal, pe un layout curat, cu contrast puternic.",
         result: "Un design auto coerent cu identitatea brandului, ușor de recunoscut în oraș și scalabil pe întreaga flotă.",
         images: [
+          "assets/images/projects/capcap-01.webp",
           "assets/images/projects/capcap-02.webp",
           "assets/images/projects/capcap-03.webp",
           "assets/images/projects/capcap-04.webp"
@@ -393,7 +398,18 @@
         context: "Pentru Rafi Decor am dezvoltat o campanie vizuală completă pentru trei linii de produs — laminat SPC, vopsea profesională și panouri 3D — cu adaptări pentru site, social media și rețele de display.",
         goal: "Un sistem vizual unitar care să funcționeze pe zeci de formate — de la postări și story-uri până la bannere 970×250, 300×600, 300×250, 336×228 și 160×600 — păstrând recognoscibilitatea brandului pe fiecare dintre ele.",
         solution: "Concept construit pe folclor românesc reinterpretat („Foaie verde și-o alună, laminatul SPC e treabă bună!”), fotografie de produs expresivă și o grilă flexibilă adaptată fiecărui format, cu accente clare pe ofertă și preț.",
-        result: "Campania a rulat simultan pe site, social media și display ads cu o identitate coerentă pe toate formatele, iar sistemul poate fi reutilizat pentru liniile noi de produs."
+        result: "Campania a rulat simultan pe site, social media și display ads cu o identitate coerentă pe toate formatele, iar sistemul poate fi reutilizat pentru liniile noi de produs.",
+        images: [
+          "assets/images/projects/rafi-post-1.webp",
+          "assets/images/projects/rafi-post-2.webp",
+          "assets/images/projects/rafi-post-3.webp",
+          "assets/images/projects/rafi-story-1.webp",
+          "assets/images/projects/rafi-story-2.webp",
+          "assets/images/projects/rafi-story-3.webp",
+          "assets/images/projects/rafi-site-1.webp",
+          "assets/images/projects/rafi-site-2.webp",
+          "assets/images/projects/rafi-site-3.webp"
+        ]
       },
       "campanie-solovov": {
         category: "Concept vizual & Campanii",
@@ -403,7 +419,29 @@
         context: "Solovov Jewelry a lansat o campanie de tip concurs — „Cumpără bijuterii și ajungi în Dubai” — care avea nevoie de un univers vizual premium și aspirațional, recognoscibil instant.",
         goal: "Comunicarea simultană a eleganței bijuteriilor și a premiului — călătoria la Dubai — într-un vizual memorabil, adaptat pentru feed, story și formate publicitare, în română și rusă.",
         solution: "Concept vizual-semnătură cu Burj Khalifa îmbrăcat în inele și verighete, paletă roșu premium cu accente metalice, declinată pe postări, story-uri și bannere pentru toate canalele campaniei.",
-        result: "O campanie recognoscibilă instant, cu un vizual-semnătură care a susținut mecanica de concurs pe toate canalele brandului."
+        result: "O campanie recognoscibilă instant, cu un vizual-semnătură care a susținut mecanica de concurs pe toate canalele brandului.",
+        images: [
+          "assets/images/projects/solovov-01.webp",
+          "assets/images/projects/solovov-02.webp",
+          "assets/images/projects/solovov-03.webp",
+          "assets/images/projects/solovov-04.webp",
+          "assets/images/projects/solovov-05.webp",
+          "assets/images/projects/solovov-06.webp",
+          "assets/images/projects/solovov-07.webp",
+          "assets/images/projects/solovov-08.webp",
+          "assets/images/projects/solovov-09.webp",
+          "assets/images/projects/solovov-10.webp",
+          "assets/images/projects/solovov-11.webp",
+          "assets/images/projects/solovov-12.webp",
+          "assets/images/projects/solovov-13.webp",
+          "assets/images/projects/solovov-14.webp",
+          "assets/images/projects/solovov-15.webp",
+          "assets/images/projects/solovov-16.webp",
+          "assets/images/projects/solovov-17.webp",
+          "assets/images/projects/solovov-18.webp",
+          "assets/images/projects/solovov-19.webp",
+          "assets/images/projects/solovov-20.webp"
+        ]
       },
       "campanie-ecb": {
         category: "Concept vizual & Campanii",
