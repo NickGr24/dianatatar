@@ -249,8 +249,7 @@
           "assets/images/projects/decoratii-10.webp",
           "assets/images/projects/decoratii-11.webp",
           "assets/images/projects/decoratii-12.webp",
-          "assets/images/projects/decoratii-13.webp",
-          "assets/images/projects/decoratii-14.webp"
+          "assets/images/projects/decoratii-13.webp"
         ]
       },
       revanty: {
@@ -307,7 +306,8 @@
           "assets/images/projects/budan-11.webp",
           "assets/images/projects/budan-12.webp",
           "assets/images/projects/budan-13.webp",
-          "assets/images/projects/budan-14.webp"
+          "assets/images/projects/budan-14.webp",
+          "assets/images/projects/budan-15.webp"
         ]
       },
       applexium: {
@@ -338,7 +338,12 @@
         context: "OO.Nutrition aveau nevoie de o prezentare de produs clară, care să explice conceptul și beneficiile liniei de nutriție către parteneri și investitori, cât și să funcționeze ca material de comunicare pe social media.",
         goal: "Un document care să vândă conceptul — structură editorială ușor de parcurs, ierarhie tipografică puternică și vizualuri care să transmită ideea de produs premium, fără a încărca informația.",
         solution: "Am construit o prezentare modulară pornind de la conceptul de produs, cu paletă asortată brandului, iconografie simplă, machete de pagini reutilizabile și un set de slide-uri adaptate pentru postări pe social media.",
-        result: "Materialul a devenit principalul instrument de comunicare a brandului către parteneri, iar echipa OO.Nutrition a putut reutiliza slide-urile pentru campanii noi fără a cere redesign de la zero."
+        result: "Materialul a devenit principalul instrument de comunicare a brandului către parteneri, iar echipa OO.Nutrition a putut reutiliza slide-urile pentru campanii noi fără a cere redesign de la zero.",
+        images: [
+          "assets/images/projects/oonutrition-01.webp",
+          "assets/images/projects/oonutrition-02.webp",
+          "assets/images/projects/oonutrition-03.webp"
+        ]
       },
       "applexium-social": {
         category: "Social Media",
@@ -368,8 +373,7 @@
         solution: "Grid editorial pe 8 coloane, ierarhie tipografică clară, fotografie documentară combinată cu infografice. Am livrat layout-uri pentru flyere, revista internă și materiale de eveniment, toate folosind același sistem vizual.",
         result: "Materiale folosite la evenimente oficiale și la comunicarea internă; instituția a câștigat un format editorial pe care îl poate extinde singură pentru numerele următoare.",
         images: [
-          "assets/images/projects/wrestling-a3.webp",
-          "assets/images/projects/editorial-frame.webp"
+          "assets/images/projects/wrestling-a3.webp"
         ]
       },
       "cap-cap": {
@@ -380,13 +384,7 @@
         context: "Branding auto pentru cap cap — aplicarea identității pe vehiculele brandului, transformându-le în purtătoare mobile ale mesajului „Toate bătăile de cap le rezolvă cap cap”.",
         goal: "Vizibilitate urbană maximă: vehiculul trebuia să comunice instant serviciile brandului, atât în trafic, cât și staționat, păstrând lizibilitatea la orice distanță.",
         solution: "Pe lateral și în partea din spate am păstrat conceptul principal cu casa secționată și procesele inginerești reprezentate vizual, deoarece aceasta transmite imediat ideea de soluții complete pentru casă. Capota poartă logo-ul și mesajul principal, pe un layout curat, cu contrast puternic.",
-        result: "Un design auto coerent cu identitatea brandului, ușor de recunoscut în oraș și scalabil pe întreaga flotă.",
-        images: [
-          "assets/images/projects/capcap-01.webp",
-          "assets/images/projects/capcap-02.webp",
-          "assets/images/projects/capcap-03.webp",
-          "assets/images/projects/capcap-04.webp"
-        ]
+        result: "Un design auto coerent cu identitatea brandului, ușor de recunoscut în oraș și scalabil pe întreaga flotă."
       },
       "campanie-vizuala": {
         category: "Concept vizual & Campanii",
@@ -495,7 +493,10 @@
         context: "În calitate de AI content creator și AI mentor la Vector Academy, am dezvoltat concepte grafice pentru postări social media, bannere și materiale promoționale folosind workflow-uri mixte — design clasic + generare cu AI.",
         goal: "Livrare rapidă și constantă de conținut vizual cu look premium, fără costurile unui shooting pentru fiecare campanie, menținând o estetică coerentă de la un lansare la alta.",
         solution: "Workflow hibrid — prompt library reutilizabil, moodboard-uri și scene generate cu AI, retouch și compoziție în Photoshop/Illustrator, export în formate pregătite pentru social și print. Am susținut cursul „AI în Marketing” cu sesiuni practice pentru peste 50 de participanți.",
-        result: "Timp de producție redus semnificativ, estetică unitară pe mai multe colecții și campanii, plus un sistem pe care echipele Vector Academy îl pot rula autonom."
+        result: "Timp de producție redus semnificativ, estetică unitară pe mai multe colecții și campanii, plus un sistem pe care echipele Vector Academy îl pot rula autonom.",
+        images: [
+          "assets/images/projects/vector-print-01.webp"
+        ]
       },
       "enzzi-ai": {
         category: "Generare conținut cu AI",
