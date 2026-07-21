@@ -1058,6 +1058,37 @@ body { background: transparent; }
   max-width: 720px;
 }
 
+.project__gallery {
+  padding-block: clamp(28px, 4vw, 48px);
+  border-top: 1px solid rgba(0,0,0,.1);
+}
+.project__gallery h2 {
+  font-size: clamp(28px, 3vw, 48px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  display: flex; flex-direction: column; gap: 12px;
+  margin-bottom: clamp(24px, 3vw, 40px);
+}
+.project__gallery h2 span {
+  font-size: 14px; font-weight: 500; color: var(--c-muted);
+  letter-spacing: 0.15em;
+}
+.project__gallery-grid {
+  columns: 2 440px;
+  column-gap: 18px;
+}
+.project__gallery-item {
+  margin: 0 0 18px;
+  break-inside: avoid;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(0,0,0,.05);
+}
+.project__gallery-item img {
+  width: 100%; height: auto; display: block;
+}
+
 .project__nav {
   display: flex; justify-content: space-between; align-items: center;
   gap: 18px;

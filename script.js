@@ -235,7 +235,23 @@
         context: "Decorații.md este un brand dedicat decorului urban și construcțiilor metalice, care transformă orașele prin lumină, structură și experiențe vizuale create pentru oameni și comunități. Rebrandingul a pornit din dorința de a evolua identitatea existentă și de a o aduce mai aproape de ceea ce compania reprezintă astăzi.",
         goal: "Nu schimbarea completă a poveștii, ci reinterpretarea ei într-un limbaj vizual mai contemporan, memorabil și relevant pentru industria în care activează compania.",
         solution: "Elementul central al noului logo este punctul luminos — simbolul ideii, al luminii și al începutului procesului creativ. Identitatea transmite rezistență, structură și precizie printr-un pattern inspirat din structuri metalice și efecte luminoase, iar paleta cromatică și texturile vin direct din materialele cu care brandul lucrează zilnic: metal, beton și structuri urbane. Accentul luminos evocă energia sărbătorilor, iar tonurile închise reflectă caracterul industrial și durabil al lucrărilor.",
-        result: "O identitate contemporană, memorabilă și flexibilă, care poziționează Decorații.md nu doar ca producător de decor urban, ci ca un brand care contribuie activ la felul în care orașele sunt trăite, celebrate și simțite de oameni."
+        result: "O identitate contemporană, memorabilă și flexibilă, care poziționează Decorații.md nu doar ca producător de decor urban, ci ca un brand care contribuie activ la felul în care orașele sunt trăite, celebrate și simțite de oameni.",
+        images: [
+          "assets/images/projects/decoratii-01.webp",
+          "assets/images/projects/decoratii-02.webp",
+          "assets/images/projects/decoratii-03.webp",
+          "assets/images/projects/decoratii-04.webp",
+          "assets/images/projects/decoratii-05.webp",
+          "assets/images/projects/decoratii-06.webp",
+          "assets/images/projects/decoratii-07.webp",
+          "assets/images/projects/decoratii-08.webp",
+          "assets/images/projects/decoratii-09.webp",
+          "assets/images/projects/decoratii-10.webp",
+          "assets/images/projects/decoratii-11.webp",
+          "assets/images/projects/decoratii-12.webp",
+          "assets/images/projects/decoratii-13.webp",
+          "assets/images/projects/decoratii-14.webp"
+        ]
       },
       revanty: {
         category: "Branding & Identitate vizuală",
@@ -245,7 +261,28 @@
         context: "Revanty este un brand de clinică stomatologică construit în jurul ideii de reconstrucție și transformare personală. Mai mult decât un spațiu medical, Revanty oferă o experiență în care tehnologia modernă, grija autentică și confortul pacientului se întâlnesc pentru a reda nu doar sănătatea dentară, ci și încrederea în propriul zâmbet.",
         goal: "Vizita la stomatolog nu ar trebui asociată cu teamă sau disconfort, ci cu sentimentul că ești ascultat, înțeles și susținut. Conceptul gravitează în jurul prefixului „re” — restabilire, regenerare, reconectare — iar namingul îl combină cu inspirația din cuvântul francez „avant”, asociat progresului, construind un brand care vorbește despre evoluție și un nou început.",
         solution: "Identitatea vizuală transmite calm, optimism și apropiere umană — brandul este prezentat prin expresii reale, oameni și emoții autentice. Patternul a pornit de la valuri, forme fluide care transmit calm și continuitate; pe măsură ce liniile au fost reinterpretate, s-a conturat o formă care amintește subtil de structura dinților — un cod vizual recognoscibil al brandului.",
-        result: "O identitate modernă și prietenoasă, construită în jurul ideii că medicina și empatia pot merge împreună."
+        result: "O identitate modernă și prietenoasă, construită în jurul ideii că medicina și empatia pot merge împreună.",
+        images: [
+          "assets/images/projects/revanty-01.webp",
+          "assets/images/projects/revanty-02.webp",
+          "assets/images/projects/revanty-03.webp",
+          "assets/images/projects/revanty-04.webp",
+          "assets/images/projects/revanty-05.webp",
+          "assets/images/projects/revanty-06.webp",
+          "assets/images/projects/revanty-07.webp",
+          "assets/images/projects/revanty-08.webp",
+          "assets/images/projects/revanty-09.webp",
+          "assets/images/projects/revanty-10.webp",
+          "assets/images/projects/revanty-11.webp",
+          "assets/images/projects/revanty-12.webp",
+          "assets/images/projects/revanty-13.webp",
+          "assets/images/projects/revanty-14.webp",
+          "assets/images/projects/revanty-15.webp",
+          "assets/images/projects/revanty-16.webp",
+          "assets/images/projects/revanty-17.webp",
+          "assets/images/projects/revanty-18.webp",
+          "assets/images/projects/revanty-19.webp"
+        ]
       },
       "budan-rush": {
         category: "Branding & Identitate vizuală",
@@ -255,17 +292,43 @@
         context: "Budan Rush a pornit de la o observație simplă: oamenii beau cafea în fiecare zi, dar de multe ori o fac pe fugă. Conceptul brandului nu vorbește despre cafea, ci despre oamenii care o beau și despre nevoia lor de a găsi o clipă de liniște într-un oraș aflat permanent în mișcare.",
         goal: "Elementul central al identității îl reprezintă paharele cu întrebări: în locul sloganurilor promoționale, fiecare pahar poartă o întrebare scurtă, personală și relevantă, care transformă un obiect obișnuit într-un punct de reflecție. Experiența brandului începe înainte de prima înghițitură de cafea.",
         solution: "Paletă de culori calde și apetisante, inspirate de cafea proaspătă, produse de patiserie și atmosfera confortabilă a unei cafenele urbane. Ilustrațiile și elementele grafice, dezvoltate într-un stil prietenos și expresiv, aduc personalitate și accesibilitate, iar formele simple creează o experiență umană și memorabilă.",
-        result: "Un brand care depășește funcția clasică de coffee to go — Budan Rush devine un mic ritual urban: un loc care nu te oprește din drum, dar te invită să te oprești pentru câteva secunde în interiorul tău."
+        result: "Un brand care depășește funcția clasică de coffee to go — Budan Rush devine un mic ritual urban: un loc care nu te oprește din drum, dar te invită să te oprești pentru câteva secunde în interiorul tău.",
+        images: [
+          "assets/images/projects/budan-01.webp",
+          "assets/images/projects/budan-02.webp",
+          "assets/images/projects/budan-03.webp",
+          "assets/images/projects/budan-04.webp",
+          "assets/images/projects/budan-05.webp",
+          "assets/images/projects/budan-06.webp",
+          "assets/images/projects/budan-07.webp",
+          "assets/images/projects/budan-08.webp",
+          "assets/images/projects/budan-09.webp",
+          "assets/images/projects/budan-10.webp",
+          "assets/images/projects/budan-11.webp",
+          "assets/images/projects/budan-12.webp",
+          "assets/images/projects/budan-13.webp",
+          "assets/images/projects/budan-14.webp"
+        ]
       },
       applexium: {
         category: "Branding & Identitate vizuală",
         title: "Applexium",
         sub: "AI-Driven Tech company | Identitate vizuală",
-        cover: "assets/images/project-applexium.webp",
+        cover: "assets/images/projects/applexium-01.webp",
         context: "Applexium este o companie tech orientată spre inovație, automatizare și dezvoltarea de produse digitale moderne. Obiectivul proiectului a fost o identitate vizuală care să transmită tehnologie, încredere și evoluție, păstrând un aspect accesibil și contemporan.",
         goal: "Logo-ul și sistemul grafic trebuiau să susțină poziționarea companiei ca partener modern în dezvoltarea soluțiilor software, AI și a produselor digitale.",
         solution: "Un element definitoriu este utilizarea efectelor de glass morphism, a gradientelor albastre și a transparențelor subtile, care creează senzația de profunzime, fluiditate și inovație tehnologică. Am dezvoltat un sistem complet de elemente grafice și aplicații vizuale — de la materiale corporate și aplicații digitale până la iconografie, social media și elemente de interfață.",
-        result: "O identitate vizuală modernă și flexibilă, care poziționează Applexium ca un brand tech inovator, pregătit să dezvolte soluții digitale pentru viitor."
+        result: "O identitate vizuală modernă și flexibilă, care poziționează Applexium ca un brand tech inovator, pregătit să dezvolte soluții digitale pentru viitor.",
+        images: [
+          "assets/images/projects/applexium-01.webp",
+          "assets/images/projects/applexium-02.webp",
+          "assets/images/projects/applexium-03.webp",
+          "assets/images/projects/applexium-04.webp",
+          "assets/images/projects/applexium-05.webp",
+          "assets/images/projects/applexium-06.webp",
+          "assets/images/projects/applexium-07.webp",
+          "assets/images/projects/applexium-08.webp"
+        ]
       },
       "oo-nutrition": {
         category: "Presentation & Social Media",
@@ -305,7 +368,12 @@
         context: "Branding auto pentru cap cap — aplicarea identității pe vehiculele brandului, transformându-le în purtătoare mobile ale mesajului „Toate bătăile de cap le rezolvă cap cap”.",
         goal: "Vizibilitate urbană maximă: vehiculul trebuia să comunice instant serviciile brandului, atât în trafic, cât și staționat, păstrând lizibilitatea la orice distanță.",
         solution: "Pe lateral și în partea din spate am păstrat conceptul principal cu casa secționată și procesele inginerești reprezentate vizual, deoarece aceasta transmite imediat ideea de soluții complete pentru casă. Capota poartă logo-ul și mesajul principal, pe un layout curat, cu contrast puternic.",
-        result: "Un design auto coerent cu identitatea brandului, ușor de recunoscut în oraș și scalabil pe întreaga flotă."
+        result: "Un design auto coerent cu identitatea brandului, ușor de recunoscut în oraș și scalabil pe întreaga flotă.",
+        images: [
+          "assets/images/projects/capcap-02.webp",
+          "assets/images/projects/capcap-03.webp",
+          "assets/images/projects/capcap-04.webp"
+        ]
       },
       "campanie-vizuala": {
         category: "Concept vizual & Campanii",
@@ -392,6 +460,25 @@
       set("goal",     data.goal);
       set("solution", data.solution);
       set("result",   data.result);
+
+      /* Gallery — full set of project visuals */
+      const gallery = projectRoot.querySelector('[data-field="gallery"]');
+      if (gallery && Array.isArray(data.images) && data.images.length) {
+        const grid = gallery.querySelector(".project__gallery-grid");
+        grid.innerHTML = "";
+        data.images.forEach((src, i) => {
+          const fig = document.createElement("figure");
+          fig.className = "project__gallery-item";
+          const img = document.createElement("img");
+          img.src = src;
+          img.alt = `${data.title} — imagine ${i + 1} din proiect`;
+          img.loading = "lazy";
+          img.decoding = "async";
+          fig.appendChild(img);
+          grid.appendChild(fig);
+        });
+        gallery.hidden = false;
+      }
 
       const canonicalUrl = `https://dianatatar.com/proiect.html?slug=${safeSlug}`;
       const canonical = document.getElementById("canonical-link");
