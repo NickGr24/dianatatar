@@ -181,6 +181,29 @@
     // wait for first paint to measure correctly
     requestAnimationFrame(pickActiveByScroll);
 
+    /* Long quotes are clamped to a few lines so the photo stays visible;
+       "Citește tot" expands the full text in place. */
+    cards.forEach((card) => {
+      const quote = card.querySelector("blockquote");
+      if (!quote) return;
+      quote.classList.add("is-clamped");
+      if (quote.scrollHeight <= quote.clientHeight + 4) {
+        quote.classList.remove("is-clamped");
+        return;
+      }
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "t-card__more";
+      btn.textContent = "Citește tot";
+      btn.setAttribute("aria-expanded", "false");
+      quote.insertAdjacentElement("afterend", btn);
+      btn.addEventListener("click", () => {
+        const expanded = !quote.classList.toggle("is-clamped");
+        btn.textContent = expanded ? "Restrânge" : "Citește tot";
+        btn.setAttribute("aria-expanded", String(expanded));
+      });
+    });
+
     tArrows.forEach((btn) => {
       btn.addEventListener("click", () => {
         const dir = Number(btn.dataset.dir);
