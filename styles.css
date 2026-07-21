@@ -827,12 +827,20 @@ body { background: transparent; }
   isolation: isolate;
   transition: transform .5s var(--ease);
   transform: scale(.92);
+  display: flex;
+  flex-direction: column;
 }
 .t-card.is-active { transform: scale(1); }
 
+/* Figure flows with the content: a long quote grows the card
+   instead of overflowing past its top edge. */
 .t-card figure {
-  margin: 0; height: 100%;
-  position: absolute; inset: 0;
+  margin: 0;
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 .t-card__photo {
   position: absolute;
@@ -848,19 +856,24 @@ body { background: transparent; }
 
 .t-card__gradient {
   position: absolute; inset: 0; z-index: 1;
-  background: linear-gradient(0deg, rgba(0,0,0,.92) 0%, rgba(0,0,0,.35) 55%, rgba(0,0,0,0) 85%);
+  background: linear-gradient(0deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.15) 45%, rgba(0,0,0,0) 75%);
 }
+/* Caption carries its own gradient, so the dark zone always matches
+   the height of the text — short or long. */
 .t-card figcaption {
-  position: absolute; inset: 0; z-index: 2;
+  position: relative; z-index: 2;
+  margin-top: auto;
   padding: clamp(28px, 4vw, 48px);
+  padding-top: 110px;
   display: flex; flex-direction: column; justify-content: flex-end;
   gap: 20px;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.78) 100px, rgba(0,0,0,.9) 100%);
 }
 .t-card blockquote {
   margin: 0;
-  font-size: clamp(18px, 1.4vw, 24px);
+  font-size: clamp(16px, 1.15vw, 19px);
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.5;
 }
 .t-card cite {
   font-style: normal;
