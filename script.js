@@ -348,7 +348,15 @@
         context: "Pentru Applexium am creat sistemul de comunicare vizuală pe social media — postări care traduc poziționarea de AI-Driven Tech company într-un limbaj vizual premium, coerent cu identitatea de brand.",
         goal: "Coerență între identitatea de brand și conținutul publicat zilnic: fiecare postare trebuia să fie recognoscibilă instant în feed și să susțină pilonii de comunicare — soluții digitale, AI, automatizare, compliance.",
         solution: "Serie de template-uri construite pe glass morphism, gradiente albastre și tipografie clară, declinate pentru anunțuri, prezentare de servicii și mesaje de brand — ușor de adaptat de echipă pentru conținut nou.",
-        result: "Un feed coerent și premium, care susține poziționarea companiei și poate fi extins fără redesign de la zero."
+        result: "Un feed coerent și premium, care susține poziționarea companiei și poate fi extins fără redesign de la zero.",
+        images: [
+          "assets/images/projects/asocial-01.webp",
+          "assets/images/projects/asocial-02.webp",
+          "assets/images/projects/asocial-03.webp",
+          "assets/images/projects/asocial-04.webp",
+          "assets/images/projects/asocial-05.webp",
+          "assets/images/projects/asocial-06.webp"
+        ]
       },
       "centrul-sportiv": {
         category: "Editorial & Print",
@@ -440,7 +448,15 @@
           "assets/images/projects/solovov-17.webp",
           "assets/images/projects/solovov-18.webp",
           "assets/images/projects/solovov-19.webp",
-          "assets/images/projects/solovov-20.webp"
+          "assets/images/projects/solovov-20.webp",
+          "assets/images/projects/solovov-21.webp",
+          "assets/images/projects/solovov-22.webp",
+          "assets/images/projects/solovov-23.webp",
+          "assets/images/projects/solovov-24.webp",
+          "assets/images/projects/solovov-25.webp",
+          "assets/images/projects/solovov-26.webp",
+          "assets/images/projects/solovov-27.webp",
+          "assets/images/projects/solovov-28.webp"
         ]
       },
       "campanie-ecb": {
@@ -451,7 +467,25 @@
         context: "Euro Credit Bank avea nevoie de o campanie pentru creditele BGK destinate antreprenorilor — investiții inteligente în echipament, energie și infrastructură sustenabilă.",
         goal: "Transmiterea încrederii și accesibilității — finanțări între 5.000 și 375.000 EUR — către antreprenori din domenii diferite, pe zeci de formate digitale și segmente de public: casă, călătorii, familie.",
         solution: "Fotografie autentică cu antreprenori reali în mediul lor de lucru, mesaje directe („Finanțăm viitorul afacerii tale”) și un sistem de layout-uri declinat pe toate formatele — social media, bannere web și materiale de campanie.",
-        result: "Un sistem de campanie coerent și scalabil, aplicat pe zeci de formate fără pierderea identității vizuale."
+        result: "Un sistem de campanie coerent și scalabil, aplicat pe zeci de formate fără pierderea identității vizuale.",
+        images: [
+          "assets/images/projects/ecb-01.webp",
+          "assets/images/projects/ecb-02.webp",
+          "assets/images/projects/ecb-03.webp",
+          "assets/images/projects/ecb-04.webp",
+          "assets/images/projects/ecb-05.webp",
+          "assets/images/projects/ecb-06.webp",
+          "assets/images/projects/ecb-07.webp",
+          "assets/images/projects/ecb-08.webp",
+          "assets/images/projects/ecb-09.webp",
+          "assets/images/projects/ecb-10.webp",
+          "assets/images/projects/ecb-11.webp",
+          "assets/images/projects/ecb-12.webp",
+          "assets/images/projects/ecb-13.webp",
+          "assets/images/projects/ecb-14.webp",
+          "assets/images/projects/ecb-15.webp",
+          "assets/images/projects/ecb-16.webp"
+        ]
       },
       "vector-academy-ai": {
         category: "Generare conținut cu AI",
@@ -471,7 +505,15 @@
         context: "Pentru brandul ENZZI am generat cu AI imagini de produs — baterii și obiecte sanitare — integrate în spații reale și scene de lifestyle, fără costurile unui shooting foto clasic.",
         goal: "Vizualuri de calitate comercială: integrarea produsului în spațiu și aplicarea logo-ului direct pe produs, păstrând materialele, reflexiile și proporțiile fidele produsului real.",
         solution: "Workflow hibrid — generarea scenelor cu AI, aplicarea logo-ului pe produs, apoi retuș și corecții manuale pentru realism și consistență între imagini.",
-        result: "Un set de imagini gata de utilizat în catalog și pe social media, produs într-un timp semnificativ mai scurt decât o producție foto clasică."
+        result: "Un set de imagini gata de utilizat în catalog și pe social media, produs într-un timp semnificativ mai scurt decât o producție foto clasică.",
+        images: [
+          "assets/images/projects/enzzi-01.webp",
+          "assets/images/projects/enzzi-02.webp",
+          "assets/images/projects/enzzi-03.webp",
+          "assets/images/projects/enzzi-04.webp",
+          "assets/images/projects/enzzi-05.webp",
+          "assets/images/projects/enzzi-06.webp"
+        ]
       }
     };
 
