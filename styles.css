@@ -187,7 +187,6 @@ p { margin: 0; }
 .hero__tagline {
   font-size: var(--fs-lead);
   font-weight: 400;
-  letter-spacing: normal;
   line-height: 1.25;
   color: #fff;
   margin-bottom: 40px;
