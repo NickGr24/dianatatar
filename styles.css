@@ -210,6 +210,33 @@ p { margin: 0; }
 .hero__link:hover { background: #0c0c0c; color: #fff; }
 .hero__link:hover svg { transform: translateX(4px); }
 
+/* Image trail — project covers chase the cursor across the hero.
+   Ported from the reactbits/Codrops pattern; runs via WAAPI, desktop only. */
+.hero__trail {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.hero__trail-img {
+  position: absolute;
+  top: 0; left: 0;
+  margin: 0;
+  width: clamp(150px, 13vw, 210px);
+  aspect-ratio: 4 / 5;
+  border-radius: 12px;
+  overflow: hidden;
+  opacity: 0;
+  will-change: transform, opacity;
+  box-shadow: 0 18px 50px rgba(0,0,0,.35);
+}
+.hero__trail-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 /* News-style ticker (subtitru, scroll dreapta → stânga) */
 .ticker {
   position: relative;
@@ -763,23 +790,71 @@ body { background: transparent; }
   border-top: 1px solid rgba(0,0,0,.1);
 }
 .services__list li {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(0,0,0,.1);
+}
+.svc__link {
   display: flex; align-items: center; gap: clamp(18px, 3vw, 48px);
   padding-block: clamp(18px, 2.5vw, 36px);
-  border-bottom: 1px solid rgba(0,0,0,.1);
   font-size: clamp(24px, 3vw, 48px);
   font-weight: 700;
   letter-spacing: -0.02em;
-  transition: padding .3s var(--ease), color .3s var(--ease);
 }
-.services__list li:hover {
-  padding-left: 16px;
-  color: var(--c-muted);
-}
-.services__list span {
+.svc__link:hover { opacity: 1; }
+.svc__link span {
   font-size: clamp(14px, 1.1vw, 18px);
   font-weight: 400;
   color: var(--c-muted);
   letter-spacing: 0.1em;
+}
+/* Flowing band (Codrops-style): a dark marquee of the category name and
+   its project covers slides in from the edge the cursor entered from.
+   JS drives the enter/leave transforms; without JS it stays hidden. */
+.svc__marquee {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--c-dark);
+  transform: translateY(101%);
+  overflow: hidden;
+  pointer-events: none;
+}
+.svc__marquee-inner {
+  height: 100%;
+  transform: translateY(-101%);
+}
+.svc__marquee-track {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: max-content;
+  animation: svc-marquee 15s linear infinite;
+  color: var(--c-accent);
+  font-size: clamp(20px, 2.2vw, 34px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+.svc__marquee-track em {
+  font-style: normal;
+  margin-right: clamp(20px, 2.5vw, 40px);
+}
+.svc__marquee-track i {
+  display: block;
+  flex: 0 0 auto;
+  width: clamp(110px, 10vw, 180px);
+  height: 62%;
+  margin-right: clamp(20px, 2.5vw, 40px);
+  border-radius: 999px;
+  background-size: cover;
+  background-position: center;
+}
+@keyframes svc-marquee {
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .svc__marquee-track { animation: none; }
 }
 
 /* =========================================================
@@ -1603,7 +1678,7 @@ body.is-lightbox-open { overflow: hidden; }
 
 
   .services { padding: 80px 0; }
-  .services__list li { padding: 18px 0; gap: 14px; }
+  .svc__link { padding-block: 18px; gap: 14px; }
 
   .testimonial__head-wrap { flex-direction: column; gap: 16px; }
   .testimonial__head {
@@ -1644,10 +1719,7 @@ body.is-lightbox-open { overflow: hidden; }
   .btn-cv__icon { width: 30px; height: 30px; }
 
 
-  .services__list li {
-    font-size: clamp(22px, 6vw, 30px);
-    grid-template-columns: 38px 1fr;
-  }
+  .svc__link { font-size: clamp(22px, 6vw, 30px); }
 
   .t-card { width: min(82vw, 360px); }
 
