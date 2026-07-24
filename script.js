@@ -66,82 +66,6 @@
   }
 
   /* =========================================================
-     CASE — project navigation inside a category
-     Each <article.case> may contain multiple .case__slide.
-     Arrows cycle through slides; counter shows "n / N".
-     ========================================================= */
-  $$(".case").forEach((caseEl) => {
-    const slides = $$(".case__slide", caseEl);
-    const counter = $(".case__counter", caseEl);
-    const arrows  = $$(".case__arrow", caseEl);
-    const nav     = $(".case__nav", caseEl);
-    if (!slides.length) return;
-
-    let index = slides.findIndex((s) => s.classList.contains("is-active"));
-    if (index < 0) index = 0;
-
-    let dots = [];
-
-    const render = () => {
-      slides.forEach((s, i) => s.classList.toggle("is-active", i === index));
-      if (counter) counter.textContent = `${index + 1} / ${slides.length}`;
-      arrows.forEach((btn) => {
-        const dir = Number(btn.dataset.dir);
-        const nextIdx = index + dir;
-        btn.disabled = slides.length <= 1 || nextIdx < 0 || nextIdx >= slides.length;
-      });
-      dots.forEach((d, i) => d.classList.toggle("is-active", i === index));
-    };
-
-    const go = (dir) => {
-      const next = index + dir;
-      if (next < 0 || next >= slides.length) return;
-      index = next;
-      render();
-    };
-
-    arrows.forEach((btn) => {
-      btn.addEventListener("click", () => go(Number(btn.dataset.dir)));
-    });
-
-    /* Dot indicators — one per project in the category */
-    if (nav && slides.length > 1) {
-      const wrap = document.createElement("div");
-      wrap.className = "case__dots";
-      dots = slides.map((s, i) => {
-        const dot = document.createElement("button");
-        dot.type = "button";
-        dot.className = "case__dot";
-        dot.setAttribute("aria-label", `Proiectul ${i + 1} din ${slides.length}`);
-        dot.addEventListener("click", () => { index = i; render(); });
-        wrap.appendChild(dot);
-        return dot;
-      });
-      nav.prepend(wrap);
-    }
-
-    /* Touch swipe — horizontal, ignores mostly-vertical gestures */
-    const stage = $(".case__stage", caseEl);
-    if (stage && slides.length > 1) {
-      let x0 = 0, y0 = 0, tracking = false;
-      stage.addEventListener("touchstart", (e) => {
-        x0 = e.touches[0].clientX;
-        y0 = e.touches[0].clientY;
-        tracking = true;
-      }, { passive: true });
-      stage.addEventListener("touchend", (e) => {
-        if (!tracking) return;
-        tracking = false;
-        const dx = e.changedTouches[0].clientX - x0;
-        const dy = e.changedTouches[0].clientY - y0;
-        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) go(dx < 0 ? 1 : -1);
-      }, { passive: true });
-    }
-
-    render();
-  });
-
-  /* =========================================================
      TESTIMONIALS — horizontal carousel
      Centered card becomes color, the others stay grayscale.
      Driven by scroll position + IntersectionObserver.
@@ -180,6 +104,14 @@
     window.addEventListener("resize", pickActiveByScroll);
     // wait for first paint to measure correctly
     requestAnimationFrame(pickActiveByScroll);
+
+    /* Blurred backdrop behind the contained (uncropped) photo —
+       each figure gets its own image as a CSS variable. */
+    cards.forEach((card) => {
+      const img = card.querySelector(".t-card__photo");
+      const fig = card.querySelector("figure");
+      if (img && fig) fig.style.setProperty("--photo", `url("${img.getAttribute("src")}")`);
+    });
 
     /* Long quotes are clamped to a few lines so the photo stays visible;
        "Citește tot" expands the full text in place. */
@@ -745,37 +677,9 @@
     matchMedia("(pointer: fine)").matches &&
     !matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  let cases = [];
-
   function initScrollFX() {
     if (!MOTION_FULL) return;
     document.documentElement.classList.add("js-stack-on");
-
-    /* Stack progress — set --stack-progress on each .case based on
-       how far it has been pushed past its sticky boundary.
-       Only relevant on index.html where .case elements exist. */
-    cases = $$(".case");
-    if (cases.length) {
-      if ("IntersectionObserver" in window) {
-        const nearIO = new IntersectionObserver(
-          (entries) => entries.forEach((e) => e.target.classList.toggle("is-near", e.isIntersecting)),
-          { rootMargin: "50% 0px" }
-        );
-        cases.forEach((c) => nearIO.observe(c));
-      }
-
-      const updateStackProgress = () => {
-        cases.forEach((caseEl) => {
-          const rect = caseEl.getBoundingClientRect();
-          const progress = Math.max(0, Math.min(1, -rect.top / rect.height));
-          caseEl.style.setProperty("--stack-progress", progress.toFixed(3));
-        });
-      };
-
-      const onScroll = () => requestAnimationFrame(updateStackProgress);
-      window.addEventListener("scroll", onScroll, { passive: true });
-      requestAnimationFrame(updateStackProgress);
-    }
 
     /* Custom cursor */
     const cursor = $(".cursor");
@@ -826,45 +730,6 @@
 
     window.addEventListener("scroll", () => requestAnimationFrame(updateParallax), { passive: true });
     requestAnimationFrame(updateParallax);
-
-    /* Stack indicator — counter [N / 05] + bottom progress bar */
-    const indicator = $(".stack-indicator");
-    const bar = $(".stack-progress-bar");
-    const barFill = $(".stack-progress-bar__fill");
-    const stack = $(".cases-stack");
-    const numEl = indicator && indicator.querySelector("[data-cur]");
-
-    if (indicator && bar && barFill && stack && numEl && cases.length) {
-      const stackIO = new IntersectionObserver(
-        (entries) => entries.forEach((entry) => {
-          indicator.classList.toggle("is-visible", entry.isIntersecting);
-          bar.classList.toggle("is-visible", entry.isIntersecting);
-        }),
-        { threshold: 0 }
-      );
-      stackIO.observe(stack);
-
-      const updateIndicator = () => {
-        let active = 0;
-        for (let i = 0; i < cases.length; i++) {
-          const p = parseFloat(cases[i].style.getPropertyValue("--stack-progress")) || 0;
-          if (p < 0.5) { active = i; break; }
-          active = i;
-        }
-        numEl.textContent = String(active + 1).padStart(2, "0");
-
-        const stackRect = stack.getBoundingClientRect();
-        const denom = stackRect.height - window.innerHeight;
-        const totalProgress = denom > 0
-          ? Math.max(0, Math.min(1, -stackRect.top / denom))
-          : 0;
-        barFill.style.setProperty("--bar-progress", `${(totalProgress * 100).toFixed(1)}%`);
-      };
-
-      const onIndicatorScroll = () => requestAnimationFrame(updateIndicator);
-      window.addEventListener("scroll", onIndicatorScroll, { passive: true });
-      requestAnimationFrame(updateIndicator);
-    }
 
     /* Magnetic CTAs */
     $$("[data-magnetic]").forEach((btn) => {
@@ -960,7 +825,7 @@
   }
 
   function initSplitText() {
-    const splitTargets = $$(".display, .case__category, .case__title");
+    const splitTargets = $$(".display, .pf-cat__title");
     splitTargets.forEach((el) => {
       const counter = { value: 0 };
       const newChildren = Array.from(el.childNodes).map((c) => splitNode(c, counter));
