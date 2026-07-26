@@ -373,7 +373,7 @@ html.js-stack-on .ticker__track {
 .stat__bar {
   display: block;
   height: 4px;
-  margin-block: clamp(14px, 1.6vw, 22px) 14px;
+  margin-block: clamp(8px, 1vw, 12px) 8px;
   border-radius: 999px;
   background: rgba(0,0,0,.08);
   overflow: hidden;
@@ -542,7 +542,7 @@ html.js-stack-on .ticker__track {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto;
-  gap: clamp(16px, 2.5vw, 40px);
+  gap: clamp(10px, 1.4vw, 20px) clamp(16px, 2.5vw, 40px);
   align-items: end;
   margin-bottom: clamp(28px, 3.5vw, 56px);
 }
@@ -567,6 +567,7 @@ html.js-stack-on .ticker__track {
   grid-row: 2;
   max-width: 620px;
   justify-self: end;
+  text-align: right;
   font-size: clamp(16px, 1.15vw, 20px);
   line-height: 1.45;
   color: var(--c-muted);
@@ -587,6 +588,9 @@ html.js-stack-on .ticker__track {
   grid-template-columns: repeat(2, 1fr);
   gap: clamp(20px, 2.6vw, 44px) clamp(20px, 2.2vw, 36px);
 }
+/* Campaign visuals are square — three per row, shown uncropped */
+.pf-cat__grid--three { grid-template-columns: repeat(3, 1fr); }
+.pf-cat__grid--three .pf-card__media { aspect-ratio: 1 / 1; }
 .pf-cat__grid .pf-card:nth-child(2n) { transition-delay: .1s; }
 
 .pf-card {
@@ -613,6 +617,23 @@ html.js-stack-on .ticker__track {
 }
 /* Posters and portrait covers keep their top edge (title zone) visible */
 .pf-card__media--top img { object-position: center top; }
+/* Cover whose aspect doesn't match the frame: shown whole (contain),
+   a blurred copy of itself fills the rest of the frame */
+.pf-card__media--fit::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--photo);
+  background-size: cover;
+  background-position: center;
+  filter: blur(28px) saturate(1.05);
+  transform: scale(1.2);
+}
+.pf-card__media--fit img {
+  position: relative;
+  z-index: 1;
+  object-fit: contain;
+}
 .pf-card:hover .pf-card__media img {
   transform: scale(1.05);
 }
@@ -700,7 +721,8 @@ html.js-stack-on .ticker__track {
   .pf-cat__count { grid-column: 1; grid-row: auto; justify-self: start; order: 4; }
   .pf-cat__title { grid-column: 1; grid-row: auto; }
   .pf-cat__desc { grid-column: 1; grid-row: auto; justify-self: start; }
-  .pf-cat__grid { grid-template-columns: 1fr; }
+  .pf-cat__grid,
+  .pf-cat__grid--three { grid-template-columns: 1fr; }
   .pf-cat__grid .pf-card:nth-child(2n) { transition-delay: 0s; }
 }
 
@@ -894,6 +916,15 @@ body { background: transparent; }
   flex-direction: column;
 }
 .t-card.is-active { transform: scale(1); }
+.t-card { cursor: pointer; }
+.project__gallery-cap {
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
 
 /* The photo is NEVER cropped: it is shown whole (object-fit: contain)
    inside a fixed frame, and a blurred copy of the same image fills
@@ -1040,15 +1071,15 @@ body { background: transparent; }
 }
 .partners__logo:hover { opacity: 1; }
 /* Real client logos — unified monochrome wall; multiply hides any
-   white boxes on the cream background, hover restores brand color. */
+   white boxes on the cream background, hover restores brand color.
+   Every logo sits in the SAME box (contain) so none reads too small. */
 .partners__img {
-  height: clamp(28px, 2.8vw, 44px);
-  width: auto;
-  max-width: clamp(110px, 12vw, 170px);
+  width: clamp(120px, 12vw, 168px);
+  height: clamp(48px, 4.6vw, 68px);
   object-fit: contain;
   filter: grayscale(1);
   mix-blend-mode: multiply;
-  opacity: .65;
+  opacity: .7;
   transition: filter .35s var(--ease), opacity .35s var(--ease), transform .35s var(--ease);
 }
 .partners__img:hover {
@@ -1504,6 +1535,38 @@ body.is-lightbox-open { overflow: hidden; }
   border: 1px solid rgba(0,0,0,.18);
   padding: 8px 16px;
   border-radius: 999px;
+}
+
+.resources__empty {
+  margin-block: clamp(32px, 4vw, 64px);
+  padding: clamp(40px, 6vw, 90px) clamp(24px, 4vw, 64px);
+  border-radius: var(--radius-m);
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(2px);
+  text-align: center;
+}
+.resources__empty-badge {
+  display: inline-block;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: var(--c-fg);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.resources__empty h2 {
+  font-size: clamp(24px, 2.6vw, 40px);
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+.resources__empty p:last-child {
+  max-width: 52ch;
+  margin-inline: auto;
+  color: var(--c-muted);
+  line-height: 1.5;
 }
 
 .resources__foot {

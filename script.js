@@ -85,8 +85,14 @@
       }
     };
 
+    /* Clicking a card (or using the arrows) must always activate it,
+       even when the card can't physically reach the rail center —
+       so manual choices briefly override the scroll-position picker. */
+    let manualUntil = 0;
+
     /* IO inside the horizontal scroller — the card closest to the rail center wins */
     const pickActiveByScroll = () => {
+      if (Date.now() < manualUntil) return;
       const rect = track.getBoundingClientRect();
       const center = rect.left + rect.width / 2;
       let best = 0;
@@ -99,6 +105,24 @@
       });
       setActive(best);
     };
+
+    const activateCard = (i) => {
+      const idx = Math.min(cards.length - 1, Math.max(0, i));
+      manualUntil = Date.now() + 900;
+      setActive(idx);
+      const c = cards[idx];
+      track.scrollTo({
+        left: c.offsetLeft - (track.clientWidth - c.offsetWidth) / 2,
+        behavior: "smooth"
+      });
+    };
+
+    cards.forEach((card, i) => {
+      card.addEventListener("click", (e) => {
+        if (e.target.closest(".t-card__more")) return;
+        activateCard(i);
+      });
+    });
 
     track.addEventListener("scroll", pickActiveByScroll, { passive: true });
     window.addEventListener("resize", pickActiveByScroll);
@@ -139,8 +163,8 @@
     tArrows.forEach((btn) => {
       btn.addEventListener("click", () => {
         const dir = Number(btn.dataset.dir);
-        const step = cards[0].getBoundingClientRect().width + 24;
-        track.scrollBy({ left: dir * step, behavior: "smooth" });
+        const cur = cards.findIndex((c) => c.classList.contains("is-active"));
+        activateCard((cur < 0 ? 0 : cur) + dir);
       });
     });
 
@@ -619,6 +643,16 @@
           btn.appendChild(img);
           btn.addEventListener("click", () => openLb(i));
           fig.appendChild(btn);
+          /* Rebranding pairs: label the old/new logo so the story
+             "cum a fost → cum a devenit" reads at a glance. */
+          const beforeAfter = src.includes("-before") ? "Înainte — logoul vechi"
+            : src.includes("-after") ? "După — logoul nou" : null;
+          if (beforeAfter) {
+            const cap = document.createElement("figcaption");
+            cap.className = "project__gallery-cap";
+            cap.textContent = beforeAfter;
+            fig.appendChild(cap);
+          }
           grid.appendChild(fig);
         });
         gallery.hidden = false;
