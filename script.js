@@ -645,8 +645,8 @@
           fig.appendChild(btn);
           /* Rebranding pairs: label the old/new logo so the story
              "cum a fost → cum a devenit" reads at a glance. */
-          const beforeAfter = src.includes("-before") ? "Înainte — logoul vechi"
-            : src.includes("-after") ? "După — logoul nou" : null;
+          const beforeAfter = src.includes("-before") ? "Înainte"
+            : src.includes("-after") ? "După" : null;
           if (beforeAfter) {
             const cap = document.createElement("figcaption");
             cap.className = "project__gallery-cap";
