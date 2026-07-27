@@ -37,6 +37,12 @@
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 html, body { margin: 0; padding: 0; }
+/* No horizontal scroll, ever — `clip` also blocks touch panning on iOS,
+   where `hidden` on body alone is ignored. */
+html, body { overflow-x: clip; }
+@supports not (overflow: clip) {
+  html, body { overflow-x: hidden; }
+}
 body {
   font-family: var(--ff-sans);
   font-size: var(--fs-body);
@@ -1751,6 +1757,8 @@ body.is-lightbox-open { overflow: hidden; }
 /* Project + Resources responsive overrides */
 @media (max-width: 760px) {
   .project__block { grid-template-columns: 1fr; }
+  /* Long one-word titles (Decorații.md) must fit the phone viewport */
+  .project__header .display { font-size: min(13vw, 64px); }
 }
 
 /* Custom cursor */
