@@ -370,25 +370,8 @@ html.js-stack-on .ticker__track {
   color: var(--c-muted);
   letter-spacing: 0;
 }
-.stat__bar {
-  display: block;
-  height: 4px;
-  margin-block: clamp(8px, 1vw, 12px) 8px;
-  border-radius: 999px;
-  background: rgba(0,0,0,.08);
-  overflow: hidden;
-}
-.stat__bar i {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: var(--c-fg);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 1.4s var(--ease) .3s;
-}
-.stat.is-visible .stat__bar i { transform: scaleX(var(--fill, 1)); }
 .stat__label {
+  margin-top: clamp(8px, 1vw, 12px);
   font-size: clamp(14px, 1.05vw, 17px);
   color: var(--c-muted);
   line-height: 1.4;
@@ -402,10 +385,6 @@ html.js-stack-on .ticker__track {
   .about__stats .stat:nth-child(2),
   .about__stats .stat:nth-child(3) { transition-delay: 0s; }
 }
-@media (prefers-reduced-motion: reduce) {
-  .stat__bar i { transition: none; transform: scaleX(var(--fill, 1)); }
-}
-
 /* Event photos strip — trainings, mentoring, conferences */
 .about__events {
   margin-top: clamp(48px, 6vw, 88px);
@@ -924,6 +903,7 @@ body { background: transparent; }
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--c-muted);
+  text-align: center;
 }
 
 /* The photo is NEVER cropped: it is shown whole (object-fit: contain)
@@ -1070,21 +1050,17 @@ body { background: transparent; }
   transition: opacity .2s var(--ease);
 }
 .partners__logo:hover { opacity: 1; }
-/* Real client logos — unified monochrome wall; multiply hides any
-   white boxes on the cream background, hover restores brand color.
-   Every logo sits in the SAME box (contain) so none reads too small. */
+/* Real client logos in full brand color; multiply hides any white
+   boxes on the cream background. Every logo sits in the SAME box
+   (contain) so none reads too small. */
 .partners__img {
   width: clamp(120px, 12vw, 168px);
   height: clamp(48px, 4.6vw, 68px);
   object-fit: contain;
-  filter: grayscale(1);
   mix-blend-mode: multiply;
-  opacity: .7;
-  transition: filter .35s var(--ease), opacity .35s var(--ease), transform .35s var(--ease);
+  transition: transform .35s var(--ease);
 }
 .partners__img:hover {
-  filter: grayscale(0);
-  opacity: 1;
   transform: translateY(-2px);
 }
 
@@ -1117,7 +1093,7 @@ body { background: transparent; }
   display: inline-block;
   transition: transform .35s var(--ease);
 }
-.cta-strip__link:hover .cta-strip__arrow { transform: translateX(0.25em); }
+.cta-strip__link:hover .cta-strip__arrow { transform: translateY(0.2em); }
 
 /* =========================================================
    FOOTER / CONTACT
