@@ -556,7 +556,24 @@
     const set = (field, value) => {
       const el = projectRoot.querySelector(`[data-field="${field}"]`);
       if (!el) return;
-      if (field === "cover") el.setAttribute("src", value);
+      if (field === "cover") {
+        el.setAttribute("src", value);
+        /* Square-ish covers don't survive the 16:9 crop — show them
+           whole over a blurred copy once the real size is known. */
+        const frameEl = el.closest(".project__cover");
+        if (frameEl) {
+          const applyFit = () => {
+            const frame = 16 / 9;
+            const a = el.naturalWidth / el.naturalHeight;
+            if (a && Math.abs(a - frame) / frame > 0.15) {
+              frameEl.classList.add("project__cover--fit");
+              frameEl.style.setProperty("--photo", `url("${value}")`);
+            }
+          };
+          if (el.complete && el.naturalWidth) applyFit();
+          else el.addEventListener("load", applyFit, { once: true });
+        }
+      }
       else                   el.textContent = value;
     };
 
