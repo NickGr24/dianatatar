@@ -149,7 +149,13 @@ p { margin: 0; }
   font-weight: 500;
   transition: transform .25s var(--ease), background .25s var(--ease);
 }
-.nav__cta:hover { transform: translateY(-2px); opacity: 1; background: var(--c-accent); }
+.nav__cta:hover {
+  transform: translateY(-2px);
+  opacity: 1;
+  background: var(--c-accent);
+  box-shadow: 0 10px 24px -10px rgba(0,0,0,.5);
+}
+.nav__cta:active { transform: translateY(0); box-shadow: none; }
 .nav__cta-star { color: #000; font-size: 14px; }
 
 .nav__toggle {
@@ -212,8 +218,18 @@ p { margin: 0; }
   transition: background .25s var(--ease), color .25s var(--ease);
   white-space: nowrap;
 }
+.hero__link {
+  transition: background .25s var(--ease), color .25s var(--ease),
+              transform .25s var(--ease), box-shadow .25s var(--ease);
+}
 .hero__link svg { transition: transform .35s var(--ease); }
-.hero__link:hover { background: #0c0c0c; color: #fff; }
+.hero__link:hover {
+  background: #0c0c0c;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -10px rgba(0,0,0,.45);
+}
+.hero__link:active { transform: translateY(0); box-shadow: none; }
 .hero__link:hover svg { transform: translateX(4px); }
 
 /* News-style ticker (subtitru, scroll dreapta → stânga) */
@@ -1174,7 +1190,12 @@ body { background: transparent; }
   font-size: var(--fs-body);
   transition: transform .25s var(--ease), background .25s var(--ease), color .25s var(--ease);
 }
-.btn:hover { transform: translateY(-2px); opacity: 1; }
+.btn:hover {
+  transform: translateY(-2px);
+  opacity: 1;
+  box-shadow: 0 10px 24px -10px rgba(0,0,0,.35);
+}
+.btn:active { transform: translateY(0); box-shadow: none; }
 .btn--primary {
   background: #fff; color: #000;
   align-self: flex-start;
