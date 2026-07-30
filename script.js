@@ -779,7 +779,16 @@
       });
     };
 
-    window.addEventListener("scroll", () => requestAnimationFrame(updateParallax), { passive: true });
+    /* One rAF per frame even when the wheel fires many scroll events */
+    let parallaxQueued = false;
+    window.addEventListener("scroll", () => {
+      if (parallaxQueued) return;
+      parallaxQueued = true;
+      requestAnimationFrame(() => {
+        parallaxQueued = false;
+        updateParallax();
+      });
+    }, { passive: true });
     requestAnimationFrame(updateParallax);
 
     /* Marquee — JS-driven so it can react to scroll velocity */
@@ -1070,9 +1079,11 @@ void main(){
         c3: hexToRgb(canvas.dataset.c3 || "#a89e8e"),
       };
 
+      /* DPR capped at 1.5: the shader outputs animated noise, where the
+         retina/1.5 difference is invisible but the fragment cost is ~2x. */
       const renderer = new Renderer({
         canvas, webgl: 2, alpha: true, antialias: false,
-        dpr: Math.min(window.devicePixelRatio || 1, 2),
+        dpr: Math.min(window.devicePixelRatio || 1, 1.5),
       });
       const gl = renderer.gl;
       const program = new Program(gl, {
@@ -1122,17 +1133,38 @@ void main(){
       setSize();
 
       let raf = 0, running = false;
+      let skipFrame = false;
       const t0 = performance.now();
+      /* The gradient drifts slowly (uTimeSpeed 0.18) — 30fps is
+         indistinguishable and halves the GPU load. */
       const loop = (t) => {
+        if (running) raf = requestAnimationFrame(loop);
+        skipFrame = !skipFrame;
+        if (skipFrame) return;
         program.uniforms.iTime.value = (t - t0) * 0.001;
         renderer.render({ scene: mesh });
-        if (running) raf = requestAnimationFrame(loop);
       };
 
       if (isGlobal) {
-        // Global canvas always animates (body is always "intersecting").
-        running = true;
-        raf = requestAnimationFrame(loop);
+        /* Render only when the canvas can actually be seen: while the
+           opaque hero still covers the whole viewport, the shader is
+           invisible — pausing it removes the GPU spike right at the
+           hero -> Despre mine boundary. */
+        const hero = document.querySelector(".hero");
+        const updateRunning = () => {
+          const heroBottom = hero ? hero.offsetTop + hero.offsetHeight : 0;
+          const covered = hero && window.scrollY + window.innerHeight <= heroBottom + 8;
+          if (!covered && !running) {
+            running = true;
+            raf = requestAnimationFrame(loop);
+          } else if (covered && running) {
+            running = false;
+            cancelAnimationFrame(raf);
+          }
+        };
+        window.addEventListener("scroll", updateRunning, { passive: true });
+        window.addEventListener("resize", updateRunning, { passive: true });
+        updateRunning();
       } else {
         const visIO = new IntersectionObserver((entries) => entries.forEach((e) => {
           if (e.isIntersecting && !running) {
