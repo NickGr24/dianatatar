@@ -1185,6 +1185,45 @@ body { background: transparent; }
 .field textarea:focus {
   border-color: #fff;
 }
+/* Focus underline grows from the left over the resting border */
+.field {
+  position: relative;
+}
+.field::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 2px;
+  background: #fff;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .4s var(--ease);
+  pointer-events: none;
+}
+.field:focus-within::after { transform: scaleX(1); }
+
+/* Submit button: spinner while sending, drawn checkmark on success */
+.btn--primary.is-loading { pointer-events: none; }
+.btn--primary.is-loading > svg { display: none; }
+.btn--primary.is-loading::after {
+  content: "";
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  animation: btn-spin .7s linear infinite;
+}
+.btn--primary .check {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  animation: draw-check .45s var(--ease) .05s forwards;
+}
+@keyframes btn-spin { to { transform: rotate(360deg); } }
+@keyframes draw-check { to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .field::after { transition: none; }
+  .btn--primary .check { animation: none; stroke-dashoffset: 0; }
+}
 
 .btn {
   display: inline-flex; align-items: center; gap: 10px;
@@ -1861,4 +1900,59 @@ html.js-stack-on input, html.js-stack-on textarea { cursor: text; }
   .split-ready.is-revealed .char {
     opacity: 1;
   }
+}
+
+/* =========================================================
+   VIEW TRANSITIONS — the clicked card's cover morphs into the
+   project page hero (and back). Browsers without support simply
+   navigate as before.
+   ========================================================= */
+@view-transition {
+  navigation: auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: .35s;
+}
+::view-transition-group(project-cover) {
+  animation-duration: .55s;
+  animation-timing-function: cubic-bezier(.2,.7,.2,1);
+}
+.project__cover img {
+  view-transition-name: project-cover;
+}
+
+/* =========================================================
+   GALLERY MASKED REVEAL — frames open with a top-down wipe while
+   the image settles from a slight zoom; the full frame is always
+   the end state (nothing stays cropped).
+   ========================================================= */
+/* The clip lives on the INNER button, not the observed <figure>:
+   a fully clipped element reports zero intersection area in Chromium,
+   so observing the clipped node itself would never fire. */
+.project__gallery-item .project__gallery-btn {
+  display: block;
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path .9s var(--ease);
+}
+.project__gallery-item img {
+  transform: scale(1.06);
+  transition: transform 1.1s var(--ease);
+}
+.project__gallery-item.is-open .project__gallery-btn { clip-path: inset(0); }
+.project__gallery-item.is-open img { transform: none; }
+.project__gallery-cap {
+  opacity: 0;
+  transition: opacity .6s var(--ease) .3s;
+}
+.project__gallery-item.is-open .project__gallery-cap { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .project__gallery-item .project__gallery-btn { clip-path: none; transition: none; }
+  .project__gallery-item img { transform: none; transition: none; }
+  .project__gallery-cap { opacity: 1; transition: none; }
 }

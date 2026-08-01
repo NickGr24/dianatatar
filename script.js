@@ -183,16 +183,74 @@
   }
 
   /* =========================================================
+     VIEW TRANSITIONS — the clicked card's cover morphs into the
+     project hero. Names must be unique per page at snapshot time,
+     so only the card being navigated gets one.
+     ========================================================= */
+  $$(".pf-card").forEach((card) => {
+    card.addEventListener("click", () => {
+      $$(".pf-card .pf-card__media img").forEach((i) => { i.style.viewTransitionName = ""; });
+      const img = $(".pf-card__media img", card);
+      if (img) img.style.viewTransitionName = "project-cover";
+    });
+  });
+
+  window.addEventListener("pagereveal", (e) => {
+    if (!e.viewTransition) return;
+    const act = window.navigation && navigation.activation;
+    let from = null;
+    try { from = act && act.from && act.from.url ? new URL(act.from.url) : null; } catch (_) {}
+    if (!from || from.origin !== location.origin) return;
+
+    /* Arriving from another internal page: things already in the
+       viewport are shown at rest — no replayed entrance animations
+       underneath the transition. */
+    $$(".reveal").forEach((el) => {
+      const r = el.getBoundingClientRect();
+      if (r.top < innerHeight && r.bottom > 0) el.classList.add("is-visible");
+    });
+
+    /* Project -> portfolio: the hero cover flies back into its card
+       (only when that card is actually on screen). */
+    const slug = from.searchParams.get("slug");
+    if (slug) {
+      const img = $(`.pf-card[href$="slug=${slug}"] .pf-card__media img`);
+      if (img) {
+        const r = img.getBoundingClientRect();
+        if (r.top < innerHeight && r.bottom > 0) {
+          img.style.viewTransitionName = "project-cover";
+          e.viewTransition.finished.then(() => { img.style.viewTransitionName = ""; });
+        }
+      }
+    }
+  });
+
+  /* =========================================================
      CONTACT FORM — validation + Formspree (with mailto fallback)
      ========================================================= */
   const form = $(".footer__form");
   if (form) {
     const status = $(".footer__status", form);
     const submitBtn = form.querySelector('button[type="submit"]');
+    const submitHTML = submitBtn ? submitBtn.innerHTML : "";
 
     const setStatus = (text, color) => {
       status.textContent = text;
       status.style.color = color;
+    };
+
+    const showSuccessButton = () => {
+      if (!submitBtn) return;
+      submitBtn.classList.remove("is-loading");
+      submitBtn.classList.add("is-success");
+      submitBtn.innerHTML =
+        'Trimis <svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18">' +
+        '<path class="check" d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" ' +
+        'stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      setTimeout(() => {
+        submitBtn.classList.remove("is-success");
+        submitBtn.innerHTML = submitHTML;
+      }, 4000);
     };
 
     form.addEventListener("submit", async (e) => {
@@ -212,7 +270,10 @@
       }
 
       if (FORM_ENDPOINT) {
-        if (submitBtn) submitBtn.disabled = true;
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.classList.add("is-loading");
+        }
         setStatus("Se trimite…", "rgba(255,255,255,.7)");
         try {
           const res = await fetch(FORM_ENDPOINT, {
@@ -226,8 +287,10 @@
           });
           if (!res.ok) throw new Error("Network response was not ok");
           setStatus("Mulțumesc! Mesajul a fost trimis — îți voi răspunde curând.", "rgba(255,255,255,.85)");
+          showSuccessButton();
           form.reset();
         } catch (err) {
+          if (submitBtn) submitBtn.classList.remove("is-loading");
           setStatus("Ceva nu a mers. Încearcă pe Telegram sau direct la email.", "#ff7a7a");
         } finally {
           if (submitBtn) submitBtn.disabled = false;
@@ -672,6 +735,21 @@
           }
           grid.appendChild(fig);
         });
+
+        /* Masked reveal: each frame wipes open as it scrolls into view */
+        const galleryItems = $$(".project__gallery-item", grid);
+        if ("IntersectionObserver" in window &&
+            !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          const gio = new IntersectionObserver((entries) => entries.forEach((en) => {
+            if (en.isIntersecting) {
+              en.target.classList.add("is-open");
+              gio.unobserve(en.target);
+            }
+          }), { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+          galleryItems.forEach((f) => gio.observe(f));
+        } else {
+          galleryItems.forEach((f) => f.classList.add("is-open"));
+        }
         gallery.hidden = false;
       }
 
