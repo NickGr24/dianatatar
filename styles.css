@@ -863,6 +863,10 @@ body { background: transparent; }
   margin: 0;
   padding: clamp(20px, 3vw, 40px) var(--gutter);
   display: flex;
+  /* Each card is exactly as tall as its own photo + quote — without
+     this, short cards stretch to the tallest one and show a large
+     empty dark area between photo and text (worst on phones). */
+  align-items: flex-start;
   gap: clamp(16px, 2vw, 32px);
   overflow-x: auto;
   overflow-y: hidden;
