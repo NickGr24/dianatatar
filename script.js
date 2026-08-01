@@ -745,7 +745,7 @@
               en.target.classList.add("is-open");
               gio.unobserve(en.target);
             }
-          }), { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+          }), { threshold: 0, rootMargin: "0px 0px 120px 0px" });
           galleryItems.forEach((f) => gio.observe(f));
         } else {
           galleryItems.forEach((f) => f.classList.add("is-open"));

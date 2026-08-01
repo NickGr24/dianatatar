@@ -1932,27 +1932,24 @@ html.js-stack-on input, html.js-stack-on textarea { cursor: text; }
    the image settles from a slight zoom; the full frame is always
    the end state (nothing stays cropped).
    ========================================================= */
-/* The clip lives on the INNER button, not the observed <figure>:
-   a fully clipped element reports zero intersection area in Chromium,
-   so observing the clipped node itself would never fire. */
+/* Quick fade + settle — opacity and transform both run on the
+   compositor, so the reveal stays smooth even on large frames. */
 .project__gallery-item .project__gallery-btn {
   display: block;
-  clip-path: inset(0 0 100% 0);
-  transition: clip-path .9s var(--ease);
+  opacity: 0;
+  transform: translateY(14px) scale(.985);
+  transition: opacity .45s var(--ease), transform .45s var(--ease);
 }
-.project__gallery-item img {
-  transform: scale(1.06);
-  transition: transform 1.1s var(--ease);
+.project__gallery-item.is-open .project__gallery-btn {
+  opacity: 1;
+  transform: none;
 }
-.project__gallery-item.is-open .project__gallery-btn { clip-path: inset(0); }
-.project__gallery-item.is-open img { transform: none; }
 .project__gallery-cap {
   opacity: 0;
-  transition: opacity .6s var(--ease) .3s;
+  transition: opacity .35s var(--ease) .15s;
 }
 .project__gallery-item.is-open .project__gallery-cap { opacity: 1; }
 @media (prefers-reduced-motion: reduce) {
-  .project__gallery-item .project__gallery-btn { clip-path: none; transition: none; }
-  .project__gallery-item img { transform: none; transition: none; }
+  .project__gallery-item .project__gallery-btn { opacity: 1; transform: none; transition: none; }
   .project__gallery-cap { opacity: 1; transition: none; }
 }
