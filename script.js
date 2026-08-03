@@ -850,7 +850,9 @@ void main(){
 
     let ogl;
     try {
-      ogl = await import("https://cdn.jsdelivr.net/npm/ogl@1.0.11/+esm");
+      /* vendored locally: reuses the already-open same-origin
+         connection instead of a fresh handshake to cdn.jsdelivr.net */
+      ogl = await import("/assets/vendor/ogl.mjs");
     } catch (err) {
       console.warn("ogl failed to load — Grainient disabled", err);
       return;
@@ -985,5 +987,11 @@ void main(){
       }
     });
   }
-  initGrainient();
+  /* Off the critical path: the ogl module + shader init should not
+     compete with the hero image and fonts for first paint. */
+  if (document.readyState === "complete") {
+    initGrainient();
+  } else {
+    window.addEventListener("load", () => initGrainient(), { once: true });
+  }
 })();
