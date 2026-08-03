@@ -931,6 +931,13 @@ void main(){
         renderer.render({ scene: mesh });
       };
 
+      /* Phones and tablets keep the gradient but as a single static
+         frame: setSize() above already painted it. The animated loop
+         forces the browser through the full render pipeline (style →
+         layerize → commit → GPU) ~60×/s even at rest, which starves
+         touch scrolling on mobile — the site "freezes" mid-scroll. */
+      if (!MOTION_FULL) return;
+
       if (isGlobal) {
         /* Render only when the canvas can actually be seen: while the
            opaque hero still covers the whole viewport, the shader is
