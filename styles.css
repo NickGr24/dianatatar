@@ -452,7 +452,9 @@ html.js-stack-on .ticker__track {
   .about__events-row {
     display: flex;
     overflow-x: auto;
-    scroll-snap-type: x mandatory;
+    /* proximity, not mandatory: mandatory snapping steals the vertical
+       swipe that merely passes over the carousel */
+    scroll-snap-type: x proximity;
     scrollbar-width: none;
     margin-inline: calc(var(--gutter) * -1);
     padding-inline: var(--gutter);
@@ -462,6 +464,10 @@ html.js-stack-on .ticker__track {
     flex: 0 0 min(62vw, 260px);
     scroll-snap-align: center;
   }
+  /* Snap areas must not move while the row scrolls into view — the
+     translateY reveal made the container re-snap every frame and the
+     photos jittered. Fade only. */
+  .about__event.reveal { transform: none; }
 }
 
 /* CV download button — dark pill with animated arrow + shine */
@@ -727,6 +733,9 @@ html.js-stack-on .ticker__track {
   z-index: -1;
   display: block;
   pointer-events: none;
+  /* on mobile the canvas is swapped for a snapshot <img>; cover keeps
+     the texture graceful when the viewport rotates or resizes */
+  object-fit: cover;
 }
 html { background: #ece4d6; }
 body { background: transparent; }
@@ -881,7 +890,10 @@ body { background: transparent; }
   gap: clamp(16px, 2vw, 32px);
   overflow-x: auto;
   overflow-y: hidden;
-  scroll-snap-type: x mandatory;
+  /* proximity, not mandatory: cards animate scale on activation, and
+     mandatory snapping re-snaps on every geometry change (jitter) while
+     also stealing vertical swipes that pass over the rail */
+  scroll-snap-type: x proximity;
   scrollbar-width: none;
   scroll-padding-inline: var(--gutter);
 }
@@ -1897,7 +1909,9 @@ html.js-stack-on input, html.js-stack-on textarea { cursor: text; }
   display: inline-block;
   transform: translateY(110%);
   transition: transform 700ms var(--ease) calc(var(--i, 0) * 22ms);
-  will-change: transform;
+  /* no will-change here: it kept every letter promoted to its own
+     compositor layer forever — browsers promote during the transition
+     on their own */
 }
 .split-ready.is-revealed .char {
   transform: translateY(0);

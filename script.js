@@ -931,12 +931,25 @@ void main(){
         renderer.render({ scene: mesh });
       };
 
-      /* Phones and tablets keep the gradient but as a single static
-         frame: setSize() above already painted it. The animated loop
-         forces the browser through the full render pipeline (style →
-         layerize → commit → GPU) ~60×/s even at rest, which starves
-         touch scrolling on mobile — the site "freezes" mid-scroll. */
-      if (!MOTION_FULL) return;
+      /* Phones and tablets keep the gradient but as a static image:
+         the animated loop forced the full render pipeline (style →
+         layerize → commit → GPU) ~60×/s even at rest, which starved
+         touch scrolling — and even an idle GL canvas keeps a costly
+         compositing surface alive on mobile Safari. Snapshot the
+         first frame into a plain <img> and drop the GL context. */
+      if (!MOTION_FULL) {
+        try {
+          const still = new Image();
+          still.src = canvas.toDataURL("image/jpeg", 0.85);
+          still.className = canvas.className;
+          still.alt = "";
+          still.setAttribute("aria-hidden", "true");
+          canvas.replaceWith(still);
+        } catch (_) { /* snapshot failed: keep the static canvas */ }
+        const lose = gl.getExtension("WEBGL_lose_context");
+        if (lose) lose.loseContext();
+        return;
+      }
 
       if (isGlobal) {
         /* Render only when the canvas can actually be seen: while the
