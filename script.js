@@ -44,7 +44,8 @@
       const target = document.querySelector(id);
       if (!target) return;
       e.preventDefault();
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      const smooth = !matchMedia("(prefers-reduced-motion: reduce)").matches;
+      target.scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: "start" });
     });
   });
 
@@ -988,10 +989,14 @@ void main(){
     });
   }
   /* Off the critical path: the ogl module + shader init should not
-     compete with the hero image and fonts for first paint. */
+     compete with the hero image and fonts for first paint — and the
+     idle callback keeps the one-time WebGL + snapshot cost away from
+     the user's first scroll gesture right after load. */
+  const grainientWhenIdle = () =>
+    (window.requestIdleCallback || ((fn) => setTimeout(fn, 1)))(() => initGrainient());
   if (document.readyState === "complete") {
-    initGrainient();
+    grainientWhenIdle();
   } else {
-    window.addEventListener("load", () => initGrainient(), { once: true });
+    window.addEventListener("load", grainientWhenIdle, { once: true });
   }
 })();

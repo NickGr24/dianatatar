@@ -58,7 +58,10 @@
    Reset
    ========================================================= */
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+/* No CSS scroll-behavior:smooth here — browsers then ANIMATE history
+   scroll restoration on page entry, and swipes are ignored until the
+   animation lands ("the page scrolls itself, then blocks"). Anchor
+   clicks get their smooth scroll from script.js instead. */
 html, body { margin: 0; padding: 0; }
 /* No horizontal scroll, ever — `clip` also blocks touch panning on iOS,
    where `hidden` on body alone is ignored. */
@@ -1848,7 +1851,6 @@ body.is-lightbox-open { overflow: hidden; }
    PREFERS REDUCED MOTION
    ========================================================= */
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
   .ticker__track { animation: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .t-card__photo, .t-card { transition: none; }
