@@ -49,14 +49,31 @@
     });
   });
 
-  /* ---------- reveal on scroll ---------- */
+  /* ---------- reveal on scroll ----------
+     .is-settled is added once the fade-up has played: it drops the
+     transition so the element stops being restyled on every later
+     frame. Fast scrolling used to enter several of these at once and
+     each one kept billing the main thread for its full duration. */
   const reveal = $$(".reveal");
   if (reveal.length && "IntersectionObserver" in window) {
+    const settleReveal = (el) => {
+      const done = (e) => {
+        if (e && e.target !== el) return;      // ignore bubbling child transitions
+        el.removeEventListener("transitionend", done);
+        clearTimeout(fallback);
+        el.classList.add("is-settled");
+      };
+      // transitionend can be skipped entirely (background tab, interrupted
+      // transition), so a timer guarantees the element still settles.
+      const fallback = setTimeout(done, 1200);
+      el.addEventListener("transitionend", done);
+    };
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("is-visible");
+            settleReveal(entry.target);
             io.unobserve(entry.target);
           }
         });
@@ -525,17 +542,26 @@
     if (cursor && cursorLabel) {
       let mx = window.innerWidth / 2, my = window.innerHeight / 2;
       let cx = mx, cy = my;
-      window.addEventListener("mousemove", (e) => {
-        mx = e.clientX; my = e.clientY;
-      });
+      let cursorRaf = 0;
+      /* The ring eases toward the pointer, so it only needs frames while
+         it is still catching up. Scrolling by wheel leaves the pointer
+         still — the loop used to keep running through every scroll. */
       const cursorLoop = () => {
         cx += (mx - cx) * 0.18;
         cy += (my - cy) * 0.18;
         cursor.style.transform = `translate3d(${cx - 18}px, ${cy - 18}px, 0)`;
         cursorLabel.style.transform = `translate3d(${mx + 22}px, ${my - 8}px, 0)`;
-        requestAnimationFrame(cursorLoop);
+        if (Math.abs(mx - cx) < 0.1 && Math.abs(my - cy) < 0.1) {
+          cursorRaf = 0;   // settled — sleep until the pointer moves again
+          return;
+        }
+        cursorRaf = requestAnimationFrame(cursorLoop);
       };
-      requestAnimationFrame(cursorLoop);
+      window.addEventListener("mousemove", (e) => {
+        mx = e.clientX; my = e.clientY;
+        if (!cursorRaf) cursorRaf = requestAnimationFrame(cursorLoop);
+      });
+      cursorRaf = requestAnimationFrame(cursorLoop);
 
       $$("[data-cursor-label]").forEach((el) => {
         el.addEventListener("mouseenter", () => {
@@ -587,6 +613,15 @@
       let lastScrollY = window.scrollY;
       const baseSpeed = 60; // px/s
       let lastT = performance.now();
+      let raf = 0;
+
+      /* scrollWidth forces a synchronous layout. Reading it inside the
+         loop made the ticker buy a full layout ~60x/s for the lifetime
+         of the page; the width only changes when the line re-wraps. */
+      let trackWidth = tickerTrack.scrollWidth / 3;
+      const measure = () => { trackWidth = tickerTrack.scrollWidth / 3; };
+      window.addEventListener("resize", measure, { passive: true });
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
 
       const trackLoop = (t) => {
         const dt = Math.min(0.05, (t - lastT) / 1000);
@@ -598,7 +633,6 @@
         velocity += (targetVel - velocity) * 0.18;
         const boost = Math.max(-200, Math.min(200, velocity * 0.5));
         x -= (baseSpeed + boost) * dt;
-        const trackWidth = tickerTrack.scrollWidth / 3;
         if (trackWidth > 0) {
           if (-x >= trackWidth) x += trackWidth;
           if (x > 0) x -= trackWidth;
@@ -607,9 +641,30 @@
         smoothedSkew += (targetSkew - smoothedSkew) * 0.12;
         tickerTrack.style.setProperty("--ticker-x", `${x.toFixed(1)}px`);
         tickerTrack.style.setProperty("--ticker-skew", `${smoothedSkew.toFixed(2)}deg`);
-        requestAnimationFrame(trackLoop);
+        raf = requestAnimationFrame(trackLoop);
       };
-      requestAnimationFrame(trackLoop);
+
+      /* Runs only while the ticker is actually on screen. */
+      const start = () => {
+        if (raf) return;
+        lastT = performance.now();
+        lastScrollY = window.scrollY;
+        raf = requestAnimationFrame(trackLoop);
+      };
+      const stop = () => {
+        if (!raf) return;
+        cancelAnimationFrame(raf);
+        raf = 0;
+      };
+      const tickerHost = tickerTrack.closest(".ticker");
+      if ("IntersectionObserver" in window && tickerHost) {
+        new IntersectionObserver(
+          (entries) => entries.forEach((e) => (e.isIntersecting ? start() : stop())),
+          { rootMargin: "150px 0px" }
+        ).observe(tickerHost);
+      } else {
+        start();
+      }
     }
   }
 
@@ -656,10 +711,50 @@
   initFlowingServices();
 
   /* =========================================================
+     Infinite marquees keep the whole render pipeline awake for every
+     frame they exist, whether or not they are on screen. Park them
+     while their section is out of view.
+     ========================================================= */
+  function initOffscreenAnimationPause() {
+    if (!("IntersectionObserver" in window)) return;
+    const pairs = [
+      [".ticker__track", ".ticker"],
+      [".svc__marquee-track", ".svc"],
+    ];
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => {
+        const tracks = e.target.__animTracks;
+        if (!tracks) return;
+        tracks.forEach((t) => t.classList.toggle("anim-paused", !e.isIntersecting));
+      }),
+      { rootMargin: "150px 0px" }
+    );
+    pairs.forEach(([trackSel, hostSel]) => {
+      $$(trackSel).forEach((track) => {
+        const host = track.closest(hostSel) || track.parentElement;
+        if (!host) return;
+        (host.__animTracks ||= []).push(track);
+        io.observe(host);
+      });
+    });
+  }
+  initOffscreenAnimationPause();
+
+  /* =========================================================
      Split-text reveal — runs unconditionally (cheap, respects
      reduced motion via CSS). Walks text nodes only, so nested
      <strong> and <br/> stay intact.
+
+     Staggering happens per WORD, not per letter. Per-letter used to
+     mean ~125 simultaneously transitioning inline-blocks; a transform
+     inside an overflow:hidden parent can't go to the compositor, so
+     every one of them was restyled on the main thread each frame
+     (measured: 10.5k style invalidations = 76% of all scroll work,
+     which is what stalled fast scrolling on phones). Word-level keeps
+     the same masked slide-up with ~5x fewer animated elements.
      ========================================================= */
+  const STAGGER_CAP = 12; // longest headline still finishes its cascade quickly
+
   function splitNode(node, counter) {
     if (node.nodeType === Node.TEXT_NODE) {
       const parts = node.textContent.split(/(\s+)/);
@@ -672,14 +767,12 @@
         }
         const wordSpan = document.createElement("span");
         wordSpan.className = "word";
-        for (const c of part) {
-          const charSpan = document.createElement("span");
-          charSpan.className = "char";
-          charSpan.style.setProperty("--i", counter.value);
-          charSpan.textContent = c;
-          wordSpan.appendChild(charSpan);
-          counter.value++;
-        }
+        const inner = document.createElement("span");
+        inner.className = "word__inner";
+        inner.style.setProperty("--i", Math.min(counter.value, STAGGER_CAP));
+        inner.textContent = part;
+        wordSpan.appendChild(inner);
+        counter.value++;
         frag.appendChild(wordSpan);
       });
       return frag;
@@ -705,11 +798,18 @@
       el.classList.add("split-ready");
     });
 
+    /* Longest cascade = capped stagger + duration, plus a small margin.
+       After that the words are parked with .is-settled so they stop
+       counting as animated elements for the rest of the session. */
+    const CASCADE_MS = STAGGER_CAP * 40 + 620 + 120;
+    const settle = (el) => setTimeout(() => el.classList.add("is-settled"), CASCADE_MS);
+
     if ("IntersectionObserver" in window) {
       const splitIO = new IntersectionObserver(
         (entries) => entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("is-revealed");
+            settle(entry.target);
             splitIO.unobserve(entry.target);
           }
         }),
@@ -717,7 +817,10 @@
       );
       splitTargets.forEach((el) => splitIO.observe(el));
     } else {
-      splitTargets.forEach((el) => el.classList.add("is-revealed"));
+      splitTargets.forEach((el) => {
+        el.classList.add("is-revealed");
+        settle(el);
+      });
     }
   }
   initSplitText();

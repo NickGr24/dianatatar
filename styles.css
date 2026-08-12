@@ -117,6 +117,8 @@ p { margin: 0; }
   transition: opacity .9s var(--ease), transform .9s var(--ease);
 }
 .reveal.is-visible { opacity: 1; transform: none; }
+/* Played out — stop being an animated element for the rest of the visit. */
+.reveal.is-settled { transition: none; }
 
 /* =========================================================
    HERO
@@ -868,6 +870,16 @@ body { background: transparent; }
 @media (prefers-reduced-motion: reduce) {
   .svc__marquee-track { animation: none; }
 }
+/* The band only ever slides in on hover, which JS wires up on fine
+   pointers at >=1024px. Everywhere else it stays parked off-screen —
+   so five infinite marquees were burning a frame slot each with
+   nothing to show. Mirror the JS condition and stop them. */
+@media (max-width: 1023px), (pointer: coarse) {
+  .svc__marquee-track { animation: none; }
+}
+
+/* Offscreen infinite marquees stop costing frames while out of view. */
+.anim-paused { animation-play-state: paused !important; }
 
 /* =========================================================
    TESTIMONIALS (carousel cu grayscale on-scroll)
@@ -1885,6 +1897,11 @@ html.js-stack-on .cursor {
   transition: width .35s var(--ease), height .35s var(--ease), border-radius .35s var(--ease),
               background-color .35s var(--ease);
   will-change: transform;
+  /* The ring grows into a pill by animating width/height, which would
+     normally dirty layout for the whole document 60x/s while hovering —
+     including mid-scroll. Containment scopes that work to this element.
+     No `paint` in the list: it would clip the ring's outer box-shadow. */
+  contain: layout size;
 }
 html.js-stack-on .cursor.is-expanded {
   width: 140px;
@@ -1923,31 +1940,40 @@ html.js-stack-on input, html.js-stack-on textarea { cursor: text; }
 
 
 
-/* Split-text reveal */
+/* Split-text reveal — the mask is the word, the slider is its inner span.
+   Staggering per word (not per letter) keeps the same effect while
+   animating ~5x fewer elements; per-letter pinned the main thread and
+   was the main cause of scroll stalls on phones. */
 .split-ready .word {
   display: inline-block;
   overflow: hidden;
   vertical-align: top;
   white-space: nowrap;
 }
-.split-ready .char {
+.split-ready .word__inner {
   display: inline-block;
   transform: translateY(110%);
-  transition: transform 700ms var(--ease) calc(var(--i, 0) * 22ms);
-  /* no will-change here: it kept every letter promoted to its own
+  transition: transform 620ms var(--ease) calc(var(--i, 0) * 40ms);
+  /* no will-change here: it kept every word promoted to its own
      compositor layer forever — browsers promote during the transition
      on their own */
 }
-.split-ready.is-revealed .char {
+.split-ready.is-revealed .word__inner {
   transform: translateY(0);
 }
+/* Once the cascade has played out the words stop being animatable at
+   all, so later scrolling never restyles them again. */
+.split-ready.is-settled .word__inner {
+  transition: none;
+  transform: none;
+}
 @media (prefers-reduced-motion: reduce) {
-  .split-ready .char {
+  .split-ready .word__inner {
     transform: none !important;
     opacity: 0;
     transition: opacity 300ms;
   }
-  .split-ready.is-revealed .char {
+  .split-ready.is-revealed .word__inner {
     opacity: 1;
   }
 }
