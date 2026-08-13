@@ -64,10 +64,19 @@
    clicks get their smooth scroll from script.js instead. */
 html, body { margin: 0; padding: 0; }
 /* No horizontal scroll, ever — `clip` also blocks touch panning on iOS,
-   where `hidden` on body alone is ignored. */
+   where `hidden` on body alone is ignored.
+
+   It must stay `clip` and never `hidden` here. Overflow axes are not
+   independent: with one axis `hidden` the other resolves from `visible`
+   to `auto`, which turns <body> into a second vertical scroll container
+   stacked on top of the document's own. The pointer is always over that
+   inner scroller, so the first wheel/swipe gets spent inside it and the
+   page only moves on the second try. `clip` has no such side effect. */
 html, body { overflow-x: clip; }
 @supports not (overflow: clip) {
-  html, body { overflow-x: hidden; }
+  /* Root only: overflow on <html> propagates to the viewport, so this
+     still kills sideways scroll without making <body> a scroller. */
+  html { overflow-x: hidden; }
 }
 body {
   font-family: var(--ff-sans);
@@ -77,7 +86,7 @@ body {
   line-height: 1.45;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;
+  /* deliberately no overflow-x here — see the note above */
 }
 img { display: block; max-width: 100%; height: auto; }
 button { font: inherit; cursor: pointer; border: 0; background: none; color: inherit; }
@@ -1524,7 +1533,14 @@ body { background: transparent; }
   font-weight: 600;
   letter-spacing: 0.08em;
 }
-body.is-lightbox-open { overflow: hidden; }
+/* Scroll lock lives on <html>, never on <body>. Overflow on body only
+   reaches the viewport when the root is `visible`, and our root carries
+   overflow-x — so locking body alone leaves the page scrolling behind
+   the overlay, and would also turn body back into a scroll container.
+   scrollbar-gutter keeps the desktop layout from jumping when the
+   scrollbar disappears. */
+html { scrollbar-gutter: stable; }
+html.is-scroll-locked { overflow: hidden; }
 @media (max-width: 760px) {
   .lightbox { padding: 12px; }
   .lightbox__nav { display: none; } /* pe mobil — swipe */
@@ -1763,7 +1779,8 @@ body.is-lightbox-open { overflow: hidden; }
   }
   .nav__toggle[aria-expanded="true"] span { background: #0c0c0c; }
 
-  body.is-menu-open { overflow: hidden; }
+  /* lock handled by html.is-scroll-locked — see the note near the
+     lightbox rules; overflow on body would not reach the viewport */
 
   /* Hero — framing pentru mobil: subiectul e în partea stângă a fotografiei */
   .hero { min-height: min(820px, 100svh); }

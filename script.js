@@ -27,6 +27,7 @@
       navMenu.classList.toggle("is-open", open);
       navToggle.setAttribute("aria-expanded", String(open));
       document.body.classList.toggle("is-menu-open", open);
+      document.documentElement.classList.toggle("is-scroll-locked", open);
     };
     navToggle.addEventListener("click", () => {
       setMenuOpen(!navMenu.classList.contains("is-open"));
@@ -411,10 +412,12 @@
           showLb(i);
           lb.classList.add("is-open");
           document.body.classList.add("is-lightbox-open");
+          document.documentElement.classList.add("is-scroll-locked");
         };
         const closeLb = () => {
           lb.classList.remove("is-open");
           document.body.classList.remove("is-lightbox-open");
+          document.documentElement.classList.remove("is-scroll-locked");
         };
 
         lb.querySelector(".lightbox__close").addEventListener("click", closeLb);
