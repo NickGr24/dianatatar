@@ -2046,28 +2046,3 @@ html.js-stack-on input, html.js-stack-on textarea { cursor: text; }
   .project__gallery-item .project__gallery-btn { opacity: 1; transform: none; transition: none; }
   .project__gallery-cap { opacity: 1; transition: none; }
 }
-
-/* ── FAQ ─────────────────────────────────────────────── */
-.faq { padding: var(--section-y) 0; }
-.faq__title { margin: 0 0 clamp(32px, 4vw, 64px); }
-.faq__list { max-width: 900px; }
-.faq__item { border-top: 1px solid rgba(10, 10, 10, .12); }
-.faq__item:last-child { border-bottom: 1px solid rgba(10, 10, 10, .12); }
-.faq__q { margin: 0; font-size: inherit; }
-.faq__btn {
-  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px;
-  padding: 28px 0; background: none; border: 0; cursor: pointer;
-  font-family: var(--ff-sans); font-size: clamp(18px, 1.5vw, 24px); font-weight: 600;
-  line-height: 1.35; color: var(--c-fg); text-align: left;
-  transition: opacity .3s var(--ease);
-}
-.faq__btn:hover { opacity: .6; }
-.faq__btn:focus-visible { outline: 2px solid var(--c-fg); outline-offset: 4px; }
-.faq__icon { flex: 0 0 auto; width: 22px; height: 22px; transition: transform .35s var(--ease); }
-.faq__item.is-open .faq__icon { transform: rotate(180deg); }
-/* 0fr -> 1fr animates to the answer's own height without measuring it. */
-.faq__a { display: grid; grid-template-rows: 1fr; transition: grid-template-rows .35s var(--ease); }
-.faq__item:not(.is-open) .faq__a { grid-template-rows: 0fr; }
-.faq__a-inner { overflow: hidden; }
-.faq__a p { margin: 0; padding: 0 0 28px; max-width: 62ch; color: var(--c-muted); line-height: 1.7; }
-@media (prefers-reduced-motion: reduce) { .faq__a, .faq__icon { transition: none; } }

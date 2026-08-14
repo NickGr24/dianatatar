@@ -1106,14 +1106,3 @@ void main(){
     window.addEventListener("load", grainientWhenIdle, { once: true });
   }
 })();
-
-/* FAQ accordion. The first item ships open and the rest closed in the markup,
-   so every answer is readable even if this script never runs. */
-document.querySelectorAll('.faq__item').forEach(function (item) {
-  var btn = item.querySelector('.faq__btn');
-  btn.addEventListener('click', function () {
-    var open = !item.classList.contains('is-open');
-    item.classList.toggle('is-open', open);
-    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
-});
